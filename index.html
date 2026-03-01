@@ -1,0 +1,1714 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ardıl Çeviri · Çalışma Seti</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════
+   APP SWITCHER — üstte her zaman görünür
+═══════════════════════════════════════════════════════ */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
+
+.app-switcher {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 9999;
+  background: #08090d;
+  border-bottom: 1px solid #1e2028;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  height: 52px;
+  gap: 8px;
+}
+
+.app-logo {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 13px;
+  color: #555;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-right: 8px;
+  white-space: nowrap;
+}
+
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+.drop-label {
+  font-family: 'Syne', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #888;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: color 0.2s;
+  user-select: none;
+  white-space: nowrap;
+}
+.drop-label:hover { color: #ccc; }
+.dropdown.has-active .drop-label { color: #e8c547; }
+#drop-davos.has-active .drop-label { color: #c8f135; }
+.drop-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #111318;
+  border: 1px solid #2a2d36;
+  border-radius: 10px;
+  padding: 6px;
+  min-width: 220px;
+  z-index: 10000;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  flex-direction: column;
+  gap: 4px;
+}
+.dropdown:hover .drop-menu { display: flex; }
+.dropdown.open .drop-menu { display: flex; }
+.drop-item {
+  display: block;
+  width: 100%;
+  padding: 10px 14px;
+  background: transparent;
+  border: none;
+  border-radius: 7px;
+  color: #7a8090;
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.drop-item:hover { background: rgba(255,255,255,0.05); color: #e8eaf0; }
+.drop-item.active-item { color: #e8c547; background: rgba(232,197,71,0.08); }
+#drop-davos .drop-item.active-item { color: #c8f135; background: rgba(200,241,53,0.08); }
+
+.app-btn {
+  flex: 1;
+  max-width: 200px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1.5px solid #2a2d36;
+  background: transparent;
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: #666;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.app-btn:hover { color: #aaa; border-color: #444; }
+
+.app-btn.active-hukuk {
+  background: rgba(232,197,71,0.12);
+  border-color: #e8c547;
+  color: #e8c547;
+}
+
+.app-btn.active-davos {
+  background: rgba(200,241,53,0.10);
+  border-color: #c8f135;
+  color: #c8f135;
+}
+
+/* ═══════════════════════════════════════════════════════
+   APP PANELS
+═══════════════════════════════════════════════════════ */
+.app-panel {
+  display: none;
+  padding-top: 52px; /* switcher yüksekliği kadar boşluk */
+}
+.app-panel.visible { display: block; }
+
+/* ═══════════════════════════════════════════════════════
+   HUKUK STYLES (orijinal — hiç değiştirilmedi)
+═══════════════════════════════════════════════════════ */
+#panel-hukuk {
+  --bg: #0f0e17;
+  --surface: #1a1828;
+  --surface2: #231f35;
+  --accent: #e8c547;
+  --accent2: #a78bfa;
+  --accent3: #34d399;
+  --accent4: #f87171;
+  --text: #e8e6f0;
+  --muted: #8b88a0;
+  --border: #2e2a45;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 300;
+  line-height: 1.75;
+  font-size: 15px;
+}
+
+#panel-hukuk .hero {
+  background: linear-gradient(135deg, #0f0e17 0%, #1e1538 50%, #0f0e17 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 60px 40px 50px;
+  position: relative;
+  overflow: hidden;
+}
+#panel-hukuk .hero::before {
+  content: '';
+  position: absolute;
+  top: -80px; right: -80px;
+  width: 350px; height: 350px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(167,139,250,0.15) 0%, transparent 70%);
+}
+#panel-hukuk .hero::after {
+  content: '';
+  position: absolute;
+  bottom: -60px; left: 100px;
+  width: 250px; height: 250px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232,197,71,0.1) 0%, transparent 70%);
+}
+#panel-hukuk .hero-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+  display: flex; align-items: center; gap: 10px;
+}
+#panel-hukuk .hero-tag::before { content: ''; width: 30px; height: 1px; background: var(--accent); }
+#panel-hukuk .hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--text);
+  max-width: 700px;
+}
+#panel-hukuk .hero h1 span { color: var(--accent); font-style: italic; }
+#panel-hukuk .hero-sub { margin-top: 16px; color: var(--muted); font-size: 14px; max-width: 500px; }
+#panel-hukuk .hero-badges { margin-top: 28px; display: flex; gap: 10px; flex-wrap: wrap; }
+#panel-hukuk .badge {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid;
+  letter-spacing: 1px;
+}
+#panel-hukuk .badge-y { border-color: var(--accent); color: var(--accent); background: rgba(232,197,71,0.08); }
+#panel-hukuk .badge-p { border-color: var(--accent2); color: var(--accent2); background: rgba(167,139,250,0.08); }
+#panel-hukuk .badge-g { border-color: var(--accent3); color: var(--accent3); background: rgba(52,211,153,0.08); }
+
+#panel-hukuk .hnav {
+  position: sticky; top: 52px; z-index: 100;
+  background: rgba(15,14,23,0.97);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 40px;
+  display: flex; gap: 0; overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+#panel-hukuk .hnav a {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  padding: 16px 18px;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: all .2s;
+  cursor: pointer;
+  -webkit-tap-highlight-color: rgba(232,197,71,0.2);
+  touch-action: manipulation;
+}
+#panel-hukuk .hnav a:hover, #panel-hukuk .hnav a:active { color: var(--text); border-bottom-color: var(--accent); }
+
+#panel-hukuk .container { max-width: 1100px; margin: 0 auto; padding: 0 40px; }
+#panel-hukuk .section { padding: 60px 0; border-bottom: 1px solid var(--border); }
+#panel-hukuk .section:last-child { border-bottom: none; }
+#panel-hukuk .section-header { display: flex; align-items: flex-start; gap: 20px; margin-bottom: 40px; }
+#panel-hukuk .section-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: var(--border);
+  line-height: 1;
+  user-select: none;
+  flex-shrink: 0;
+}
+#panel-hukuk .section-source {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+#panel-hukuk .section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.2;
+}
+#panel-hukuk .section-title .accent { color: var(--accent); }
+#panel-hukuk .section-title .accent2 { color: var(--accent2); }
+#panel-hukuk .section-title .accent3 { color: var(--accent3); }
+#panel-hukuk p { margin-bottom: 14px; color: var(--text); }
+#panel-hukuk .lead { font-size: 16px; font-weight: 400; color: var(--text); border-left: 3px solid var(--accent); padding-left: 16px; margin-bottom: 24px; }
+#panel-hukuk .card-grid { display: grid; gap: 16px; }
+#panel-hukuk .card-grid-2 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+#panel-hukuk .card-grid-3 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+#panel-hukuk .card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  transition: border-color .2s, transform .2s;
+}
+#panel-hukuk .card:hover { border-color: var(--accent2); transform: translateY(-2px); }
+#panel-hukuk .card-icon { font-size: 1.5rem; margin-bottom: 12px; }
+#panel-hukuk .card h4 { font-family: 'IBM Plex Sans', sans-serif; font-weight: 600; font-size: 14px; color: var(--accent); margin-bottom: 8px; letter-spacing: 0.5px; }
+#panel-hukuk .card p { font-size: 13.5px; color: var(--muted); margin: 0; }
+#panel-hukuk .card-y { border-top: 2px solid var(--accent); }
+#panel-hukuk .card-p { border-top: 2px solid var(--accent2); }
+#panel-hukuk .card-g { border-top: 2px solid var(--accent3); }
+#panel-hukuk .card-r { border-top: 2px solid var(--accent4); }
+#panel-hukuk .diff-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px;
+  margin-bottom: 16px;
+  position: relative;
+  overflow: hidden;
+}
+#panel-hukuk .diff-block::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; }
+#panel-hukuk .diff-block.sys::before { background: var(--accent); }
+#panel-hukuk .diff-block.ling::before { background: var(--accent2); }
+#panel-hukuk .diff-block.cult::before { background: var(--accent3); }
+#panel-hukuk .diff-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+#panel-hukuk .diff-block.sys .diff-label { color: var(--accent); }
+#panel-hukuk .diff-block.ling .diff-label { color: var(--accent2); }
+#panel-hukuk .diff-block.cult .diff-label { color: var(--accent3); }
+#panel-hukuk .diff-block h4 { font-size: 15px; font-weight: 600; margin-bottom: 10px; color: var(--text); }
+#panel-hukuk .diff-block p { font-size: 13.5px; color: var(--muted); margin: 0; line-height: 1.7; }
+#panel-hukuk .compare-table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin-top: 16px; }
+#panel-hukuk .compare-table th { text-align: left; padding: 12px 16px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--border); }
+#panel-hukuk .compare-table td { padding: 12px 16px; border-bottom: 1px solid rgba(46,42,69,0.5); vertical-align: top; color: var(--text); }
+#panel-hukuk .compare-table tr:hover td { background: var(--surface); }
+#panel-hukuk .compare-table .col-en { color: var(--accent); font-weight: 500; }
+#panel-hukuk .compare-table .col-tr { color: var(--accent3); }
+#panel-hukuk .compare-table .col-note { color: var(--muted); font-size: 12px; font-style: italic; }
+#panel-hukuk .term-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+#panel-hukuk .term-en, #panel-hukuk .term-tr { background: var(--surface2); border-radius: 8px; padding: 10px 14px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; }
+#panel-hukuk .term-en { border-left: 2px solid var(--accent); color: var(--accent); }
+#panel-hukuk .term-tr { border-left: 2px solid var(--accent3); color: var(--accent3); }
+@media (max-width: 500px) { #panel-hukuk .term-pair { grid-template-columns: 1fr; } }
+#panel-hukuk .quote-block { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 28px 32px; margin: 24px 0; position: relative; }
+#panel-hukuk .quote-block::before { content: '"'; font-family: 'Playfair Display', serif; font-size: 5rem; color: var(--accent2); opacity: 0.3; position: absolute; top: -10px; left: 20px; line-height: 1; }
+#panel-hukuk .quote-block p { font-style: italic; font-size: 15px; color: var(--text); padding-left: 10px; margin: 0; }
+#panel-hukuk .quote-block cite { display: block; margin-top: 10px; font-size: 12px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; padding-left: 10px; }
+#panel-hukuk .pill-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+#panel-hukuk .pill { font-size: 12px; padding: 4px 12px; border-radius: 20px; font-family: 'IBM Plex Mono', monospace; letter-spacing: 0.5px; }
+#panel-hukuk .pill-y { background: rgba(232,197,71,0.12); color: var(--accent); border: 1px solid rgba(232,197,71,0.25); }
+#panel-hukuk .pill-p { background: rgba(167,139,250,0.12); color: var(--accent2); border: 1px solid rgba(167,139,250,0.25); }
+#panel-hukuk .pill-g { background: rgba(52,211,153,0.12); color: var(--accent3); border: 1px solid rgba(52,211,153,0.25); }
+#panel-hukuk .pill-r { background: rgba(248,113,113,0.12); color: var(--accent4); border: 1px solid rgba(248,113,113,0.25); }
+#panel-hukuk .structure { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-top: 16px; }
+#panel-hukuk .structure-item { display: flex; align-items: center; gap: 16px; padding: 14px 20px; border-bottom: 1px solid var(--border); transition: background .15s; }
+#panel-hukuk .structure-item:last-child { border-bottom: none; }
+#panel-hukuk .structure-item:hover { background: var(--surface2); }
+#panel-hukuk .structure-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); width: 20px; flex-shrink: 0; }
+#panel-hukuk .structure-en { font-size: 13px; font-weight: 500; color: var(--accent); flex: 1; font-family: 'IBM Plex Mono', monospace; }
+#panel-hukuk .structure-tr { font-size: 13px; color: var(--accent3); flex: 1; }
+#panel-hukuk .structure-note { font-size: 11.5px; color: var(--muted); flex: 1.5; font-style: italic; }
+#panel-hukuk .flashcard-section { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 32px; text-align: center; margin-top: 32px; }
+#panel-hukuk .flashcard-section h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--text); margin-bottom: 8px; }
+#panel-hukuk .flashcard-section p { color: var(--muted); font-size: 13.5px; margin-bottom: 24px; }
+#panel-hukuk .hflashcard { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 32px; min-height: 120px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; cursor: pointer; transition: border-color .2s; position: relative; }
+#panel-hukuk .hflashcard:hover { border-color: var(--accent2); }
+#panel-hukuk .flashcard-q { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--text); text-align: center; }
+#panel-hukuk .flashcard-a { display: none; font-size: 14px; color: var(--accent3); text-align: center; font-family: 'IBM Plex Mono', monospace; }
+#panel-hukuk .hflashcard.revealed .flashcard-q { display: none; }
+#panel-hukuk .hflashcard.revealed .flashcard-a { display: block; }
+#panel-hukuk .flashcard-hint { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 1.5px; color: var(--muted); text-transform: uppercase; }
+#panel-hukuk .fc-controls { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+#panel-hukuk .hbtn { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; padding: 10px 20px; border-radius: 8px; border: 1px solid; cursor: pointer; transition: all .2s; touch-action: manipulation; }
+#panel-hukuk .btn-y { background: transparent; border-color: var(--accent); color: var(--accent); }
+#panel-hukuk .btn-y:hover { background: var(--accent); color: var(--bg); }
+#panel-hukuk .btn-p { background: transparent; border-color: var(--accent2); color: var(--accent2); }
+#panel-hukuk .btn-p:hover { background: var(--accent2); color: var(--bg); }
+#panel-hukuk .btn-muted { background: transparent; border-color: var(--muted); color: var(--muted); }
+#panel-hukuk .fc-counter { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted); margin-top: 12px; }
+#panel-hukuk .modal-words { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 16px; }
+#panel-hukuk .modal-word { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px; text-align: center; }
+#panel-hukuk .modal-word .word { font-family: 'IBM Plex Mono', monospace; font-size: 18px; font-weight: 500; margin-bottom: 6px; }
+#panel-hukuk .modal-word .meaning { font-size: 12px; color: var(--muted); line-height: 1.5; }
+#panel-hukuk .modal-word.shall .word { color: var(--accent4); }
+#panel-hukuk .modal-word.may .word { color: var(--accent3); }
+#panel-hukuk .modal-word.shall-not .word { color: var(--accent); }
+#panel-hukuk .checklist { list-style: none; margin-top: 16px; }
+#panel-hukuk .checklist li { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid rgba(46,42,69,0.4); font-size: 14px; color: var(--text); }
+#panel-hukuk .checklist li:last-child { border-bottom: none; }
+#panel-hukuk .checklist .check { width: 20px; height: 20px; border-radius: 50%; background: var(--surface2); border: 1px solid var(--border); cursor: pointer; flex-shrink: 0; margin-top: 2px; transition: all .2s; display: flex; align-items: center; justify-content: center; }
+#panel-hukuk .checklist .check.done { background: var(--accent3); border-color: var(--accent3); }
+#panel-hukuk .checklist .check.done::after { content: '✓'; font-size: 11px; color: var(--bg); }
+#panel-hukuk .checklist li.done-item > span { text-decoration: line-through; color: var(--muted); }
+#panel-hukuk .hfooter { background: var(--surface); border-top: 1px solid var(--border); padding: 32px 40px; text-align: center; }
+#panel-hukuk .hfooter p { font-size: 12px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; }
+#panel-hukuk .hfooter span { color: var(--accent); }
+#panel-hukuk ::-webkit-scrollbar { width: 6px; height: 6px; }
+#panel-hukuk ::-webkit-scrollbar-track { background: var(--bg); }
+#panel-hukuk ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+#panel-hukuk .mt-8 { margin-top: 8px; }
+#panel-hukuk .mt-16 { margin-top: 16px; }
+#panel-hukuk .mt-24 { margin-top: 24px; }
+#panel-hukuk .mb-8 { margin-bottom: 8px; }
+#panel-hukuk .text-muted { color: var(--muted); font-size: 13px; }
+#panel-hukuk .divider { height: 1px; background: var(--border); margin: 24px 0; }
+#panel-hukuk .highlight-box { background: rgba(232,197,71,0.06); border: 1px solid rgba(232,197,71,0.2); border-radius: 10px; padding: 20px 24px; margin: 20px 0; }
+#panel-hukuk .highlight-box p { margin: 0; font-size: 13.5px; color: var(--text); }
+#panel-hukuk .highlight-box strong { color: var(--accent); }
+
+/* ═══════════════════════════════════════════════════════
+   DAVOS STYLES (orijinal — hiç değiştirilmedi)
+═══════════════════════════════════════════════════════ */
+#panel-davos {
+  background: #0a0c10;
+  color: #e8eaf0;
+  font-family: 'DM Sans', sans-serif;
+}
+
+#panel-davos * { box-sizing: border-box; }
+
+#panel-davos::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(circle at 20% 80%, rgba(200,241,53,0.04) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 20%, rgba(56,189,248,0.04) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+#panel-davos header {
+  position: relative;
+  padding: 60px 40px 40px;
+  border-bottom: 1px solid #232730;
+  overflow: hidden;
+  background: #0a0c10;
+}
+#panel-davos header::after {
+  content: 'DAVOS';
+  position: absolute;
+  right: -20px; top: -10px;
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(80px,15vw,200px);
+  font-weight: 800;
+  color: rgba(255,255,255,0.02);
+  letter-spacing: -5px;
+  pointer-events: none;
+  user-select: none;
+}
+#panel-davos .dtag {
+  display: inline-block;
+  background: #c8f135;
+  color: #0a0c10;
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 2px;
+  margin-bottom: 20px;
+}
+#panel-davos h1 { font-family: 'Syne', sans-serif; font-size: clamp(28px,5vw,56px); font-weight: 800; line-height: 1.1; letter-spacing: -1px; color: #e8eaf0; }
+#panel-davos h1 span { color: #c8f135; }
+#panel-davos .dsubtitle { margin-top: 12px; font-size: 15px; color: #7a8090; font-weight: 300; max-width: 600px; line-height: 1.6; }
+
+#panel-davos .progress-strip {
+  padding: 16px 40px;
+  background: #111318;
+  border-bottom: 1px solid #232730;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: sticky;
+  top: 52px;
+  z-index: 100;
+  backdrop-filter: blur(12px);
+}
+#panel-davos .progress-label { font-family: 'Syne', sans-serif; font-size: 12px; color: #7a8090; white-space: nowrap; }
+#panel-davos .progress-bar { flex: 1; height: 4px; background: #232730; border-radius: 2px; overflow: hidden; }
+#panel-davos .progress-fill { height: 100%; background: linear-gradient(90deg, #c8f135, #38bdf8); border-radius: 2px; transition: width 0.5s ease; width: 0%; }
+#panel-davos .progress-pct { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: #c8f135; min-width: 36px; }
+
+#panel-davos nav {
+  padding: 24px 40px 0;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid #232730;
+  padding-bottom: 0;
+  background: #0a0c10;
+  position: sticky;
+  top: calc(52px + 52px);
+  z-index: 99;
+}
+#panel-davos .dnav-btn {
+  padding: 10px 18px;
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  color: #7a8090;
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+#panel-davos .dnav-btn:hover { color: #e8eaf0; }
+#panel-davos .dnav-btn.active { color: #c8f135; border-bottom-color: #c8f135; }
+
+#panel-davos main { padding: 40px; max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+#panel-davos .dsection { display: none; }
+#panel-davos .dsection.active { display: block; animation: dfadeIn 0.4s ease; }
+@keyframes dfadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+#panel-davos .dsection-title { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.5px; color: #e8eaf0; }
+#panel-davos .dsection-desc { color: #7a8090; font-size: 14px; margin-bottom: 32px; line-height: 1.6; font-weight: 300; }
+
+#panel-davos .session-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(300px,1fr)); gap: 16px; margin-bottom: 40px; }
+#panel-davos .session-card { background: #16191f; border: 1px solid #232730; border-radius: 12px; padding: 24px; cursor: pointer; transition: all 0.25s; position: relative; overflow: hidden; }
+#panel-davos .session-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--card-color, #c8f135); transform: scaleX(0); transform-origin: left; transition: transform 0.3s; }
+#panel-davos .session-card:hover::before, #panel-davos .session-card.open::before { transform: scaleX(1); }
+#panel-davos .session-card:hover { border-color: var(--card-color, #c8f135); transform: translateY(-2px); }
+#panel-davos .session-num { font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 2px; color: var(--card-color, #c8f135); margin-bottom: 8px; text-transform: uppercase; }
+#panel-davos .session-name { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 8px; line-height: 1.3; color: #e8eaf0; }
+#panel-davos .session-desc { font-size: 13px; color: #7a8090; line-height: 1.6; font-weight: 300; }
+#panel-davos .session-detail { display: none; margin-top: 16px; padding-top: 16px; border-top: 1px solid #232730; font-size: 13px; line-height: 1.7; color: #e8eaf0; }
+#panel-davos .session-card.open .session-detail { display: block; }
+#panel-davos .session-detail strong { color: var(--card-color, #c8f135); }
+#panel-davos .key-quote { background: rgba(255,255,255,0.03); border-left: 3px solid var(--card-color, #c8f135); padding: 12px 16px; margin: 12px 0; font-style: italic; font-size: 13px; border-radius: 0 8px 8px 0; }
+#panel-davos .dtracker { background: #111318; border: 1px solid #232730; border-radius: 12px; padding: 20px 24px; margin-bottom: 32px; }
+#panel-davos .dtracker-title { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: #7a8090; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 16px; }
+#panel-davos .dtracker-items { display: grid; grid-template-columns: repeat(auto-fill,minmax(200px,1fr)); gap: 8px; }
+#panel-davos .dtracker-item { display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 8px 12px; border-radius: 6px; transition: background 0.2s; touch-action: manipulation; }
+#panel-davos .dtracker-item:hover { background: rgba(255,255,255,0.03); }
+#panel-davos .dtracker-check { width: 18px; height: 18px; border-radius: 4px; border: 2px solid #232730; display: flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0; transition: all 0.2s; background: transparent; color: transparent; }
+#panel-davos .dtracker-item.checked .dtracker-check { border-color: #4ade80; background: #4ade80; color: #0a0c10; }
+#panel-davos .dtracker-item label { font-size: 13px; color: #7a8090; cursor: pointer; font-weight: 300; transition: color 0.2s; }
+#panel-davos .dtracker-item.checked label { color: #4ade80; text-decoration: line-through; }
+
+#panel-davos .term-section { margin-bottom: 40px; }
+#panel-davos .term-section-title { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--cat-color, #c8f135); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+#panel-davos .term-section-title::after { content: ''; flex: 1; height: 1px; background: #232730; }
+#panel-davos .term-grid { display: grid; gap: 8px; }
+#panel-davos .term-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; background: #16191f; border: 1px solid #232730; border-radius: 8px; padding: 14px 18px; transition: border-color 0.2s; align-items: center; }
+#panel-davos .term-row:hover { border-color: var(--cat-color, #c8f135); }
+#panel-davos .dterm-en { font-weight: 500; font-size: 14px; color: #e8eaf0; }
+#panel-davos .dterm-tr { font-size: 14px; color: var(--cat-color, #38bdf8); font-weight: 400; }
+#panel-davos .dterm-note { font-size: 12px; color: #7a8090; font-style: italic; font-weight: 300; }
+
+#panel-davos .phrase-card { background: #16191f; border: 1px solid #232730; border-radius: 12px; padding: 20px 24px; margin-bottom: 12px; transition: border-color 0.2s; }
+#panel-davos .phrase-card:hover { border-color: #f97316; }
+#panel-davos .phrase-en { font-size: 15px; font-weight: 500; margin-bottom: 6px; color: #f97316; font-style: italic; }
+#panel-davos .phrase-tr { font-size: 14px; color: #e8eaf0; margin-bottom: 4px; }
+#panel-davos .phrase-context { font-size: 12px; color: #7a8090; font-weight: 300; }
+
+#panel-davos .quiz-container { max-width: 700px; }
+#panel-davos .quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+#panel-davos .quiz-score { font-family: 'Syne', sans-serif; font-size: 14px; color: #7a8090; }
+#panel-davos .quiz-score span { color: #c8f135; font-size: 20px; font-weight: 800; }
+#panel-davos .quiz-card { background: #16191f; border: 1px solid #232730; border-radius: 16px; padding: 32px; margin-bottom: 16px; min-height: 200px; position: relative; }
+#panel-davos .quiz-type { font-family: 'Syne', sans-serif; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #a78bfa; margin-bottom: 20px; font-weight: 700; }
+#panel-davos .quiz-q { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; margin-bottom: 28px; line-height: 1.3; letter-spacing: -0.5px; color: #e8eaf0; }
+#panel-davos .quiz-options { display: grid; gap: 10px; }
+#panel-davos .quiz-option { background: #111318; border: 1px solid #232730; border-radius: 8px; padding: 14px 20px; cursor: pointer; font-size: 14px; text-align: left; color: #e8eaf0; transition: all 0.2s; font-family: 'DM Sans', sans-serif; font-weight: 400; touch-action: manipulation; }
+#panel-davos .quiz-option:hover:not(:disabled) { border-color: #a78bfa; background: rgba(167,139,250,0.08); }
+#panel-davos .quiz-option.correct { border-color: #4ade80 !important; background: rgba(74,222,128,0.1) !important; color: #4ade80; }
+#panel-davos .quiz-option.wrong { border-color: #f87171 !important; background: rgba(248,113,113,0.1) !important; color: #f87171; }
+#panel-davos .quiz-option:disabled { cursor: default; }
+#panel-davos .quiz-feedback { margin-top: 16px; padding: 14px 18px; border-radius: 8px; font-size: 14px; display: none; line-height: 1.6; }
+#panel-davos .quiz-feedback.show { display: block; }
+#panel-davos .quiz-feedback.correct-fb { background: rgba(74,222,128,0.1); border: 1px solid #4ade80; color: #4ade80; }
+#panel-davos .quiz-feedback.wrong-fb { background: rgba(248,113,113,0.1); border: 1px solid #f87171; color: #f87171; }
+#panel-davos .quiz-next { margin-top: 20px; padding: 12px 28px; background: #c8f135; color: #0a0c10; border: none; border-radius: 8px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; cursor: pointer; display: none; letter-spacing: 0.5px; transition: opacity 0.2s; touch-action: manipulation; }
+#panel-davos .quiz-next:hover { opacity: 0.85; }
+#panel-davos .quiz-next.show { display: inline-block; }
+#panel-davos .quiz-complete { text-align: center; padding: 60px 32px; display: none; }
+#panel-davos .quiz-complete h2 { font-family: 'Syne', sans-serif; font-size: 36px; font-weight: 800; margin-bottom: 12px; color: #e8eaf0; }
+#panel-davos .quiz-complete .final-score { font-size: 72px; font-family: 'Syne', sans-serif; font-weight: 800; color: #c8f135; line-height: 1; margin: 24px 0; }
+#panel-davos .quiz-restart { margin-top: 24px; padding: 14px 32px; background: transparent; border: 2px solid #c8f135; color: #c8f135; border-radius: 8px; font-family: 'Syne', sans-serif; font-weight: 700; cursor: pointer; font-size: 14px; transition: all 0.2s; letter-spacing: 0.5px; touch-action: manipulation; }
+#panel-davos .quiz-restart:hover { background: #c8f135; color: #0a0c10; }
+
+#panel-davos .practice-card { background: #16191f; border: 1px solid #232730; border-radius: 12px; padding: 28px; margin-bottom: 16px; transition: all 0.2s; }
+#panel-davos .practice-num { font-family: 'Syne', sans-serif; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #38bdf8; font-weight: 700; margin-bottom: 12px; }
+#panel-davos .practice-en { font-size: 18px; font-weight: 500; line-height: 1.5; margin-bottom: 16px; color: #e8eaf0; font-style: italic; }
+#panel-davos .show-answer-btn { background: transparent; border: 1px solid #232730; color: #7a8090; padding: 8px 16px; border-radius: 6px; font-size: 13px; cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif; touch-action: manipulation; }
+#panel-davos .show-answer-btn:hover { border-color: #38bdf8; color: #38bdf8; }
+#panel-davos .practice-tr { margin-top: 16px; padding: 16px; background: rgba(56,189,248,0.06); border: 1px solid rgba(56,189,248,0.2); border-radius: 8px; font-size: 15px; color: #38bdf8; line-height: 1.6; display: none; }
+#panel-davos .practice-tr.visible { display: block; }
+#panel-davos .done-btn { width: 32px; height: 32px; border-radius: 50%; border: 2px solid #232730; background: transparent; color: #7a8090; cursor: pointer; font-size: 16px; transition: all 0.2s; float: right; margin-top: -8px; touch-action: manipulation; }
+#panel-davos .done-btn.done { border-color: #4ade80; color: #4ade80; background: rgba(74,222,128,0.1); }
+
+#panel-davos .speaker-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(200px,1fr)); gap: 12px; margin-bottom: 32px; }
+#panel-davos .speaker-card { background: #16191f; border: 1px solid #232730; border-radius: 10px; padding: 18px; transition: all 0.2s; }
+#panel-davos .speaker-card:hover { border-color: #a78bfa; transform: translateY(-2px); }
+#panel-davos .speaker-name { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; margin-bottom: 4px; color: #e8eaf0; }
+#panel-davos .speaker-role { font-size: 12px; color: #7a8090; line-height: 1.4; font-weight: 300; }
+#panel-davos .number-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(220px,1fr)); gap: 12px; margin-bottom: 32px; }
+#panel-davos .number-card { background: #16191f; border: 1px solid #232730; border-radius: 10px; padding: 20px; }
+#panel-davos .number-val { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; color: #c8f135; line-height: 1; margin-bottom: 8px; }
+#panel-davos .number-label { font-size: 13px; color: #7a8090; line-height: 1.5; font-weight: 300; }
+#panel-davos .abbr-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(280px,1fr)); gap: 10px; margin-bottom: 32px; }
+#panel-davos .abbr-card { background: #16191f; border: 1px solid #232730; border-radius: 8px; padding: 16px; display: flex; gap: 14px; align-items: flex-start; }
+#panel-davos .abbr-short { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; color: #c8f135; min-width: 60px; letter-spacing: -0.5px; }
+#panel-davos .abbr-full { font-size: 13px; color: #e8eaf0; line-height: 1.4; }
+#panel-davos .abbr-tr { font-size: 12px; color: #7a8090; margin-top: 2px; font-weight: 300; }
+
+#panel-davos .flashcard-area { max-width: 600px; margin: 0 auto; }
+#panel-davos .dflashcard { perspective: 1000px; height: 220px; cursor: pointer; margin-bottom: 24px; user-select: none; }
+#panel-davos .dflashcard-inner { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.5s ease; }
+#panel-davos .dflashcard.flipped .dflashcard-inner { transform: rotateY(180deg); }
+#panel-davos .dflashcard-front, #panel-davos .dflashcard-back { position: absolute; inset: 0; backface-visibility: hidden; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 32px; text-align: center; }
+#panel-davos .dflashcard-front { background: #16191f; border: 1px solid #232730; }
+#panel-davos .dflashcard-back { background: linear-gradient(135deg,rgba(200,241,53,0.08),rgba(56,189,248,0.08)); border: 1px solid #c8f135; transform: rotateY(180deg); }
+#panel-davos .dflashcard-hint { font-size: 11px; color: #7a8090; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 16px; font-family: 'Syne', sans-serif; font-weight: 700; }
+#panel-davos .dflashcard-word { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; color: #e8eaf0; letter-spacing: -0.5px; line-height: 1.2; }
+#panel-davos .dflashcard-back .dflashcard-word { color: #c8f135; }
+#panel-davos .dflashcard-note { font-size: 13px; color: #7a8090; margin-top: 10px; font-weight: 300; line-height: 1.5; }
+#panel-davos .flash-controls { display: flex; gap: 12px; justify-content: center; align-items: center; }
+#panel-davos .flash-btn { padding: 10px 24px; border-radius: 8px; border: 1px solid #232730; background: transparent; color: #e8eaf0; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; cursor: pointer; transition: all 0.2s; touch-action: manipulation; }
+#panel-davos .flash-btn:hover { border-color: #c8f135; color: #c8f135; }
+#panel-davos .flash-btn.primary { background: #c8f135; color: #0a0c10; border-color: #c8f135; }
+#panel-davos .flash-btn.primary:hover { opacity: 0.85; }
+#panel-davos .flash-counter { font-family: 'Syne', sans-serif; font-size: 13px; color: #7a8090; min-width: 60px; text-align: center; }
+
+@media (max-width: 768px) {
+  #panel-davos header, #panel-davos main { padding: 24px 20px; }
+  #panel-davos nav { padding: 0 20px; overflow-x: auto; }
+  #panel-davos .progress-strip { padding: 12px 20px; }
+  #panel-davos .term-row { grid-template-columns: 1fr 1fr; }
+  #panel-davos .dterm-note { display: none; }
+  #panel-hukuk .container { padding: 0 20px; }
+  #panel-hukuk .hnav { padding: 0 20px; }
+}
+</style>
+</head>
+<body>
+<style>
+#lockscreen {
+  position: fixed;
+  inset: 0;
+  background: #08090d;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+  font-family: 'Syne', sans-serif;
+}
+#lockscreen h2 {
+  color: #e8eaf0;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+#lockscreen .lock-sub {
+  color: #555;
+  font-size: 13px;
+  margin-top: -12px;
+}
+#lock-input {
+  background: #111318;
+  border: 1.5px solid #2a2d36;
+  border-radius: 10px;
+  padding: 14px 20px;
+  font-size: 22px;
+  color: #e8eaf0;
+  text-align: center;
+  letter-spacing: 8px;
+  width: 160px;
+  outline: none;
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+}
+#lock-input:focus { border-color: #c8f135; }
+#lock-input.wrong { border-color: #f87171; animation: shake 0.3s; }
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  25% { transform: translateX(-8px); }
+  75% { transform: translateX(8px); }
+}
+#lock-btn {
+  padding: 12px 32px;
+  background: #c8f135;
+  color: #08090d;
+  border: none;
+  border-radius: 10px;
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 14px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: opacity 0.2s;
+}
+#lock-btn:hover { opacity: 0.85; }
+#lock-logo {
+  font-size: 32px;
+  margin-bottom: -8px;
+}
+</style>
+
+<div id="lockscreen">
+  <div id="lock-logo">🔒</div>
+  <h2>Tariktanta</h2>
+  <p class="lock-sub">Şifrenizi girin</p>
+  <input type="password" id="lock-input" maxlength="10" placeholder="••••" onkeydown="if(event.key==='Enter') lockCheck()" />
+  <button id="lock-btn" onclick="lockCheck()">Giriş</button>
+</div>
+
+<script>
+function lockCheck() {
+  const val = document.getElementById('lock-input').value;
+  if (val === '3131') {
+    document.getElementById('lockscreen').style.display = 'none';
+    sessionStorage.setItem('unlocked','1');
+  } else {
+    const inp = document.getElementById('lock-input');
+    inp.classList.add('wrong');
+    inp.value = '';
+    setTimeout(() => inp.classList.remove('wrong'), 400);
+  }
+}
+if (sessionStorage.getItem('unlocked') === '1') {
+  document.addEventListener('DOMContentLoaded', function() {
+    var ls = document.getElementById('lockscreen');
+    if (ls) ls.style.display = 'none';
+  });
+}
+</script>
+
+
+<!-- ═══════════════ APP SWITCHER ═══════════════ -->
+<div class="app-switcher">
+  <div class="app-logo">Tariktanta</div>
+  <div class="dropdown" id="drop-hukuk">
+    <div class="drop-label" id="droplabel-hukuk">HUKUK ÇEVİRİSİ ▾</div>
+    <div class="drop-menu" id="dropmenu-hukuk">
+      <button class="drop-item active-item" id="btn-hukuk" onclick="switchApp('hukuk','2. Hafta — Hukuki Çeviri','hukuk')">⚖️ 2. Hafta — Hukuki Çeviri</button>
+    </div>
+  </div>
+  <div class="dropdown" id="drop-davos">
+    <div class="drop-label" id="droplabel-davos">ARDIL ÇEVİRİ ▾</div>
+    <div class="drop-menu" id="dropmenu-davos">
+      <button class="drop-item active-item" id="btn-davos" onclick="switchApp('davos','2. Hafta — Davos 2026','davos')">🎙️ 2. Hafta — Davos 2026</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ HUKUK PANEL ═══════════════ -->
+<div class="app-panel visible" id="panel-hukuk">
+
+<div class="hero">
+  <div class="container">
+    <div class="hero-tag">Çalışma Dosyası · Week 2</div>
+    <h1>Hukuki <span>Çeviri</span><br>Teori & Pratik</h1>
+    <p class="hero-sub">Deborah Cao · Legal Translation &nbsp;+&nbsp; AB Mevzuatı Çeviri Rehberi · Kapsamlı ders notları</p>
+    <div class="hero-badges">
+      <span class="badge badge-y">Legal Translation — EN</span>
+      <span class="badge badge-p">AB Mevzuatı — TR</span>
+      <span class="badge badge-g">Flashcard Testi</span>
+    </div>
+  </div>
+</div>
+
+<nav class="hnav">
+  <a onclick="hScrollTo('tanim')">Tanım</a>
+  <a onclick="hScrollTo('siniflandirma')">Sınıflandırma</a>
+  <a onclick="hScrollTo('zorluklar')">Zorluklar</a>
+  <a onclick="hScrollTo('metin-turleri')">Metin Türleri</a>
+  <a onclick="hScrollTo('ab-genel')">AB Rehberi</a>
+  <a onclick="hScrollTo('ab-duzenlemeler')">AB Düzenlemeleri</a>
+  <a onclick="hScrollTo('ab-bolumler')">Bölümler & Kalıplar</a>
+  <a onclick="hScrollTo('ab-atiflar')">Atıflar</a>
+  <a onclick="hScrollTo('ab-yazim')">Yazım Kuralları</a>
+  <a onclick="hScrollTo('ab-ifadeler')">Sık İfadeler</a>
+  <a onclick="hScrollTo('htest')">Flashcard Testi</a>
+</nav>
+
+<div class="section" id="tanim">
+<div class="container">
+  <div class="section-header">
+    <div class="section-num">01</div>
+    <div class="section-title-wrap">
+      <div class="section-source">Legal Translation · Deborah Cao</div>
+      <div class="section-title">Hukuki Çeviri <span class="accent">Nedir?</span></div>
+    </div>
+  </div>
+  <p class="lead">Hukuki çeviri; hukuk ve hukuki süreçlerle ilgili dil kullanımını içeren, kaynak metni (SL) hedef dile (TL) aktarma faaliyetidir.</p>
+  <p>Hukuki çeviri, teknik/uzman çevirinin bir alt dalıdır. Dar anlamda yalnızca hukuki metinlerin çevirisini değil, hukuki bağlamlarda gerçekleşen her türlü iletişimin aktarımını kapsayan geniş bir terim olarak kullanılır.</p>
+  <div class="quote-block">
+    <p>Legal translation is used as a generic term to cover both the translation of law and other communications in legal settings.</p>
+    <cite>— Deborah Cao</cite>
+  </div>
+</div>
+</div>
+
+<div class="section" id="siniflandirma">
+<div class="container">
+  <div class="section-header">
+    <div class="section-num">02</div>
+    <div class="section-title-wrap">
+      <div class="section-source">Legal Translation · Deborah Cao</div>
+      <div class="section-title"><span class="accent">Sınıflandırma</span> Kriterleri</div>
+    </div>
+  </div>
+  <p class="lead">Hukuki çeviri, dört farklı kritere göre sınıflandırılabilir. Bu sınıflandırmaların her biri aynı metni farklı açıdan ele alır.</p>
+  <div class="card-grid card-grid-2 mt-16">
+    <div class="card card-y"><div class="card-icon">📋</div><h4>1. Konu Maddesine Göre</h4><p>Ulusal mevzuat ve uluslararası antlaşmalar · Özel hukuk belgeleri · Hukuki akademik çalışmalar · Mahkeme içtihadı (case law)</p></div>
+    <div class="card card-p"><div class="card-icon">⚖️</div><h4>2. Kaynak Metnin Statüsüne Göre</h4><p>Bağlayıcı/uygulanabilir hukuk (statutes) · Bağlayıcı olmayan hukuk (akademik çalışmalar, görüşler)</p></div>
+    <div class="card card-g"><div class="card-icon">🎯</div><h4>3. Kaynak Metindeki İşleve Göre</h4><p><strong style="color:var(--accent3)">Öncelikle kuraloyucu</strong>: kanunlar, sözleşmeler, antlaşmalar · <strong style="color:var(--accent3)">Tanımlayıcı + kuraloyucu</strong>: mahkeme kararları · <strong style="color:var(--accent3)">Saf tanımlayıcı</strong>: akademik hukuk eserleri (Sarcevic 1997)</p></div>
+    <div class="card card-r"><div class="card-icon">🌐</div><h4>4. Hedef Metnin Amacına Göre</h4><p><strong style="color:var(--accent4)">Normatif</strong>: eşit özgünlükte metin üretimi · <strong style="color:var(--accent4)">Bilgilendirici</strong>: okuyucuya bilgi sunma · <strong style="color:var(--accent4)">Genel hukuki/yargısal</strong> amaç</p></div>
+  </div>
+</div>
+</div>
+
+<div class="section" id="zorluklar">
+<div class="container">
+  <div class="section-header">
+    <div class="section-num">03</div>
+    <div class="section-title-wrap">
+      <div class="section-source">Legal Translation · Deborah Cao</div>
+      <div class="section-title">Zorluk <span class="accent">Kaynakları</span></div>
+    </div>
+  </div>
+  <p class="lead">Hukuki çevirinin karmaşıklığı üç temel kaynaktan beslenir. Bu kaynaklar birbirinden ayrı değil, iç içe geçmiş bir bütün oluşturur.</p>
+  <div class="diff-block sys">
+    <div class="diff-label">Zorluk 1 · Sistemik</div>
+    <h4>Hukuk Sistemleri Arasındaki Farklılıklar</h4>
+    <p>Hukuk, ulusal bir olgudur ve her ulusal hukuk sistemi özgün bir bütün oluşturur. Dünyanın en etkili iki hukuk ailesi — <strong>Romano-Germen (Kıta Avrupası Medeni Hukuku)</strong> ve <strong>Common Law</strong> — tarihi, kültürel gelişim ve temel felsefe bakımından köklü biçimde farklıdır. Kaynak hukukun unsurları hedef hukuk sistemine doğrudan aktarılamaz.</p>
+  </div>
+  <div class="diff-block ling">
+    <div class="diff-label">Zorluk 2 · Dilsel</div>
+    <h4>Dilsel ve Terminolojik Farklılıklar</h4>
+    <p>Hukuki dil, teknik bir dildir; ancak matematiğin ya da fiziğin aksine evrensel değildir — belirli bir hukuk sistemine bağlıdır. Her hukuki dil, özgün bir tarih ve kültürün ürünüdür. Hukuki çevirideki temel dilsel güçlük, diller arasında <strong>eşdeğer terminolojinin yokluğudur</strong>.</p>
+  </div>
+  <div class="diff-block cult">
+    <div class="diff-label">Zorluk 3 · Kültürel</div>
+    <h4>Kültürel Farklılıklar</h4>
+    <p>Hukuk, kültürün bir ifadesidir. "Her ülkenin, kendi özgün hukuki düzeninin sosyal gerçekliğini yansıtan bir hukuki dili vardır" (Sarcevic 1985). Çevirmen, hem hukuki hem de kültürel engelleri aşmak zorundadır.</p>
+  </div>
+  <div class="highlight-box mt-24">
+    <p><strong>🔑 Anahtar Kavram:</strong> Hukuki çeviri, <em>sui generis</em>dir — evrensel bilgi aktaran diğer teknik çeviri türlerinden farklıdır. Çevirmen yalnızca iki dil arasında değil, iki hukuk sistemi ve iki kültür arasında köprü kurmak zorundadır.</p>
+  </div>
+</div>
+</div>
+
+<div class="section" id="metin-turleri">
+<div class="container">
+  <div class="section-header">
+    <div class="section-num">04</div>
+    <div class="section-title-wrap">
+      <div class="section-source">Legal Translation · Deborah Cao</div>
+      <div class="section-title">Hukuki <span class="accent">Metin Türleri</span></div>
+    </div>
+  </div>
+  <p class="lead">Hukuki çeviri pratiği üç ana metin kategorisini kapsar: özel hukuk belgeleri, ulusal mevzuat ve uluslararası hukuki belgeler.</p>
+  <div class="card card-y mt-16" style="margin-bottom:16px">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;">
+      <div>
+        <h4>📄 2.1 · Özel Hukuk Belgelerinin Çevirisi</h4>
+        <p style="margin-top:8px">Sözleşmeler, tapu senetleri, vasiyetnameler, noterlik beyanları, vekaletnameler, iddianameler, dava dilekçeleri. Pratikte en büyük çeviri yükünü oluştururlar.</p>
+      </div>
+      <div class="pill-list" style="flex-direction:column;min-width:200px;">
+        <span class="pill pill-y">Kalıplaşmış dil yapısı</span>
+        <span class="pill pill-y">Arkaik sözcükler</span>
+        <span class="pill pill-y">Kelime kümeleri</span>
+        <span class="pill pill-y">Uzun-karmaşık cümleler</span>
+        <span class="pill pill-y">Pasif yapılar</span>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <p class="text-muted" style="margin:0"><strong style="color:var(--accent)">Arkaik ifadeler:</strong> aforementioned · hereinafter · hereinabove · hereunder · said · such</p>
+    <p class="text-muted" style="margin-top:8px;margin-bottom:0"><strong style="color:var(--accent)">Kelime kümeleri:</strong> "restriction, restraint, prohibition or intervention" · "change, modification or alteration"</p>
+  </div>
+  <div class="card card-p" style="margin-bottom:16px">
+    <h4>🏛️ 2.2 · Ulusal Mevzuatın Çevirisi</h4>
+    <p style="margin-top:8px">İki durum: (1) <strong style="color:var(--accent2)">İki/çok dilli yargı bölgeleri</strong> — Kanada, İsviçre, Hong Kong, Güney Afrika; (2) <strong style="color:var(--accent2)">Bilgilendirme amaçlı</strong> çeviri.</p>
+    <div class="divider"></div>
+    <p style="font-size:13px;font-weight:500;color:var(--accent2);margin-bottom:10px">⚡ İllokütif Güç (Illocutionary Force) — Kritik!</p>
+    <div class="modal-words">
+      <div class="modal-word shall"><div class="word">SHALL</div><div class="meaning">Yükümlülük yükler<br>"bir eylem yapmak zorundadır"</div></div>
+      <div class="modal-word may"><div class="word">MAY</div><div class="meaning">Hak / yetki / güç tanır<br>"yapabilir / yapma yetkisi var"</div></div>
+      <div class="modal-word shall-not"><div class="word">SHALL NOT<br>MAY NOT</div><div class="meaning">Yasaklama / çekimser kalma yükümlülüğü<br>"yapmama yükümlülüğü"</div></div>
+    </div>
+  </div>
+  <div class="card card-g">
+    <h4>🌍 2.3 · Uluslararası Hukuki Belgelerin Çevirisi</h4>
+    <p style="margin-top:8px">BM ve AB gibi uluslararası kuruluşlardaki çeviri faaliyetleri.</p>
+    <div class="divider"></div>
+    <div class="highlight-box" style="background:rgba(52,211,153,0.06);border-color:rgba(52,211,153,0.2);margin:0">
+      <p><strong>Eşit Özgünlük İlkesi (Equal Authenticity):</strong> Uluslararası bir antlaşmanın resmi dillerdeki tüm metinleri — çeviri olup olmadığından bağımsız — eşit otoritede ve eşit hukuki güçte kabul edilir.</p>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="section" id="ab-genel">
+<div class="container">
+  <div class="section-header">
+    <div class="section-num">05</div>
+    <div class="section-title-wrap">
+      <div class="section-source">AB Mevzuatı Çeviri Rehberi · 2017</div>
+      <div class="section-title">AB Rehberi: <span class="accent2">Genel Çerçeve</span></div>
+    </div>
+  </div>
+  <p class="lead">Türkiye Cumhuriyeti AB Bakanlığı Çeviri Eşgüdüm Başkanlığı tarafından 2009'da ilk yayımlanan, 2016'da güncellenen rehber; AB müktesebatının tutarlı ve kaliteli biçimde Türkçeye aktarılması için hazırlanmıştır.</p>
+  <p>AB müktesebatı çok katmanlı bir yapıya sahiptir: birincil mevzuat (kurucu antlaşmalar) ile ikincil mevzuat (tüzükler, direktifler, kararlar, tavsiyeler, görüşler).</p>
+  <div class="divider"></div>
+  <p style="font-size:13px;font-weight:500;color:var(--accent2);margin-bottom:12px">📐 Temel Biçimsel Çeviri Kuralları:</p>
+  <div class="card-grid card-grid-3">
+    <div class="card"><h4>Belge Türü</h4><p>Yeni bir Word belgesi olarak hazırlanmalı.</p></div>
+    <div class="card"><h4>Yazı Tipi</h4><p>Times New Roman, 12 punto. Çift sütunlu kaynak metinler hedef metinde tek sütunlu yapıya dönüştürülür.</p></div>
+    <div class="card"><h4>Paragraf & Sayfa</h4><p>Paragraf başında girintisiz, tek satır ara. Metin her iki yana yaslanır. Sayfalar numaralandırılmaz.</p></div>
+    <div class="card"><h4>Terminoloji</h4><p>AB Bakanlığı Terimleri Sözlüğü temel alınır. Gereksiz yabancı kelime kullanılmaz.</p></div>
+    <div class="card"><h4>Yazım Dili</h4><p>TDK Yazım Kılavuzu ve Türkçe Sözlük esas alınır; yaşayan Türkçe kullanılır.</p></div>
+    <div class="card"><h4>Dosya Adı</h4><p>Sayı-harf kodları + hedef dil kodu (TR/EN) ile kaydedilir. Örnek: 31997L0311_TR</p></div>
+  </div>
+</div>
+</div>
+
+<div class="section" id="ab-duzenlemeler">
+<div class="container">
+  <div class="section-header">
+    <div class="section-num">06</div>
+    <div class="section-title-wrap">
+      <div class="section-source">AB Mevzuatı Çeviri Rehberi</div>
+      <div class="section-title">AB <span class="accent2">Düzenleme Türleri</span> ve Karşılıkları</div>
+    </div>
+  </div>
+  <p class="lead">AB düzenlemelerinin hukuki bağlayıcılık dereceleri farklıdır. Çevirmen bu ayrımı bilmek zorundadır.</p>
+  <table class="compare-table">
+    <thead><tr><th>İngilizce</th><th>Türkçe</th><th>Bağlayıcılık / Not</th></tr></thead>
+    <tbody>
+      <tr><td class="col-en">Regulation</td><td class="col-tr">Tüzük</td><td class="col-note">Tüm üye devletlerde doğrudan bağlayıcı ve uygulanabilir</td></tr>
+      <tr><td class="col-en">Implementing Regulation</td><td class="col-tr">Uygulama Tüzüğü</td><td class="col-note">Yasama tasarrufunun yeknesak uygulanması için</td></tr>
+      <tr><td class="col-en">Directive</td><td class="col-tr">Direktif</td><td class="col-note">Ulusal hukuka aktarılmak zorunda</td></tr>
+      <tr><td class="col-en">Decision</td><td class="col-tr">Karar</td><td class="col-note">Atıfta bulunduğu merciler bakımından bağlayıcı</td></tr>
+      <tr><td class="col-en">Recommendation</td><td class="col-tr">Tavsiye</td><td class="col-note">Bağlayıcı değil</td></tr>
+      <tr><td class="col-en">Opinion</td><td class="col-tr">Görüş</td><td class="col-note">Bağlayıcı değil</td></tr>
+      <tr><td class="col-en">Resolution</td><td class="col-tr">İlke Kararı</td><td class="col-note">Siyasi nitelik taşır</td></tr>
+      <tr><td class="col-en">Framework Decision</td><td class="col-tr">Çerçeve Karar</td><td class="col-note">JHA alanında — doğrudan etkisizdir</td></tr>
+      <tr><td class="col-en">Legislative act</td><td class="col-tr">Yasama Tasarrufu</td><td class="col-note">Olağan veya özel yasama usulüyle</td></tr>
+      <tr><td class="col-en">Non-legislative act</td><td class="col-tr">Yasama Dışı Tasarruf</td><td class="col-note">Yetki devrine dayanan veya uygulama tasarrufu</td></tr>
+      <tr><td class="col-en">Delegated act</td><td class="col-tr">Yetki Devrine Dayanan Tasarruf</td><td class="col-note">Yasama tasarrufuna ilavede bulunmak veya değiştirmek için</td></tr>
+      <tr><td class="col-en">Implementing act</td><td class="col-tr">Uygulama Tasarrufu</td><td class="col-note">Yeknesak uygulama sağlar</td></tr>
+    </tbody>
+  </table>
+  <div class="highlight-box mt-24">
+    <p><strong>⚠️ Karıştırılan İfadeler:</strong> <strong>European Council (AB Zirvesi)</strong> ≠ <strong>Council of Europe (Avrupa Konseyi)</strong> ≠ <strong>Council of the EU (Avrupa Birliği Konseyi)</strong>. Bu üç kurum tamamen farklıdır!</p>
+  </div>
+</div>
+</div>
+
+<div class="section" id="ab-bolumler">
+<div class="container">
+  <div class="section-header">
+    <div class="section-num">07</div>
+    <div class="section-title-wrap">
+      <div class="section-source">AB Mevzuatı Çeviri Rehberi</div>
+      <div class="section-title">AB Mevzuatının <span class="accent2">Bölümleri</span> ve Çeviri Kalıpları</div>
+    </div>
+  </div>
+  <p class="lead">Her AB mevzuatı standart bölümlerden oluşur. Her bölümün kendine özgü çeviri kalıpları vardır ve bunlar yeknesaklık için zorunludur.</p>
+  <div class="diff-block sys" style="margin-bottom:16px">
+    <div class="diff-label">Bölüm 1 · Başlık</div>
+    <h4>Mevzuat Başlıkları</h4>
+    <div class="term-pair mt-8">
+      <div class="term-en">REGULATION (EU) 2015/… OF THE EUROPEAN PARLIAMENT AND OF THE COUNCIL of … on …</div>
+      <div class="term-tr">… hakkında/ilişkin … tarihli ve (AB) 2015/… sayılı AVRUPA PARLAMENTOSU VE KONSEY TÜZÜĞÜ</div>
+    </div>
+    <div class="term-pair">
+      <div class="term-en">DIRECTIVE (EU) 2015/… OF THE EUROPEAN PARLIAMENT AND OF THE COUNCIL of … on …</div>
+      <div class="term-tr">… ilişkin/hakkında … tarihli ve (AB) 2015/… sayılı AVRUPA PARLAMENTOSU VE KONSEY DİREKTİFİ</div>
+    </div>
+    <p class="text-muted mt-8">Not: Sıra — konu (on/concerning) → tarih → numara → kurum adı</p>
+  </div>
+  <div class="diff-block ling" style="margin-bottom:16px">
+    <div class="diff-label">Bölüm 2 · Giriş (Preamble)</div>
+    <h4>Düzenlemeyi Onaylayan Kuruluşlar</h4>
+    <div class="term-pair mt-8">
+      <div class="term-en">THE EUROPEAN PARLIAMENT AND THE COUNCIL OF THE EUROPEAN UNION,</div>
+      <div class="term-tr">AVRUPA PARLAMENTOSU VE AVRUPA BİRLİĞİ KONSEYİ;</div>
+    </div>
+    <div class="term-pair">
+      <div class="term-en">THE COUNCIL OF THE EUROPEAN UNION AND THE REPRESENTATIVES OF THE GOVERNMENTS OF THE MEMBER STATES OF THE EUROPEAN UNION, MEETING WITHIN THE COUNCIL,</div>
+      <div class="term-tr">KONSEY BÜNYESİNDE TOPLANAN AVRUPA BİRLİĞİ KONSEYİ VE AVRUPA BİRLİĞİ ÜYE DEVLETLERİNİN HÜKÜMET TEMSİLCİLERİ;</div>
+    </div>
+  </div>
+  <div class="diff-block cult" style="margin-bottom:16px">
+    <div class="diff-label">Bölüm 3 · Referanslar (Citations)</div>
+    <h4>Hukuki Dayanak ve Yasama Usulü</h4>
+    <p style="margin-bottom:12px">Her cümle büyük harfle başlar, virgülle biter.</p>
+    <div class="term-pair">
+      <div class="term-en">Having regard to the Treaty on the Functioning of the European Union, and in particular Article(s) … thereof,</div>
+      <div class="term-tr">Avrupa Birliği'nin İşleyişi Hakkında Antlaşma'yı ve bu Antlaşma'nın özellikle … maddesini(lerini) göz önünde tutarak,</div>
+    </div>
+    <div class="term-pair">
+      <div class="term-en">Having regard to the proposal from the European Commission,</div>
+      <div class="term-tr">Avrupa Komisyonunun önerisini göz önünde tutarak,</div>
+    </div>
+    <div class="term-pair">
+      <div class="term-en">Acting in accordance with the ordinary legislative procedure,</div>
+      <div class="term-tr">Olağan yasama usulü uyarınca hareket ederek,</div>
+    </div>
+    <div class="term-pair">
+      <div class="term-en">Having regard to the opinion of the European Economic and Social Committee,</div>
+      <div class="term-tr">Avrupa Ekonomik ve Sosyal Komitesinin görüşünü göz önünde tutarak,</div>
+    </div>
+    <p class="text-muted mt-8">Diğer sık kalıplar: Whereas · Recalling · Recognising · Considering · Convinced that · Welcoming · Emphasizing</p>
+  </div>
+  <div class="diff-block sys" style="margin-bottom:16px">
+    <div class="diff-label">Bölüm 4 · Gerekçeler (Recitals)</div>
+    <h4>Düzenlemenin Hazırlanma Nedenleri</h4>
+    <p style="margin-bottom:12px">İki format kullanılır:</p>
+    <div class="term-pair">
+      <div class="term-en">Whereas:<br>(1) … .<br>(2) … ,</div>
+      <div class="term-tr">Aşağıdaki gerekçelerle:<br>(1) … tam cümle.<br>(2) … tam cümle,</div>
+    </div>
+    <div class="term-pair" style="margin-top:10px">
+      <div class="term-en">(1) Whereas … ;<br>(2) Whereas … ;<br>( ) Whereas … ,</div>
+      <div class="term-tr">(1) … dığından;<br>(2) … dığından;<br>( ) … dığından,</div>
+    </div>
+    <p class="text-muted mt-8">Son gerekçeden sonra: HAVE ADOPTED THIS … → İŞBU … 'Yİ KABUL ETMİŞTİR:</p>
+  </div>
+  <div class="diff-block ling" style="margin-bottom:16px">
+    <div class="diff-label">Bölüm 5 · Maddeler (Articles)</div>
+    <h4>Temel Çeviri Kalıpları</h4>
+    <div class="term-pair mt-8">
+      <div class="term-en">This Regulation shall enter into force on the (…) day of its publication in the Official Journal of the European Union.</div>
+      <div class="term-tr">Bu Tüzük, Avrupa Birliği Resmi Gazetesi'nde yayımlanmasını takip eden (…) gün yürürlüğe girer.</div>
+    </div>
+    <div class="term-pair">
+      <div class="term-en">For the purposes of this Regulation, the following definitions shall apply: '…' means "…"</div>
+      <div class="term-tr">Bu Tüzük'ün amaçları doğrultusunda, aşağıdaki tanımlar uygulanır: "…" … dır.</div>
+    </div>
+    <div class="term-pair">
+      <div class="term-en">This Regulation shall be binding in its entirety and directly applicable in all Member States.</div>
+      <div class="term-tr">Bu Tüzük, bütün unsurlarıyla bağlayıcıdır ve tüm üye devletlerde doğrudan uygulanır.</div>
+    </div>
+  </div>
+  <div class="diff-block cult">
+    <div class="diff-label">Bölüm 6–7 · İmza & Ekler</div>
+    <h4>Kapanış ve Ek Bölümler</h4>
+    <div class="term-pair mt-8">
+      <div class="term-en">Done at …, …<br>For the European Parliament: The President<br>For the Council: The President</div>
+      <div class="term-tr">…'de, … tarihinde düzenlenmiştir.<br>Avrupa Parlamentosu adına: Başkan<br>Konsey adına: Başkan</div>
+    </div>
+    <p class="text-muted mt-8">Ekler: Genel olarak liste ve tablolar içerir; kaynak metnin formatı korunur.</p>
+    <p class="text-muted">Dipnotlar: Times New Roman 8 punto; sıralı rakamlarla (1, 2, 3…).</p>
+  </div>
+</div>
+</div>
+
+<div class="section" id="ab-atiflar">
+<div class="container">
+  <div class="section-header">
+    <div class="section-num">08</div>
+    <div class="section-title-wrap">
+      <div class="section-source">AB Mevzuatı Çeviri Rehberi</div>
+      <div class="section-title">Atıf <span class="accent2">Kuralları</span></div>
+    </div>
+  </div>
+  <p class="lead">AB mevzuatında atıf yapılırken sıralama ve yazım biçimi kuralları katı şekilde uygulanır.</p>
+  <table class="compare-table">
+    <thead><tr><th>İngilizce Atıf</th><th>Türkçe Karşılık</th></tr></thead>
+    <tbody>
+      <tr><td class="col-en">Article 5(2)</td><td class="col-tr">5(2) maddesi</td></tr>
+      <tr><td class="col-en">Article 7(3)(a)</td><td class="col-tr">7(3)(a) maddesi</td></tr>
+      <tr><td class="col-en">Articles 1 and 2</td><td class="col-tr">1 ve 2. maddeler</td></tr>
+      <tr><td class="col-en">Article 1 to 9</td><td class="col-tr">1 ilâ 9. maddeler</td></tr>
+      <tr><td class="col-en">first paragraph of Article 2</td><td class="col-tr">2. maddenin birinci paragrafı</td></tr>
+      <tr><td class="col-en">paragraph (a) of Article 5</td><td class="col-tr">5. maddenin (a) paragrafı</td></tr>
+      <tr><td class="col-en">Pursuant to paragraph (c) of Article 5</td><td class="col-tr">5. maddenin (c) paragrafı uyarınca</td></tr>
+      <tr><td class="col-en">In Annex A to this Regulation</td><td class="col-tr">Bu Tüzük'ün A Ekinde</td></tr>
+      <tr><td class="col-en">Annex IV of this Directive</td><td class="col-tr">Bu Direktif'in IV. Ekinde</td></tr>
+      <tr><td class="col-en">Titles I and II</td><td class="col-tr">I ve II. Başlıklar</td></tr>
+      <tr><td class="col-en">OJ L 10, 15.1.2009, p.10</td><td class="col-tr">ABRG L 10, 15.1.2009, s.10</td></tr>
+      <tr><td class="col-en">OJ L 293, 16.11.1996, p.1 (öncesi)</td><td class="col-tr">ATRG L 293, 16.11.1996, s.1</td></tr>
+    </tbody>
+  </table>
+  <div class="highlight-box mt-24">
+    <p><strong>❌ Yaygın Hata:</strong> "In accordance with Article 5 …" → Doğrusu: <strong>"5. madde uyarınca"</strong> — "provision" ifadesi AB düzenlemesinde açıkça yer almıyorsa kullanılmaz.</p>
+  </div>
+  <div class="highlight-box" style="background:rgba(52,211,153,0.06);border-color:rgba(52,211,153,0.2)">
+    <p><strong>📅 Resmi Gazete:</strong> 1 Şubat 2003 öncesi mevzuat → <strong>ATRG</strong> | 1 Şubat 2003 sonrası → <strong>ABRG</strong></p>
+  </div>
+</div>
+</div>
+
+<div class="section" id="ab-yazim">
+<div class="container">
+  <div class="section-header">
+    <div class="section-num">09</div>
+    <div class="section-title-wrap">
+      <div class="section-source">AB Mevzuatı Çeviri Rehberi</div>
+      <div class="section-title">Başlıca <span class="accent2">Yazım Kuralları</span></div>
+    </div>
+  </div>
+  <p class="lead">TDK Yazım Kılavuzu esas olmakla birlikte, AB mevzuatına özgü tutarlılık kuralları da uygulanır.</p>
+  <div class="card-grid card-grid-2">
+    <div class="card card-p"><h4>Büyük Harf Kullanımı</h4><p>"Birlik" tek başına Avrupa Birliği'ne atıf yapıyorsa büyük yazılır: <span style="color:var(--accent3)">Birlik'in mali çıkarları</span>. Kurum adlarının her kelimesi büyük: <span style="color:var(--accent3)">Komisyonun, Konseyin</span>.</p></div>
+    <div class="card card-p"><h4>Kesme İşareti</h4><p>Kanun/tüzük/direktif başlıklarına gelen ekler kesme işaretiyle ayrılır: <span style="color:var(--accent3)">Tüzük'ün, Direktif'e</span>. Mevzuat bölümlerine yapılan atıflarda kesme işareti kullanılmaz: <span style="color:var(--accent3)">I. Ekte, 3. maddede</span>.</p></div>
+    <div class="card card-p"><h4>Tarih İfadeleri</h4><p>Gün-ay-yıl sırasıyla çevrilir. Tam tarihte "tarihinde": <span style="color:var(--accent3)">12.01.2010 tarihinde</span>. Tek başına: <span style="color:var(--accent3)">2010'da, Ekim'de, 15 Temmuz'da</span>.</p></div>
+    <div class="card card-p"><h4>Sayılar</h4><p>4+ basamaklı sayılar sağdan üçlü gruplara: <span style="color:var(--accent3)">326.197</span>. Sıra sayısı: <span style="color:var(--accent3)">15., 56., XX.</span> Kesirler virgülle: <span style="color:var(--accent3)">7,7 milyar, %5,3</span>.</p></div>
+    <div class="card card-p"><h4>Tekil-Çoğul Uyumu</h4><p>"Üye devletler" ifadesinin yüklemi her zaman çoğul: <span style="color:var(--accent3)">Üye devletler, bu belgeleri Komisyona iletirler.</span></p></div>
+    <div class="card card-p"><h4>Tırnak İşareti</h4><p>Kaynak metinde tek tırnak kullanılsa bile Türkçede çift tırnağa dönüştürülür: <span style="color:var(--accent3)">'Public institution' → "Kamu kurumu"</span>.</p></div>
+  </div>
+  <div class="highlight-box mt-24">
+    <p><strong>📌 Yer Adları:</strong> Yerleşik Türkçe karşılığı olan yabancı yer adları Türkçesiyle yazılır: Strazburg. Yerleşik kullanımı olmayan adlar özgün biçimiyle: New York.</p>
+  </div>
+</div>
+</div>
+
+<div class="section" id="ab-ifadeler">
+<div class="container">
+  <div class="section-header">
+    <div class="section-num">10</div>
+    <div class="section-title-wrap">
+      <div class="section-source">AB Mevzuatı Çeviri Rehberi</div>
+      <div class="section-title">Sıkça Rastlanan <span class="accent2">İfadeler</span> ve Kısaltmalar</div>
+    </div>
+  </div>
+  <p class="lead">Özel ifadeler, zaman kipleri ve karıştırılan terimler — bunları ezberlemek çeviri hızını ve kalitesini büyük ölçüde artırır.</p>
+  <p style="font-size:13px;font-weight:500;color:var(--accent2);margin-bottom:12px">⚙️ Özel İfadeler:</p>
+  <table class="compare-table" style="margin-bottom:28px">
+    <thead><tr><th>İngilizce</th><th>Türkçe</th></tr></thead>
+    <tbody>
+      <tr><td class="col-en">Without prejudice to the obligations set out in …</td><td class="col-tr">… belirtilen yükümlülüklere halel gelmeksizin,</td></tr>
+      <tr><td class="col-en">By way of derogation from Article …</td><td class="col-tr">… maddesine istisna olarak,</td></tr>
+      <tr><td class="col-en">Notwithstanding the general rule on …</td><td class="col-tr">… ilişkin genel kurala bakılmaksızın,</td></tr>
+      <tr><td class="col-en">Save as otherwise set out …</td><td class="col-tr">Aksi öngörülmedikçe/belirtilmedikçe,</td></tr>
+      <tr><td class="col-en">Inter alia</td><td class="col-tr">Diğerlerinin yanı sıra</td></tr>
+      <tr><td class="col-en">Where applicable</td><td class="col-tr">Uygulanabildiği hallerde / gerektiğinde</td></tr>
+      <tr><td class="col-en">For the sake of clarity / In the interests of clarity</td><td class="col-tr">Açıklık sağlanması amacıyla</td></tr>
+      <tr><td class="col-en">Hereby / Herein / this</td><td class="col-tr">Bu / İşbu (yalnızca bağlantı cümlesinde "işbu")</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:13px;font-weight:500;color:var(--accent2);margin-bottom:12px">⏱️ Zaman Kipleri (Shall / Should / May):</p>
+  <table class="compare-table" style="margin-bottom:28px">
+    <thead><tr><th>İngilizce Örnek</th><th>Türkçe Karşılık</th><th>Kip</th></tr></thead>
+    <tbody>
+      <tr><td class="col-en">FIUs shall undertake all necessary measures.</td><td class="col-tr">MİB'ler, gerekli tüm tedbirleri alır.</td><td class="col-note">Geniş zaman (zorunluluk)</td></tr>
+      <tr><td class="col-en">There should be an improvement in cooperation.</td><td class="col-tr">… işbirliği geliştirilmelidir.</td><td class="col-note">Gereklilik kipi</td></tr>
+      <tr><td class="col-en">Members may establish a central unit.</td><td class="col-tr">Bir üye devlet, merkezi bir birim kurabilir.</td><td class="col-note">İzin/yetki</td></tr>
+      <tr><td class="col-en">The Parliament may not reject the appointment.</td><td class="col-tr">Parlamento, … atamasını reddedemez.</td><td class="col-note">Yasak/kısıtlama</td></tr>
+      <tr><td class="col-en">This Regulation establishes performance requirements.</td><td class="col-tr">Bu Tüzük ile … tesis edilir.</td><td class="col-note">"-mektedir" EKİ KULLANILMAZ!</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:13px;font-weight:500;color:var(--accent2);margin-bottom:12px">🔤 Sık Kullanılan Kısaltmalar:</p>
+  <div class="card-grid" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px">
+    <div class="card" style="padding:14px;text-align:center"><div class="term-en" style="margin-bottom:6px;border:none;background:none;padding:0;font-size:14px">e.g.</div><div style="font-size:12px;color:var(--accent3)">örn.</div></div>
+    <div class="card" style="padding:14px;text-align:center"><div class="term-en" style="margin-bottom:6px;border:none;background:none;padding:0;font-size:14px">i.e.</div><div style="font-size:12px;color:var(--accent3)">başka bir ifadeyle</div></div>
+    <div class="card" style="padding:14px;text-align:center"><div class="term-en" style="margin-bottom:6px;border:none;background:none;padding:0;font-size:14px">etc.</div><div style="font-size:12px;color:var(--accent3)">vb.</div></div>
+    <div class="card" style="padding:14px;text-align:center"><div class="term-en" style="margin-bottom:6px;border:none;background:none;padding:0;font-size:14px">see</div><div style="font-size:12px;color:var(--accent3)">bkz.</div></div>
+    <div class="card" style="padding:14px;text-align:center"><div class="term-en" style="margin-bottom:6px;border:none;background:none;padding:0;font-size:14px">TFEU</div><div style="font-size:12px;color:var(--accent3)">ABİA</div></div>
+    <div class="card" style="padding:14px;text-align:center"><div class="term-en" style="margin-bottom:6px;border:none;background:none;padding:0;font-size:14px">TEU</div><div style="font-size:12px;color:var(--accent3)">ABA</div></div>
+    <div class="card" style="padding:14px;text-align:center"><div class="term-en" style="margin-bottom:6px;border:none;background:none;padding:0;font-size:14px">MS</div><div style="font-size:12px;color:var(--accent3)">ÜD (Üye Devlet)</div></div>
+    <div class="card" style="padding:14px;text-align:center"><div class="term-en" style="margin-bottom:6px;border:none;background:none;padding:0;font-size:14px">n/a</div><div style="font-size:12px;color:var(--accent3)">uygulanamaz</div></div>
+  </div>
+  <p style="font-size:13px;font-weight:500;color:var(--accent2);margin-top:28px;margin-bottom:12px">⚠️ Karıştırılan İfadeler:</p>
+  <table class="compare-table">
+    <thead><tr><th>İngilizce 1</th><th>Türkçe 1</th><th>İngilizce 2</th><th>Türkçe 2</th></tr></thead>
+    <tbody>
+      <tr><td class="col-en">approximation of laws</td><td class="col-tr">mevzuatın yaklaştırılması</td><td class="col-en">harmonization of laws</td><td class="col-tr">mevzuatın uyumlaştırılması</td></tr>
+      <tr><td class="col-en">annex</td><td class="col-tr">ek</td><td class="col-en">appendix</td><td class="col-tr">açıklayıcı ek</td></tr>
+      <tr><td class="col-en">assent / consent</td><td class="col-tr">muvafakat</td><td class="col-en">approval</td><td class="col-tr">onay</td></tr>
+      <tr><td class="col-en">practical application</td><td class="col-tr">fiilen uygulama</td><td class="col-en">legal application</td><td class="col-tr">hukuken uygulama</td></tr>
+      <tr><td class="col-en">read as</td><td class="col-tr">… olarak değerlendirilir</td><td class="col-en">construed as</td><td class="col-tr">… gibi yorumlanır</td></tr>
+      <tr><td class="col-en">Act of Accession</td><td class="col-tr">Katılım Senedi</td><td class="col-en">Treaty of Accession</td><td class="col-tr">Katılım Antlaşması</td></tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+<div class="section" id="htest">
+<div class="container">
+  <div class="section-header">
+    <div class="section-num">11</div>
+    <div class="section-title-wrap">
+      <div class="section-source">Ders Öncesi Test</div>
+      <div class="section-title">Flashcard <span class="accent3">Testi</span></div>
+    </div>
+  </div>
+  <p class="lead">Her karta bak, cevabı düşün ve üzerine tıkla. Kendi kendini test et!</p>
+  <div class="flashcard-section">
+    <h3 id="hfc-title">Kart hazırlanıyor…</h3>
+    <p id="hfc-topic">—</p>
+    <div class="hflashcard" id="hflashcard" onclick="hRevealCard()">
+      <div>
+        <div class="flashcard-q" id="hfc-question"></div>
+        <div class="flashcard-a" id="hfc-answer"></div>
+        <div class="flashcard-hint" id="hfc-hint" style="margin-top:12px"></div>
+      </div>
+    </div>
+    <div class="fc-controls">
+      <button class="hbtn btn-p" onclick="hRevealCard()">👁 Göster</button>
+      <button class="hbtn btn-y" onclick="hNextCard()">→ Sonraki</button>
+      <button class="hbtn btn-muted" onclick="hShuffleCards()">⇄ Karıştır</button>
+    </div>
+    <div class="fc-counter" id="hfc-counter">1 / 20</div>
+  </div>
+  <div style="margin-top:48px">
+    <p style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:16px">✅ Ders Öncesi Kontrol Listesi</p>
+    <ul class="checklist">
+      <li><div class="check" onclick="hToggleCheck(this)"></div><span>Hukuki çeviri tanımını ve 4 sınıflandırma kriterini anlattım</span></li>
+      <li><div class="check" onclick="hToggleCheck(this)"></div><span>Üç zorluk kaynağını (sistemik, dilsel, kültürel) örneklerle açıklayabildim</span></li>
+      <li><div class="check" onclick="hToggleCheck(this)"></div><span>İllokütif güç — shall / may / shall not farkını biliyor</span></li>
+      <li><div class="check" onclick="hToggleCheck(this)"></div><span>Eşit özgünlük ilkesini (equal authenticity) açıklayabildim</span></li>
+      <li><div class="check" onclick="hToggleCheck(this)"></div><span>Tüzük / Direktif / Karar arasındaki bağlayıcılık farkını biliyor</span></li>
+      <li><div class="check" onclick="hToggleCheck(this)"></div><span>European Council ≠ Council of Europe ≠ Council of EU ayrımını biliyor</span></li>
+      <li><div class="check" onclick="hToggleCheck(this)"></div><span>AB mevzuatının bölümlerini (başlık → giriş → referanslar → gerekçeler → maddeler → imza) sıralayabildim</span></li>
+      <li><div class="check" onclick="hToggleCheck(this)"></div><span>"Having regard to …" kalıbını ve Türkçe karşılığını ezberledi</span></li>
+      <li><div class="check" onclick="hToggleCheck(this)"></div><span>Atıf kurallarını (madde, ek, resmi gazete) uygulayabildim</span></li>
+      <li><div class="check" onclick="hToggleCheck(this)"></div><span>ATRG / ABRG ayrımını ve tarih sınırını biliyor (1 Şubat 2003)</span></li>
+    </ul>
+  </div>
+</div>
+</div>
+
+<div class="hfooter">
+  <p>Hukuk Çevirisi · Week 2 · <span>Deborah Cao + AB Çeviri Rehberi</span> · Çalışma Dosyası</p>
+</div>
+
+</div><!-- end panel-hukuk -->
+
+<!-- ═══════════════ DAVOS PANEL ═══════════════ -->
+<div class="app-panel" id="panel-davos">
+
+<header>
+  <div class="dtag">🎙️ Ardıl Çeviri · Hazırlık Dosyası</div>
+  <h1>DAVOS <span>2026</span><br>Çalışma Rehberi</h1>
+  <p class="dsubtitle">WEF 56. Yıllık Toplantısı · 19–23 Ocak 2026 · İsviçre, Davos<br>Tema: <em>"A Spirit of Dialogue"</em> · Tüm oturumlar, terminoloji, quiz ve flash kart dahil.</p>
+</header>
+
+<div class="progress-strip">
+  <span class="progress-label">GENEL İLERLEME</span>
+  <div class="progress-bar"><div class="progress-fill" id="dProgressFill"></div></div>
+  <span class="progress-pct" id="dProgressPct">0%</span>
+</div>
+
+<nav>
+  <button class="dnav-btn active" onclick="dShowSection('oturumlar', this)">📋 Oturumlar</button>
+  <button class="dnav-btn" onclick="dShowSection('terminoloji', this)">📚 Terminoloji</button>
+  <button class="dnav-btn" onclick="dShowSection('kaliplar', this)">💬 Kalıplar</button>
+  <button class="dnav-btn" onclick="dShowSection('flashcard', this)">🃏 Flash Kart</button>
+  <button class="dnav-btn" onclick="dShowSection('quiz', this)">🧠 Quiz</button>
+  <button class="dnav-btn" onclick="dShowSection('pratik', this)">🎤 Çeviri Pratiği</button>
+  <button class="dnav-btn" onclick="dShowSection('konusmaci', this)">👤 Konuşmacılar</button>
+</nav>
+
+<main>
+<div class="dsection active" id="dsec-oturumlar">
+  <p class="dsection-title">Tüm Oturumlar</p>
+  <p class="dsection-desc">Her karta tıkla → ayrıntıları, anahtar soruları ve dikkat noktalarını gör.</p>
+  <div class="dtracker"><div class="dtracker-title">✅ Okuduklarım</div><div class="dtracker-items" id="dSessionTracker"></div></div>
+  <div class="session-grid" id="dSessionGrid"></div>
+</div>
+
+<div class="dsection" id="dsec-terminoloji">
+  <p class="dsection-title">Terminoloji Sözlüğü</p>
+  <p class="dsection-desc">İngilizce → Türkçe. Hover ile kategorileri renklendir.</p>
+  <div id="dTermListContainer"></div>
+</div>
+
+<div class="dsection" id="dsec-kaliplar">
+  <p class="dsection-title">Zor Kalıplar & Deyimsel İfadeler</p>
+  <p class="dsection-desc">Ardıl çeviride anında aklına gelmesi gereken ifadeler.</p>
+  <div id="dPhraseContainer"></div>
+</div>
+
+<div class="dsection" id="dsec-flashcard">
+  <p class="dsection-title">Flash Kart</p>
+  <p class="dsection-desc">Karta tıkla → Türkçeyi gör. ← → ile ilerle.</p>
+  <div class="flashcard-area">
+    <div class="dflashcard" id="dMainFlashcard" onclick="dFlipCard()">
+      <div class="dflashcard-inner">
+        <div class="dflashcard-front"><div class="dflashcard-hint">İNGİLİZCE — tıkla</div><div class="dflashcard-word" id="dFlashEN">–</div></div>
+        <div class="dflashcard-back"><div class="dflashcard-hint">TÜRKÇE KARŞILIĞI</div><div class="dflashcard-word" id="dFlashTR">–</div><div class="dflashcard-note" id="dFlashNote">–</div></div>
+      </div>
+    </div>
+    <div class="flash-controls">
+      <button class="flash-btn" onclick="dPrevCard()">← Önceki</button>
+      <span class="flash-counter" id="dFlashCounter">1 / ?</span>
+      <button class="flash-btn primary" onclick="dNextCard()">Sonraki →</button>
+    </div>
+  </div>
+</div>
+
+<div class="dsection" id="dsec-quiz">
+  <p class="dsection-title">Quiz</p>
+  <p class="dsection-desc">Terminolojiyi test et. Her turda 12 soru, karışık sıra.</p>
+  <div class="quiz-container">
+    <div class="quiz-header">
+      <div class="quiz-score">PUAN: <span id="dQuizScore">0</span> / <span id="dQuizTotal">12</span></div>
+      <div class="quiz-score">SORU: <span id="dQuizCurrent">1</span></div>
+    </div>
+    <div id="dQuizCard" class="quiz-card"></div>
+    <div id="dQuizComplete" class="quiz-complete">
+      <h2>Tur Bitti! 🎉</h2>
+      <div class="final-score" id="dFinalScore">–</div>
+      <p style="color:#7a8090;font-size:14px;">Skor / 12</p>
+      <button class="quiz-restart" onclick="dStartQuiz()">Tekrar Başla</button>
+    </div>
+  </div>
+</div>
+
+<div class="dsection" id="dsec-pratik">
+  <p class="dsection-title">Çeviri Pratiği</p>
+  <p class="dsection-desc">Davos tarzı cümleler. Önce kendin dene → sonra cevabı gör → ✓ ile işaretle.</p>
+  <div id="dPracticeContainer"></div>
+</div>
+
+<div class="dsection" id="dsec-konusmaci">
+  <p class="dsection-title">Önemli Konuşmacılar</p>
+  <p class="dsection-desc">İsimleri, unvanları ve konuştukları konular.</p>
+  <div class="speaker-grid" id="dSpeakerGrid"></div>
+  <p class="dsection-title" style="font-size:20px;margin-bottom:12px;">Sayılar & Veriler</p>
+  <div class="number-grid" id="dNumberGrid"></div>
+  <p class="dsection-title" style="font-size:20px;margin-bottom:12px;">Kısaltmalar</p>
+  <div class="abbr-grid" id="dAbbrGrid"></div>
+</div>
+</main>
+
+</div><!-- end panel-davos -->
+
+<script>
+// ════════════════════════════════════════════════
+// APP SWITCHER
+// ════════════════════════════════════════════════
+function switchApp(app, label, category) {
+  document.getElementById('panel-hukuk').classList.remove('visible');
+  document.getElementById('panel-davos').classList.remove('visible');
+  document.getElementById('panel-' + app).classList.add('visible');
+  // reset all drop-items
+  document.querySelectorAll('.drop-item').forEach(b => b.classList.remove('active-item'));
+  // reset has-active
+  document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('has-active'));
+  // find clicked button by matching text and set active
+  document.querySelectorAll('.drop-item').forEach(b => {
+    if (b.textContent.trim() === (app === 'hukuk' ? '⚖️ ' : '🎙️ ') + label.replace('⚖️ ','').replace('🎙️ ','') || b.getAttribute('onclick').includes("'" + app + "'")) {
+      // simpler: just mark the one that was clicked
+    }
+  });
+  // mark the clicked one via event
+  if (window._lastClickedDropItem) {
+    window._lastClickedDropItem.classList.add('active-item');
+    window._lastClickedDropItem.closest('.dropdown').classList.add('has-active');
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('drop-item')) {
+    window._lastClickedDropItem = e.target;
+  }
+  // iOS tap to toggle dropdown
+  var label = e.target.closest('.drop-label');
+  if (label) {
+    var dropdown = label.closest('.dropdown');
+    var isOpen = dropdown.classList.contains('open');
+    // close all
+    document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('open'));
+    if (!isOpen) dropdown.classList.add('open');
+    e.stopPropagation();
+    return;
+  }
+  // click outside closes all
+  if (!e.target.closest('.dropdown')) {
+    document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('open'));
+  }
+});
+
+// ════════════════════════════════════════════════
+// HUKUK LOGIC
+// ════════════════════════════════════════════════
+function hScrollTo(id) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  var navH = 52 + 52; // switcher + hnav
+  var top = el.getBoundingClientRect().top + window.pageYOffset - navH - 8;
+  window.scrollTo({ top: top, behavior: 'smooth' });
+}
+
+const hCards = [
+  { q: "Legal translation nedir?", a: "Hukuk diliyle ilgili metinleri kaynak dilden (SL) hedef dile (TL) aktarma faaliyeti. Teknik çevirinin bir alt dalıdır.", topic: "Temel Tanım" },
+  { q: "Hukuki çeviri hangi 4 kritere göre sınıflandırılır?", a: "1) Konu maddesine göre 2) Kaynak metnin statüsüne göre 3) Metnin işlevine göre 4) Hedef metnin amacına göre", topic: "Sınıflandırma" },
+  { q: "SHALL — kanun dilinde ne anlama gelir?", a: "Zorunluluk yükler: 'bir eylem yapmak zorundadır' (imposing an obligation)", topic: "İllokütif Güç" },
+  { q: "MAY — kanun dilinde ne anlama gelir?", a: "Hak / yetki / güç tanır: 'yapabilir' (conferring a right, privilege or power)", topic: "İllokütif Güç" },
+  { q: "Hukuki çevirinin üç zorluk kaynağı nelerdir?", a: "1) Hukuk sistemleri arasındaki farklılıklar (sistemik) 2) Dilsel ve terminolojik farklılıklar 3) Kültürel farklılıklar", topic: "Zorluk Kaynakları" },
+  { q: "Eşit özgünlük ilkesi (equal authenticity) ne demektir?", a: "Uluslararası antlaşmaların tüm resmi dil versiyonları — çeviri olup olmadığından bağımsız — eşit hukuki güce sahiptir.", topic: "Uluslararası Hukuk" },
+  { q: "Regulation (Tüzük) neden direktiften farklıdır?", a: "Tüzük tüm üye devletlerde doğrudan bağlayıcıdır. Direktif ise ulusal hukuka aktarılmalıdır.", topic: "AB Düzenleme Türleri" },
+  { q: "European Council'ın Türkçe karşılığı nedir?", a: "AB Zirvesi — Council of Europe (Avrupa Konseyi) veya Council of the EU (Avrupa Birliği Konseyi) ile karıştırılmamalı!", topic: "Karıştırılan Terimler" },
+  { q: "'Having regard to the Treaty on the Functioning of the European Union' — Türkçesi?", a: "Avrupa Birliği'nin İşleyişi Hakkında Antlaşma'yı … göz önünde tutarak,", topic: "Referans Kalıpları" },
+  { q: "AB mevzuatının biçimsel çeviri kurallarında hangi yazı tipi ve punto kullanılır?", a: "Times New Roman, 12 punto. Yeni bir Word belgesi olarak hazırlanır.", topic: "Biçimsel Kurallar" },
+  { q: "Whereas kalıbının Türkçe karşılığı nedir?", a: "Format 1: 'Aşağıdaki gerekçelerle:' | Format 2: Her gerekçe '… dığından;' ile biter, son gerekçe virgülle biter", topic: "Gerekçeler Bölümü" },
+  { q: "HAVE ADOPTED THIS REGULATION — Türkçesi?", a: "İŞBU TÜZÜĞÜ KABUL ETMİŞTİR:", topic: "Gerekçe-Madde Bağlantısı" },
+  { q: "OJ → Resmi Gazete kısaltması: 1 Şubat 2003 öncesi ve sonrası?", a: "Öncesi: ATRG | Sonrası: ABRG", topic: "Atıf Kuralları" },
+  { q: "Direktif çevirisinde 'This Directive is addressed to the Member States.' cümlesi nasıl aktarılır?", a: "Bu Direktif'in muhatabı üye devletlerdir.", topic: "Maddeler Bölümü" },
+  { q: "'Done at Brussels, 12 March 2020.' ifadesinin Türkçesi?", a: "Brüksel'de, 12 Mart 2020 tarihinde düzenlenmiştir.", topic: "İmza Bölümü" },
+  { q: "Hukuki dili 'sui generis' yapan nedir?", a: "Evrensel bilgi aktaran diğer teknik çeviri türlerinden farklı olarak, hukuki dil ulusal/kültürel bağlama sıkı sıkıya bağlıdır.", topic: "Teorik Temel" },
+  { q: "Common Law ve Civil Law sistemleri arasındaki temel fark nedir?", a: "Tarihsel gelişim, yazılı/geleneksel hukuk vurgusu, yargılama usulü, hukuki kategoriler ve yazı üslubu bakımından köklü farklılıklar vardır.", topic: "Hukuk Sistemleri" },
+  { q: "'By way of derogation from Article …' ifadesinin Türkçesi?", a: "… maddesine istisna olarak,", topic: "Özel İfadeler" },
+  { q: "'This Regulation establishes performance requirements' — dikkat edilmesi gereken çeviri hatası nedir?", a: "'-mektedir' eki KULLANILMAZ. Doğrusu: 'Bu Tüzük ile … tesis edilir.'", topic: "Zaman Kipleri" },
+  { q: "Approximation of laws vs Harmonization of laws farkı?", a: "Approximation = mevzuatın yaklaştırılması | Harmonization = mevzuatın uyumlaştırılması", topic: "Karıştırılan Terimler" }
+];
+
+let hCurrentIndex = 0;
+let hShuffled = [...hCards];
+
+function hRenderCard() {
+  const c = hShuffled[hCurrentIndex];
+  const card = document.getElementById('hflashcard');
+  card.classList.remove('revealed');
+  document.getElementById('hfc-question').textContent = c.q;
+  document.getElementById('hfc-answer').textContent = c.a;
+  document.getElementById('hfc-hint').textContent = '↑ Cevabı görmek için tıkla';
+  document.getElementById('hfc-title').textContent = c.q.length > 50 ? c.q.substring(0,50) + '…' : c.q;
+  document.getElementById('hfc-topic').textContent = '📌 ' + c.topic;
+  document.getElementById('hfc-counter').textContent = (hCurrentIndex + 1) + ' / ' + hShuffled.length;
+}
+function hRevealCard() { document.getElementById('hflashcard').classList.add('revealed'); document.getElementById('hfc-hint').textContent = ''; }
+function hNextCard() { hCurrentIndex = (hCurrentIndex + 1) % hShuffled.length; hRenderCard(); }
+function hShuffleCards() {
+  for (let i = hShuffled.length - 1; i > 0; i--) { const j = Math.floor(Math.random()*(i+1)); [hShuffled[i],hShuffled[j]]=[hShuffled[j],hShuffled[i]]; }
+  hCurrentIndex = 0; hRenderCard();
+}
+function hToggleCheck(el) { el.classList.toggle('done'); const li = el.parentElement; li.querySelector('span').classList.toggle('done-item'); li.classList.toggle('done-item'); }
+
+// ════════════════════════════════════════════════
+// DAVOS DATA
+// ════════════════════════════════════════════════
+const SESSIONS = [
+  { color:'#c8f135', num:'OTURUM 01', name:'Geopolitik & Güvenlik', desc:'Demokrasinin geleceği, NATO, Ukrayna-Rusya, Grönland meselesi ve Avrupa savunması.', detail:`<strong>Ana Sorular:</strong><br>"Is Democracy in Trouble?" · "Who Brokers Trust Now?" · "Can Europe Defend Itself?"<br><br><strong>Öne Çıkanlar:</strong> ABD ile NATO müttefikleri arasındaki gerginlik, Grönland üzerindeki tartışmalar ve Ukrayna barış sürecinin olası parametreleri tartışıldı.<br><div class="key-quote">"If you're not at the table, you're on the menu." — Mark Carney</div><strong>Dikkat:</strong> "sovereignty" ve "self-determination" kavramları bu oturumda iç içe geçer.` },
+  { color:'#38bdf8', num:'OTURUM 02', name:'Küresel Ekonomi & Ticaret', desc:'Gümrük tarifeleri, korumacılık, IMF verileri ve çok kutuplu ekonomik düzen.', detail:`<strong>Ana Soru:</strong> "Küresel ekonomiyi parçalamadan ülkeler çıkarlarını nasıl koruyabilir?"<br><br><strong>Kristalina Georgieva (IMF):</strong> Dünyanın artık gerçekten çok kutuplu olduğunu vurguladı.<br><div class="key-quote">"We are not in Kansas anymore." — Georgieva</div><strong>Dikkat:</strong> "tariffs", "levies", "duties" hepsi gümrük/vergi anlamında ama farklı bağlamlarda.` },
+  { color:'#f97316', num:'OTURUM 03', name:'Yapay Zeka & Teknoloji', desc:'AI egemenliği, altyapı sahipliği, Jensen Huang ve dijital bölünme.', detail:`<strong>Öne Çıkan:</strong> Jensen Huang (NVIDIA CEO), yapay zekanın hesaplama altyapısını nasıl dönüştürdüğünü anlattı.<br><br><strong>Ana Gerilim:</strong> "AI sovereignty increasingly equated with infrastructure ownership"<br><br><strong>Dikkat:</strong> "compute" isim olarak da kullanılır. Türkçe: <em>hesaplama kapasitesi/gücü</em>.` },
+  { color:'#a78bfa', num:'OTURUM 04', name:'Enerji Güvenliği', desc:'IEA Fatih Birol, nükleer rönesans, yenilenebilir enerji ve enerji trilemması.', detail:`<strong>"Who is Winning on Energy Security?"</strong><br>IEA Direktörü Fatih Birol: Parçalı dünyada ortaklık seçimi kritik. Küresel elektrik talebi genel enerji talebinin <strong>2,5 katı</strong> hızla büyüyor.<br><br><strong>Nükleer Oturum:</strong> "Clear-Eyed about Nuclear Renaissance" — Çekya, Hindistan, İngiltere planları masada.<br><div class="key-quote">"Dispatchable sources" = talebe göre devreye giren kaynaklar.</div>` },
+  { color:'#f87171', num:'OTURUM 05', name:'Demokrasi & Yönetişim', desc:'Kutuplaşma, kurumsal güven krizi, sivil toplum ve çok paydaşlı model.', detail:`<strong>Ana Tema:</strong> "Is Democracy in Trouble?" — kurumsal güvenin nasıl yeniden inşa edileceği sorgulandı.<br><br><strong>WEF Çerçevesi:</strong> Multistakeholder (çok paydaşlı) model — hükümetler, iş dünyası, sivil toplum ve akademinin birlikte karar aldığı yapı.<br><br><strong>Dikkat:</strong> "governance" = yönetişim (sadece hükümet değil!). "government" = hükümet.` },
+  { color:'#4ade80', num:'OTURUM 06', name:'Kadın Sağlığı & Toplumsal Eşitlik', desc:'Sağlıkta cinsiyet uçurumu ve ekonomik boyutları.', detail:`<strong>"Breakthroughs in Women's Health"</strong><br>Kadınlar, erkeklere kıyasla hayatlarının <strong>%25 daha fazlasını</strong> kötü sağlık koşullarında geçiriyor.<br><br><strong>Dikkat:</strong> "health equity" ≠ "health equality". Equity = hakkaniyetli erişim, equality = eşit erişim.` },
+  { color:'#fbbf24', num:'OTURUM 07', name:'İklim & Sürdürülebilirlik', desc:'"Gezegenin sınırları içinde refah" ve adil enerji geçişi.', detail:`<strong>"How Can We Build Prosperity within Planetary Boundaries?"</strong><br><br><strong>Dikkat:</strong> "net-zero" çevirirken "sıfır karbon" DEMEYİN. "Net sıfır emisyon" diyebilirsiniz — çünkü bir kısmı telafi ediliyor.` },
+  { color:'#e879f9', num:'OTURUM 08', name:'Latin Amerika & Güvenlik', desc:'Narco-terörizm, kurumsal kırılganlık ve Milei\'nin mali reform konuşması.', detail:`<strong>Daniel Noboa (Ekvador):</strong> Narco-terörizme karşı mücadelelerin geleneksel kurumlar içinde yürütülmesinin güçlüğünü anlattı.<br><br><strong>Javier Milei (Arjantin):</strong> Mali disiplin, devlet küçülmesi, hiperenflasyon ve borç yeniden yapılandırması.<br><div class="key-quote">"The state is not the solution. The state is the problem." — Milei</div>` }
+];
+
+const TERMS = [
+  { cat:'🔵 Jeopolitik & Dış Politika', color:'#38bdf8', items:[['rules-based international order','kurallara dayalı uluslararası düzen','En sık geçen ifadelerden'],['geopolitical fragmentation','jeopolitik parçalanma / bölünme',''],['geoeconomic fragmentation','jeoekonik parçalanma','ekonomi+jeopolitik kesişimi'],['multilateralism','çok taraflılık',''],['effective multilateralism','etkin çok taraflılık','Macron\'un kullandığı kalıp'],['great power rivalry','büyük güç rekabeti',''],['middle powers','orta güçler',''],['security guarantees','güvenlik güvenceleri',''],['deterrence','caydırıcılık',''],['sanctions','yaptırımlar',''],['coercion','zorlama, baskı',''],['sovereignty','egemenlik',''],['annexation','ilhak',''],['expansionist overtures','yayılmacı girişimler',''],['contested norms','tartışmalı normlar',''],['bilateral talks','ikili görüşmeler',''],['trilateral talks','üçlü görüşmeler',''],['strained alliances','gergin ittifaklar','']] },
+  { cat:'🔴 Ekonomi & Ticaret', color:'#f87171', items:[['tariffs','gümrük tarifeleri','Toplantının ana kelimesi'],['trade levies','ticaret vergileri/harçları','tariff ile eş anlamlı kullanılır'],['protectionism','korumacılık',''],['economic nationalism','ekonomik milliyetçilik',''],['laissez-faire','serbest piyasa','Fransızca kökenli'],['geoeconomic shifts','jeoekonik dönüşümler',''],['fiscal discipline','mali disiplin','Milei\'nin ana argümanı'],['fiscal reform','mali reform',''],['hyperinflation','hiperenflasyon',''],['debt restructuring','borç yeniden yapılandırması',''],['public debt','kamu borcu',''],['productivity','verimlilik / üretkenlik',''],['export controls','ihracat kısıtlamaları',''],['value chains','değer zincirleri',''],['supply chain','tedarik zinciri',''],['foreign direct investment (FDI)','doğrudan yabancı yatırım (DYY)',''],['domestic demand','yurt içi talep',''],['inclusive growth','kapsayıcı büyüme',''],['headwinds','olumsuz koşullar','Ekonomide "engel" anlamında']] },
+  { cat:'🟢 Yapay Zeka & Teknoloji', color:'#4ade80', items:[['AI governance','yapay zeka yönetişimi',''],['AI sovereignty','yapay zeka egemenliği',''],['AI acceleration','yapay zeka hızlanması',''],['generative AI','üretici yapay zeka',''],['compute power / compute','hesaplama gücü / kapasitesi',''],['data centres','veri merkezleri',''],['AI agents','yapay zeka ajanları',''],['physical AI and robotics','fiziksel yapay zeka ve robotik',''],['automation','otomasyon',''],['reskilling / upskilling','yeniden beceri kazandırma / geliştirme',''],['workforce preparedness','işgücü hazırlığı',''],['cybersecurity','siber güvenlik',''],['quantum computing','kuantum bilişimi',''],['technology divide','teknoloji uçurumu',''],['democratization of AI','yapay zekanın demokratikleşmesi',''],['scalable','ölçeklenebilir',''],['digital infrastructure','dijital altyapı','']] },
+  { cat:'🟡 Enerji & İklim', color:'#fbbf24', items:[['energy security','enerji güvenliği','En kritik konulardan'],['energy trilemma','enerji trilemması','güvenlik+erişilebilirlik+sürdürülebilirlik'],['energy transition','enerji dönüşümü',''],['decarbonization','karbonsuzlaştırma',''],['nuclear renaissance','nükleer rönesans / yeniden doğuş',''],['renewables','yenilenebilir enerji kaynakları',''],['grid infrastructure','şebeke altyapısı',''],['electrification','elektrifikasyon / elektrikleştirme',''],['critical minerals','kritik mineraller',''],['rare earths','nadir toprak elementleri',''],['net-zero','net sıfır (emisyon)','Sıfır karbon DEMEYİN!'],['just transition','adil geçiş','Fosil yakıt çalışanları için'],['planetary boundaries','gezegenin ekolojik sınırları',''],['greenhouse gases','sera gazları',''],['dispatchable sources','talebe göre devreye giren kaynaklar','Nükleer, doğalgaz'],['intermittent renewables','aralıklı yenilenebilir kaynaklar','Güneş/rüzgar için']] },
+  { cat:'🟣 Yönetişim & Toplum', color:'#a78bfa', items:[['multistakeholder','çok paydaşlı','WEF\'in özgün terimi'],['public-private cooperation','kamu-özel sektör işbirliği',''],['civil society','sivil toplum',''],['systemic impact','sistemik etki',''],['polarization','kutuplaşma',''],['societal fragmentation','toplumsal parçalanma',''],['social cohesion','sosyal uyum',''],['trust deficit','güven açığı',''],['accountability','hesap verebilirlik',''],['transparency','şeffaflık',''],['humanitarian aid','insani yardım',''],['governance','yönetişim','government ≠ governance!'],['geopolitical foresight','jeopolitik öngörü',''],['structural not cyclical','yapısal, döngüsel değil','Ekonomistlerin sık kullandığı ayrım']] }
+];
+
+const PHRASES = [
+  { en:'"If we\'re not at the table, we\'re on the menu."', tr:'"Masada olmazsak, menüde oluruz."', ctx:'Mark Carney (Kanada Başbakanı)' },
+  { en:'"A rupture, not a transition."', tr:'"Bu bir geçiş değil, köklü bir kopuş."', ctx:'Carney — dünya düzeninin köklü değişimini anlatırken' },
+  { en:'"We are not in Kansas anymore."', tr:'"Artık eski dünyada değiliz."', ctx:'Kristalina Georgieva (IMF) — Wizard of Oz referansı' },
+  { en:'"Learn to think the unthinkable."', tr:'"Düşünülemezi düşünmeyi öğrenmek."', ctx:'Georgieva — dışsal şoklara hazırlık üzerine' },
+  { en:'"Exogenous shocks"', tr:'"Dışsal şoklar"', ctx:'Dışarıdan gelen öngörülemeyen krizler (pandemi, savaş vb.)' },
+  { en:'"Structural, not cyclical"', tr:'"Yapısal, döngüsel değil"', ctx:'Ekonomistlerin çok kullandığı ayrım' },
+  { en:'"Echo chamber of consensus"', tr:'"Mutabakat yankı odası"', ctx:'WEF Başkanı Borge Brende — eleştirel düşünceye çağrı' },
+  { en:'"Level playing field"', tr:'"Eşit rekabet ortamı"', ctx:'Ticaret oturumlarında çok geçer' },
+  { en:'"Double down"', tr:'"Bağlılığı/kararlılığı artırmak, ısrar etmek"', ctx:'Bir stratejiye sıkı sıkıya bağlı kalmak' },
+  { en:'"At a pivotal moment"', tr:'"Kritik bir dönüm noktasında"', ctx:'Neredeyse her Davos konuşmasında en az bir kez geçer' },
+  { en:'"Unlock opportunities"', tr:'"Fırsatları açığa çıkarmak"', ctx:'WEF\'in favori fiili' },
+  { en:'"In the wake of"', tr:'"…nin ardından, akabinde"', ctx:'Nedensellik zinciri kurarken kullanılır' },
+  { en:'"Loomed large"', tr:'"Gölge düşürdü, ağır bastı"', ctx:'Tehdidin veya sorunun baskın olduğunu ifade eder' },
+  { en:'"Fraught moment"', tr:'"Gergin / çalkantılı an"', ctx:'"Fraught" = çok fazla sorun/gerginlik yüklü' },
+  { en:'"A who\'s who"', tr:'"Seçkin isimler topluluğu"', ctx:'Trump\'ın kullandığı ifade' },
+  { en:'"Bright spots"', tr:'"Parlak noktalar / umut veren alanlar"', ctx:'Karamsarlık içinde olumlu işaretleri vurgularken' },
+  { en:'"Systemic fault lines"', tr:'"Sistemik kırık hatları"', ctx:'Deprem metaforu — sistemdeki yapısal zayıflık' },
+  { en:'"Geopolitical noise"', tr:'"Jeopolitik gürültü"', ctx:'Dikkat dağıtıcı jeopolitik gelişmeler' },
+  { en:'"Impartial platform"', tr:'"Tarafsız platform"', ctx:'WEF\'in kendini tanımlamak için kullandığı ifade' },
+  { en:'"To exist is to change."', tr:'"Var olmak değişmektir."', ctx:'İsviçre Federal Konseyi Başkanı Parmelin' },
+];
+
+const FLASHCARDS_D = TERMS.flatMap(cat => cat.items.map(t => ({en:t[0],tr:t[1],note:t[2]})));
+
+const QUIZ_Q = [
+  { q:'"Gümrük tarifeleri" İngilizcede nasıl denir?', opts:['tariffs','levies','duties','hepsinin hepsi doğru'], ans:3, exp:'Tariffs, levies ve duties; hepsi gümrük/vergi anlamında kullanılabilir. "Tariffs" en yaygın.' },
+  { q:'"Çok taraflılık" terimini bul.', opts:['multilateralism','bilateralism','unilateralism','multistakeholderism'], ans:0, exp:'"Multilateralism" = çok taraflılık. "Multistakeholderism" WEF\'e özgü, biraz farklı anlam taşır.' },
+  { q:'"Net sıfır" derken neyi kastediyoruz?', opts:['Hiç emisyon üretmemek','Salınan emisyonu telafi ederek sıfırlamak','Yenilenebilir enerjiye geçiş','Nükleer santral kullanımı'], ans:1, exp:'Net-zero: atmosfere salınan karbon miktarını, uzaklaştırılan miktarla sıfırlamak.' },
+  { q:'"Dispatchable sources" ne demek?', opts:['İhracat yapılabilen kaynaklar','Talebe göre devreye giren kaynaklar','Dağıtılabilir doğal kaynaklar','Yayılabilir enerji türleri'], ans:1, exp:'Nükleer, doğalgaz gibi "istendiğinde açılabilen" enerji kaynakları.' },
+  { q:'"Governance" ve "government" arasındaki fark?', opts:['Aynı anlama gelir','Governance = yönetişim (geniş), Government = hükümet','Government = yönetişim, Governance = hükümet','Governance sadece kurumsal şirketler için'], ans:1, exp:'"Governance" = daha geniş, kamu-özel-sivil toplumu kapsayan yönetim anlayışı.' },
+  { q:'Kristalina Georgieva\'nın Davos 2026\'daki en ünlü ifadesi?', opts:['"If you\'re not at the table, you\'re on the menu"','"We are not in Kansas anymore"','"To exist is to change"','"The state is the problem"'], ans:1, exp:'Georgieva, Wizard of Oz\'dan alıntıyla "We are not in Kansas anymore" dedi.' },
+  { q:'"Just transition" Türkçesi nedir?', opts:['Adalet geçişi','Hızlı geçiş','Adil geçiş','Doğru geçiş'], ans:2, exp:'"Just" burada "adil" anlamında. Fosil yakıt bağımlı toplulukları gözetecek şekilde enerji dönüşümü.' },
+  { q:'"Reskilling" ne demek?', opts:['Tekrar ölçeklendirmek','Yeniden beceri kazandırmak','Beceri değerlendirmesi','Eğitim bütçesi artırmak'], ans:1, exp:'"Reskilling" = işgücüne yeni beceriler öğretmek. "Upskilling" = mevcut becerileri geliştirmek.' },
+  { q:'"Headwinds" ekonomi bağlamında ne anlama gelir?', opts:['Rüzgar enerjisi potansiyeli','Olumsuz koşullar / engeller','Büyüme hızlanması','Döviz kuru dalgalanmaları'], ans:1, exp:'Uçuşta "rüzgara karşı gitmek" = yavaşlamak. Ekonomide: büyümeyi yavaşlatan dış etkenler.' },
+  { q:'"Multistakeholder" modeli kimin felsefesidir?', opts:['IMF','NATO','WEF (Dünya Ekonomik Forumu)','BM Güvenlik Konseyi'], ans:2, exp:'WEF\'in kuruluşundan bu yana benimsediği model.' },
+  { q:'"Exogenous shock" Türkçesi?', opts:['İçsel kriz','Dışsal şok','Ekonomik çöküş','Yapısal sorun'], ans:1, exp:'"Exogenous" = dışarıdan gelen. Pandemi, savaş, doğal afet gibi krizler.' },
+  { q:'"Level playing field" en iyi nasıl çevrilir?', opts:['Düz oyun alanı','Eşit rekabet ortamı','Adil saha','Standart koşullar'], ans:1, exp:'Spor metaforu: herkesin eşit koşullarda rekabet ettiği alan.' },
+];
+
+const PRACTICE = [
+  { en:'Globalization has not failed — it has simply become more complex, more contested, and more consequential than ever before.', tr:'Küreselleşme başarısız olmadı — sadece her zamankinden daha karmaşık, daha tartışmalı ve daha belirleyici bir hal aldı.' },
+  { en:'Energy security must now be elevated to the same level as national security in every country\'s strategic agenda.', tr:'Enerji güvenliği, her ülkenin stratejik gündeminde artık ulusal güvenlikle eş düzeye taşınmalıdır.' },
+  { en:'In a world defined by great power rivalry, middle powers that fail to act collectively will find themselves not at the table, but on the menu.', tr:'Büyük güç rekabetinin şekillendirdiği bu dünyada, birlikte hareket edemeyen orta güçler masada oturanlar arasında değil, menüde yer alan unsurlar arasında kalacak.' },
+  { en:'These disruptions are structural, not cyclical — the world we once knew is not coming back, and we must learn to think the unthinkable.', tr:'Bu aksaklıklar döngüsel değil, yapısaldır — bir zamanlar bildiğimiz dünya geri dönmeyecek ve artık düşünülemezi düşünmeyi öğrenmemiz gerekiyor.' },
+  { en:'We need to deploy innovation at scale, responsibly, and with equity in mind, ensuring that no country and no community is left behind in the AI transition.', tr:'İnovasyonu ölçekli, sorumlu ve hakkaniyetli bir biçimde hayata geçirmeliyiz; yapay zeka geçişinde hiçbir ülkenin ve hiçbir topluluğun geride bırakılmamasını sağlamalıyız.' },
+  { en:'The question is no longer whether artificial intelligence will transform our economies, but rather whether that transformation will be inclusive or extractive.', tr:'Artık asıl soru, yapay zekanın ekonomilerimizi dönüştürüp dönüştürmeyeceği değil; bu dönüşümün kapsayıcı mı yoksa dışlayıcı mı olacağıdır.' },
+  { en:'Nuclear power is no longer a fringe option; it is increasingly seen as a cornerstone of any credible net-zero strategy.', tr:'Nükleer enerji artık marjinal bir seçenek değil; güvenilir herhangi bir net-sıfır stratejisinin temel taşı olarak giderek daha fazla benimsenmektedir.' },
+  { en:'Democracy is not in decline because people have stopped believing in its values; it is under pressure because institutions have failed to deliver on its promises.', tr:'Demokrasi, insanların onun değerlerine inanmayı bırakması nedeniyle gerilemiyor; kurumların bu değerlerin vaadini yerine getirememesi yüzünden baskı altında.' },
+];
+
+const SPEAKERS = [
+  { name:'Donald Trump', role:'ABD Başkanı · Açılış konuşmacısı' },
+  { name:'Mark Carney', role:'Kanada Başbakanı · "At the table" sözü' },
+  { name:'Emmanuel Macron', role:'Fransa Cumhurbaşkanı · Avrupa savunması' },
+  { name:'Ursula von der Leyen', role:'AB Komisyonu Başkanı' },
+  { name:'He Lifeng', role:'Çin Başbakan Yardımcısı · Ticaret' },
+  { name:'Javier Milei', role:'Arjantin Cumhurbaşkanı · Mali reform' },
+  { name:'Kristalina Georgieva', role:'IMF Başkanı · "Kansas" sözü' },
+  { name:'Jensen Huang', role:'NVIDIA CEO · AI & GPU' },
+  { name:'Fatih Birol', role:'IEA Direktörü · Enerji güvenliği' },
+  { name:'Mark Rutte', role:'NATO Genel Sekreteri' },
+  { name:'Volodymyr Zelenskyy', role:'Ukrayna Cumhurbaşkanı' },
+  { name:'Daniel Noboa', role:'Ekvador Cumhurbaşkanı · Narco-terör' },
+  { name:'Borge Brende', role:'WEF Başkanı' },
+  { name:'Karin Keller-Sutter', role:'İsviçre Federal Konseyi Başkanı' },
+];
+
+const NUMBERS = [
+  { val:'2.5×', label:'Küresel elektrik talebinin genel enerji talebine kıyasla büyüme hızı (IEA)' },
+  { val:'39%', label:'Yapay zeka nedeniyle geçerliliğini yitirecek mevcut becerilerin oranı' },
+  { val:'25%', label:'Kadınların erkeklere kıyasla daha fazla kötü sağlıkta geçirdikleri yaşam süresi' },
+  { val:'$1T+', label:'Küresel AI altyapı yatırımı beklentisi (2025-2030)' },
+  { val:'1.5°C', label:'Paris Anlaşması sıcaklık hedefi (iklim oturumlarında referans)' },
+  { val:'56.', label:'WEF\'nin düzenlediği Yıllık Toplantı sayısı' },
+];
+
+const ABBREVS = [
+  { short:'WEF', full:'World Economic Forum', tr:'Dünya Ekonomik Forumu' },
+  { short:'IMF', full:'International Monetary Fund', tr:'Uluslararası Para Fonu' },
+  { short:'IEA', full:'International Energy Agency', tr:'Uluslararası Enerji Ajansı' },
+  { short:'NATO', full:'North Atlantic Treaty Organisation', tr:'Kuzey Atlantik Antlaşması Örgütü' },
+  { short:'WTO', full:'World Trade Organization', tr:'Dünya Ticaret Örgütü' },
+  { short:'EU', full:'European Union', tr:'Avrupa Birliği' },
+  { short:'AI', full:'Artificial Intelligence', tr:'Yapay Zeka' },
+  { short:'FDI', full:'Foreign Direct Investment', tr:'Doğrudan Yabancı Yatırım' },
+  { short:'GDP', full:'Gross Domestic Product', tr:'Gayri Safi Yurt İçi Hasıla (GSYİH)' },
+  { short:'G7/G20', full:'Group of Seven / Twenty', tr:'Yediler / Yirmiler Grubu' },
+];
+
+// ════════════════════════════════════════════════
+// DAVOS RENDER
+// ════════════════════════════════════════════════
+function dRenderSessions() {
+  const grid = document.getElementById('dSessionGrid');
+  const tracker = document.getElementById('dSessionTracker');
+  SESSIONS.forEach((s,i) => {
+    const card = document.createElement('div');
+    card.className = 'session-card';
+    card.style.setProperty('--card-color', s.color);
+    card.innerHTML = `<div class="session-num">${s.num}</div><div class="session-name">${s.name}</div><div class="session-desc">${s.desc}</div><div class="session-detail">${s.detail}</div>`;
+    card.onclick = () => { card.classList.toggle('open'); dMarkTracked('sess_'+i); };
+    grid.appendChild(card);
+    const ti = document.createElement('div');
+    ti.className = 'dtracker-item' + (dIsTracked('sess_'+i)?' checked':'');
+    ti.id = 'dti_'+i;
+    ti.innerHTML = `<div class="dtracker-check">✓</div><label>${s.name}</label>`;
+    ti.onclick = () => { dToggleTracked('sess_'+i,'dti_'+i); };
+    tracker.appendChild(ti);
+  });
+}
+
+function dRenderTerms() {
+  const c = document.getElementById('dTermListContainer');
+  TERMS.forEach(cat => {
+    const sec = document.createElement('div');
+    sec.className = 'term-section';
+    sec.style.setProperty('--cat-color', cat.color);
+    sec.innerHTML = `<div class="term-section-title">${cat.cat}</div>`;
+    const grid = document.createElement('div');
+    grid.className = 'term-grid';
+    cat.items.forEach(([en,tr,note]) => {
+      grid.innerHTML += `<div class="term-row"><div class="dterm-en">${en}</div><div class="dterm-tr">${tr}</div><div class="dterm-note">${note}</div></div>`;
+    });
+    sec.appendChild(grid);
+    c.appendChild(sec);
+  });
+}
+
+function dRenderPhrases() {
+  const c = document.getElementById('dPhraseContainer');
+  PHRASES.forEach(p => {
+    c.innerHTML += `<div class="phrase-card"><div class="phrase-en">${p.en}</div><div class="phrase-tr">${p.tr}</div><div class="phrase-context">📌 ${p.ctx}</div></div>`;
+  });
+}
+
+function dRenderPractice() {
+  const c = document.getElementById('dPracticeContainer');
+  PRACTICE.forEach((p,i) => {
+    const div = document.createElement('div');
+    div.className = 'practice-card';
+    div.innerHTML = `<div class="practice-num">CÜMLE ${i+1} / ${PRACTICE.length}<button class="done-btn" id="ddone_${i}" onclick="dTogglePracticeDone(${i})">✓</button></div><div class="practice-en">${p.en}</div><button class="show-answer-btn" onclick="dShowAnswer(${i})">Türkçeyi Gör ▾</button><div class="practice-tr" id="dptr_${i}">${p.tr}</div>`;
+    c.appendChild(div);
+  });
+}
+
+function dShowAnswer(i) { document.getElementById('dptr_'+i).classList.add('visible'); }
+
+function dTogglePracticeDone(i) {
+  const btn = document.getElementById('ddone_'+i);
+  btn.classList.toggle('done');
+  dUpdateProgress();
+}
+
+function dRenderSpeakers() {
+  const g = document.getElementById('dSpeakerGrid');
+  SPEAKERS.forEach(s => { g.innerHTML += `<div class="speaker-card"><div class="speaker-name">${s.name}</div><div class="speaker-role">${s.role}</div></div>`; });
+  const ng = document.getElementById('dNumberGrid');
+  NUMBERS.forEach(n => { ng.innerHTML += `<div class="number-card"><div class="number-val">${n.val}</div><div class="number-label">${n.label}</div></div>`; });
+  const ag = document.getElementById('dAbbrGrid');
+  ABBREVS.forEach(a => { ag.innerHTML += `<div class="abbr-card"><div class="abbr-short">${a.short}</div><div><div class="abbr-full">${a.full}</div><div class="abbr-tr">${a.tr}</div></div></div>`; });
+}
+
+// ════════════════════════════════════════════════
+// DAVOS FLASH CARDS
+// ════════════════════════════════════════════════
+let dFlashIndex = 0;
+const dShuffledCards = [...FLASHCARDS_D].sort(() => Math.random()-0.5);
+
+function dRenderFlashcard() {
+  const card = dShuffledCards[dFlashIndex];
+  document.getElementById('dFlashEN').textContent = card.en;
+  document.getElementById('dFlashTR').textContent = card.tr;
+  document.getElementById('dFlashNote').textContent = card.note || '';
+  document.getElementById('dFlashCounter').textContent = `${dFlashIndex+1} / ${dShuffledCards.length}`;
+  document.getElementById('dMainFlashcard').classList.remove('flipped');
+}
+function dFlipCard() { document.getElementById('dMainFlashcard').classList.toggle('flipped'); }
+function dNextCard() { dFlashIndex = (dFlashIndex+1)%dShuffledCards.length; dRenderFlashcard(); }
+function dPrevCard() { dFlashIndex = (dFlashIndex-1+dShuffledCards.length)%dShuffledCards.length; dRenderFlashcard(); }
+
+// ════════════════════════════════════════════════
+// DAVOS QUIZ
+// ════════════════════════════════════════════════
+let dQuizQuestions = [], dQuizCur = 0, dQuizScore = 0, dQuizAnswered = false;
+
+function dStartQuiz() {
+  dQuizQuestions = [...QUIZ_Q].sort(()=>Math.random()-0.5).slice(0,12);
+  dQuizCur = 0; dQuizScore = 0; dQuizAnswered = false;
+  document.getElementById('dQuizScore').textContent = '0';
+  document.getElementById('dQuizTotal').textContent = dQuizQuestions.length;
+  document.getElementById('dQuizComplete').style.display = 'none';
+  document.getElementById('dQuizCard').style.display = 'block';
+  dRenderQuizQ();
+}
+
+function dRenderQuizQ() {
+  if (dQuizCur >= dQuizQuestions.length) { dEndQuiz(); return; }
+  dQuizAnswered = false;
+  const q = dQuizQuestions[dQuizCur];
+  document.getElementById('dQuizCurrent').textContent = dQuizCur+1;
+  const opts = q.opts.map((o,i) => `<button class="quiz-option" onclick="dAnswerQuiz(${i})">${o}</button>`).join('');
+  document.getElementById('dQuizCard').innerHTML = `<div class="quiz-type">SORU ${dQuizCur+1} / ${dQuizQuestions.length}</div><div class="quiz-q">${q.q}</div><div class="quiz-options">${opts}</div><div class="quiz-feedback" id="dqfb"></div><button class="quiz-next" id="dqnext" onclick="dNextQuizQ()">Sonraki Soru →</button>`;
+}
+
+function dAnswerQuiz(i) {
+  if (dQuizAnswered) return;
+  dQuizAnswered = true;
+  const q = dQuizQuestions[dQuizCur];
+  const opts = document.querySelectorAll('#dQuizCard .quiz-option');
+  opts.forEach(o => o.disabled = true);
+  const fb = document.getElementById('dqfb');
+  if (i === q.ans) { opts[i].classList.add('correct'); dQuizScore++; document.getElementById('dQuizScore').textContent = dQuizScore; fb.className='quiz-feedback correct-fb show'; fb.textContent='✓ Doğru! '+q.exp; }
+  else { opts[i].classList.add('wrong'); opts[q.ans].classList.add('correct'); fb.className='quiz-feedback wrong-fb show'; fb.textContent='✗ Yanlış. '+q.exp; }
+  document.getElementById('dqnext').classList.add('show');
+}
+
+function dNextQuizQ() { dQuizCur++; if (dQuizCur>=dQuizQuestions.length) dEndQuiz(); else dRenderQuizQ(); }
+
+function dEndQuiz() {
+  document.getElementById('dQuizCard').style.display = 'none';
+  const comp = document.getElementById('dQuizComplete');
+  comp.style.display = 'block';
+  document.getElementById('dFinalScore').textContent = dQuizScore+' / '+dQuizQuestions.length;
+  sessionStorage.setItem('dQuizDone','1');
+  dUpdateProgress();
+}
+
+// ════════════════════════════════════════════════
+// DAVOS NAVIGATION & PROGRESS
+// ════════════════════════════════════════════════
+const D_SECTIONS = ['oturumlar','terminoloji','kaliplar','flashcard','quiz','pratik','konusmaci'];
+
+function dShowSection(id, btn) {
+  D_SECTIONS.forEach(s => { document.getElementById('dsec-'+s).classList.remove('active'); });
+  document.querySelectorAll('.dnav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('dsec-'+id).classList.add('active');
+  if (btn) btn.classList.add('active');
+  sessionStorage.setItem('dvisited_'+id,'1');
+  dUpdateProgress();
+}
+
+function dUpdateProgress() {
+  let score = 0, total = 10;
+  D_SECTIONS.forEach(s => { if (sessionStorage.getItem('dvisited_'+s)) score+=1; });
+  SESSIONS.forEach((_,i) => { if (dIsTracked('sess_'+i)) score+=0.1; });
+  if (sessionStorage.getItem('dQuizDone')) score+=2;
+  const pct = Math.min(100, Math.round((score/total)*100));
+  document.getElementById('dProgressFill').style.width = pct+'%';
+  document.getElementById('dProgressPct').textContent = pct+'%';
+}
+
+function dIsTracked(key) { return sessionStorage.getItem('d_'+key)==='1'; }
+function dMarkTracked(key) { sessionStorage.setItem('d_'+key,'1'); dUpdateProgress(); }
+function dToggleTracked(key, elId) {
+  if (dIsTracked(key)) sessionStorage.removeItem('d_'+key);
+  else sessionStorage.setItem('d_'+key,'1');
+  const el = document.getElementById(elId);
+  if (el) el.classList.toggle('checked', dIsTracked(key));
+  dUpdateProgress();
+}
+
+// ════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════
+hRenderCard();
+dRenderSessions();
+dRenderTerms();
+dRenderPhrases();
+dRenderPractice();
+dRenderSpeakers();
+dRenderFlashcard();
+dStartQuiz();
+dUpdateProgress();
+</script>
+</body>
+</html>
