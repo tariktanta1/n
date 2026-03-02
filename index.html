@@ -6,11 +6,7 @@
 <title>Tariktanta · Çalışma İstasyonu</title>
 <meta name="description" content="Tarık'ın çevirmen çalışma istasyonu">
 <meta name="theme-color" content="#08090d">
-<link rel="manifest" href="data:application/json,{&quot;name&quot;:&quot;Tariktanta&quot;,&quot;short_name&quot;:&quot;Tariktanta&quot;,&quot;start_url&quot;:&quot;/&quot;,&quot;display&quot;:&quot;standalone&quot;,&quot;background_color&quot;:&quot;#08090d&quot;,&quot;theme_color&quot;:&quot;#08090d&quot;,&quot;icons&quot;:[{&quot;src&quot;:&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' rx='40' fill='%2308090d'/%3E%3Ctext x='100' y='88' font-family='Arial Black,sans-serif' font-size='62' font-weight='900' fill='%23c8f135' text-anchor='middle' letter-spacing='-2'%3ETAN%3C/text%3E%3Ctext x='100' y='158' font-family='Arial Black,sans-serif' font-size='62' font-weight='900' fill='%23c8f135' text-anchor='middle' letter-spacing='-2'%3ETA%3C/text%3E%3C/svg%3E&quot;,&quot;sizes&quot;:&quot;any&quot;,&quot;type&quot;:&quot;image/svg+xml&quot;}]}">
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' rx='40' fill='%2308090d'/%3E%3Ctext x='100' y='88' font-family='Arial Black,sans-serif' font-size='62' font-weight='900' fill='%23c8f135' text-anchor='middle' letter-spacing='-2'%3ETAN%3C/text%3E%3Ctext x='100' y='158' font-family='Arial Black,sans-serif' font-size='62' font-weight='900' fill='%23c8f135' text-anchor='middle' letter-spacing='-2'%3ETA%3C/text%3E%3C/svg%3E">
-<meta name="apple-mobile-web-app-title" content="Tariktanta">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="data:application/json,{&quot;name&quot;:&quot;Tariktanta&quot;,&quot;short_name&quot;:&quot;Tariktanta&quot;,&quot;start_url&quot;:&quot;/&quot;,&quot;display&quot;:&quot;standalone&quot;,&quot;background_color&quot;:&quot;#08090d&quot;,&quot;theme_color&quot;:&quot;#08090d&quot;,&quot;icons&quot;:[{&quot;src&quot;:&quot;data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>&quot;,&quot;sizes&quot;:&quot;any&quot;,&quot;type&quot;:&quot;image/svg+xml&quot;}]}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
@@ -1441,7 +1437,7 @@ function switchApp(app, label, dropId, fromPopState) {
   }
   // Tarayıcı history — geri tuşu çalışsın
   if (!fromPopState) {
-    try { const urlApp = app === 'davos' ? 'ardil' : app; history.pushState({app, dropId}, '', '#' + urlApp); } catch(e) {}
+    try { history.pushState({app, dropId}, '', '#' + app); } catch(e) {}
   }
   try { localStorage.setItem('tariktanta-lastpanel', JSON.stringify({app, dropId})); } catch(e){}
   window.scrollTo({top:0,behavior:'smooth'});
@@ -1625,135 +1621,21 @@ function toggleAppsMenu() {
 
 
 // ── DİL SEÇİCİ ──
-let _currentLang = localStorage.getItem('tariktanta-lang') || 'tr';
+let _currentLang = 'tr';
 function setLang(lang) {
   _currentLang = lang;
-  localStorage.setItem('tariktanta-lang', lang);
   document.getElementById('flag-tr').style.opacity = lang === 'tr' ? '1' : '0.4';
   document.getElementById('flag-en').style.opacity = lang === 'en' ? '1' : '0.4';
-
-  const EN = {
-    // Dashboard
-    subtitle: 'Final year — 8 courses, 1 goal.',
-    today_label: '📅 Today\'s Classes',
-    pomodoro_label: '⏱ POMODORO',
-    start: 'Start', reset: 'Reset',
-    sound_closed: '🔇 Off', sound_rain: '🌧️ Rain', sound_forest: '🐦 Forest',
-    sound_wind: '💨 Wind', sound_fire: '🔥 Fireplace', sound_piano: '🎹 Piano', sound_ocean: '🌊 Ocean',
-    // Nav
-    apps: 'APPS',
-    nav_hukuk: 'LAW', nav_ardil: 'CONSEC.', nav_gobilim: 'SEMIOTICS',
-    nav_etik: 'ETHICS', nav_rusca4: 'RUSSIAN IV', nav_rusca6: 'RUSSIAN VI',
-    nav_isaret: 'SIGN LANG.', nav_tibbi: 'MEDICINAL',
-    // Course cards
-    courses_title: 'ALL COURSES',
-    schedule_title: 'WEEKLY SCHEDULE',
-    // Today banner
-    today_day_prefix: '',
-    // Search
-    search_placeholder: 'Search...',
-    // Pomodoro
-    pomo_session: 'Session',
-    // WOD
-    wod_phrasal: '🔤 Phrasal Verb of the Day',
-    wod_term: '📚 Term of the Day',
-    // Misc
-    lock_title: 'Tariktanta', lock_sub: 'Enter your PIN',
-    lock_btn: 'Enter',
-    available: 'Active', coming_soon: 'Coming Soon',
-  };
-  const TR = {
-    subtitle: 'Son sınıf — 8 ders, 1 hedef.',
-    today_label: '📅 Bugünün Dersleri',
-    pomodoro_label: '⏱ POMODORO',
-    start: 'Başlat', reset: 'Sıfırla',
-    sound_closed: '🔇 Kapalı', sound_rain: '🌧️ Yağmur', sound_forest: '🐦 Orman',
-    sound_wind: '💨 Rüzgar', sound_fire: '🔥 Şömine', sound_piano: '🎹 Piyano', sound_ocean: '🌊 Okyanus',
-    apps: 'UYGULAMALAR',
-    nav_hukuk: 'HUKUK', nav_ardil: 'ARDIL', nav_gobilim: 'GÖSTERGEBİLİM',
-    nav_etik: 'ETİK', nav_rusca4: 'RUSÇA IV', nav_rusca6: 'RUSÇA VI',
-    nav_isaret: 'İŞARET', nav_tibbi: 'TIBBİ BİTKİ',
-    courses_title: 'TÜM DERSLER',
-    schedule_title: 'HAFTALIK PROGRAM',
-    search_placeholder: 'Ara...',
-    pomo_session: 'Oturum',
-    wod_phrasal: '🔤 Günün Phrasal Verbi',
-    wod_term: '📚 Günün Terimi',
-    lock_title: 'Tariktanta', lock_sub: 'Şifrenizi girin',
-    lock_btn: 'Giriş',
-    available: 'Aktif', coming_soon: 'Yakında',
-  };
-
-  const t = lang === 'en' ? EN : TR;
-
-  // Greeting
   const hour = new Date().getHours();
   const greet = hour < 12 ? 'Good morning, my lord' : hour < 18 ? 'Good afternoon, my lord' : 'Good evening, my lord';
   const greetEl = document.getElementById('dash-greeting');
   if (greetEl) greetEl.textContent = greet;
-
-  // Dashboard subtitle
   const sub = document.getElementById('dash-subtitle');
-  if (sub) sub.textContent = t.subtitle;
-
-  // Today label
+  if (sub) sub.textContent = lang === 'en' ? 'Final year — 8 courses, 1 goal.' : 'Son sınıf — 8 ders, 1 hedef.';
   const todayLabel = document.querySelector('.today-label');
-  if (todayLabel) todayLabel.textContent = t.today_label;
-
-  // Apps label
+  if (todayLabel) todayLabel.textContent = lang === 'en' ? '📅 Today\u2019s Classes' : '📅 Bugünün Dersleri';
   const appsLabel = document.querySelector('#drop-apps .drop-label');
-  if (appsLabel) appsLabel.textContent = t.apps;
-
-  // Nav labels
-  const navMap = {
-    'droplabel-hukuk': t.nav_hukuk,
-    'droplabel-davos': t.nav_ardil,
-  };
-  Object.entries(navMap).forEach(([id, txt]) => {
-    const el = document.getElementById(id);
-    if (el) el.textContent = txt;
-  });
-  // Nav labels without id
-  const navNoId = document.querySelectorAll('.drop-label:not([id])');
-  const navOrder = [t.nav_gobilim, t.nav_etik, t.nav_rusca4, t.nav_rusca6, t.nav_isaret, t.nav_tibbi];
-  navNoId.forEach((el, i) => { if (navOrder[i]) el.textContent = navOrder[i]; });
-
-  // Sound buttons
-  const soundMap = ['none','rain','forest','wind','fire','piano','ocean'];
-  const soundLabels = [t.sound_closed, t.sound_rain, t.sound_forest, t.sound_wind, t.sound_fire, t.sound_piano, t.sound_ocean];
-  document.querySelectorAll('.sound-opt').forEach(btn => {
-    const idx = soundMap.indexOf(btn.dataset.sound);
-    if (idx >= 0) btn.textContent = soundLabels[idx];
-  });
-
-  // Pomodoro start/reset buttons
-  const pomoStart = document.getElementById('pomoStartBtn');
-  if (pomoStart && !pomoStart.classList.contains('running')) pomoStart.textContent = '▶ ' + t.start;
-  const pomoReset = document.querySelector('[onclick="pomoReset()"]');
-  if (pomoReset) pomoReset.textContent = '↺ ' + t.reset;
-
-  // Search placeholder
-  const searchInput = document.getElementById('search-input');
-  if (searchInput) searchInput.placeholder = t.search_placeholder;
-
-  // WOD label
-  const wodLabel = document.querySelector('#word-of-day-widget .wod-label');
-  if (wodLabel) {
-    const current = wodLabel.textContent;
-    if (current.includes('Phrasal') || current.includes('phrasal')) wodLabel.textContent = t.wod_phrasal;
-    else wodLabel.textContent = t.wod_term;
-  }
-
-  // Course cards — available/coming soon badges
-  document.querySelectorAll('.placeholder-badge').forEach(el => {
-    if (lang === 'en') el.textContent = el.textContent.replace('Yakında', 'Coming Soon').replace('Hafta notlarını at', 'Add weekly notes');
-    else el.textContent = el.textContent.replace('Coming Soon', 'Yakında').replace('Add weekly notes', 'Hafta notlarını at');
-  });
-
-  // Section titles on dashboard
-  const sectionTitles = document.querySelectorAll('.dash-section-title');
-  if (sectionTitles[0]) sectionTitles[0].textContent = '— ' + t.courses_title;
-  if (sectionTitles[1]) sectionTitles[1].textContent = '— ' + t.schedule_title;
+  if (appsLabel) appsLabel.textContent = lang === 'en' ? 'APPS' : 'UYGULAMALAR';
 }
 
 // ── UYGULAMA AÇICI ──
@@ -2031,8 +1913,7 @@ function initApp(){
   dUpdateProgress();
   buildSearchIndex();
   registerSW();
-  restoreLastPanel();
-  setTimeout(() => setLang(_currentLang), 100); // ← localStorage SON PANEL
+  restoreLastPanel(); // ← localStorage SON PANEL
   initPremium();
 }
 
@@ -2153,17 +2034,28 @@ function initPullToRefresh() {
 // ── SES MOTORU (YouTube IFrame API) ──
 // Reklamsız ambient YouTube videoları (sadece ses, görünmez player)
 const SOUND_VIDEOS = {
-  rain:   'mPZkdNFkNps',  // Heavy rain sounds
-  forest: 'xNN7iTA57jM',  // Forest birds ambience
-  wind:   'bGKth93bHUw',  // Gentle wind sounds
-  fire:   'L_LUpnjgPso',  // Fireplace crackling
-  piano:  'lTRiuFIWV54',  // Relaxing piano music
-  ocean:  'bn9F19Hi1Lk',  // Ocean waves
+  rain:   'mPZkdNFkNps',
+  forest: 'xNN7iTA57jM',
+  wind:   'bGKth93bHUw',
+  fire:   'L_LUpnjgPso',
+  piano:  'lTRiuFIWV54',
+  ocean:  'bn9F19Hi1Lk',
+};
+const SOUND_MP3 = {
+  rain:   'https://assets.mixkit.co/sfx/preview/mixkit-rain-and-thunder-ambience-1246.mp3',
+  forest: 'https://assets.mixkit.co/sfx/preview/mixkit-forest-birds-ambience-1210.mp3',
+  wind:   'https://assets.mixkit.co/sfx/preview/mixkit-howling-wind-1465.mp3',
+  fire:   'https://assets.mixkit.co/sfx/preview/mixkit-campfire-crackles-1330.mp3',
+  piano:  'https://assets.mixkit.co/sfx/preview/mixkit-piano-meditation-19.mp3',
+  ocean:  'https://assets.mixkit.co/sfx/preview/mixkit-ocean-waves-1178.mp3',
 };
 const SOUND_ICONS = { rain:'🌧️', forest:'🐦', wind:'💨', fire:'🔥', piano:'🎹', ocean:'🌊' };
+const _isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 let _ytPlayer = null, _ytReady = false, _ytPendingVideo = null, _currentSound = 'none', _isMuted = false;
+let _iosAudio = null;
 
 function loadYTApi() {
+  if (_isIOS) return;
   if (document.getElementById('yt-api-script')) return;
   const tag = document.createElement('script');
   tag.id = 'yt-api-script';
@@ -2172,26 +2064,27 @@ function loadYTApi() {
 }
 
 window.onYouTubeIframeAPIReady = function() {
+  if (_isIOS) return;
   const div = document.createElement('div');
   div.id = 'yt-player-container';
   div.style.cssText = 'position:fixed;bottom:-9999px;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;z-index:-1';
   document.body.appendChild(div);
-
   _ytPlayer = new YT.Player('yt-player-container', {
     width: '1', height: '1',
     videoId: 'mPZkdNFkNps',
     playerVars: { autoplay: 0, controls: 0, loop: 1, disablekb: 1, fs: 0, modestbranding: 1, rel: 0, playsinline: 1 },
     events: {
-      onReady: (e) => {
+      onReady: function(e) {
         _ytReady = true;
         e.target.setVolume(40);
         e.target.pauseVideo();
         if (_ytPendingVideo) {
-          e.target.cueVideoById({ videoId: _ytPendingVideo, startSeconds: 0 });
+          e.target.loadVideoById({ videoId: _ytPendingVideo, startSeconds: 0 });
+          e.target.playVideo();
           _ytPendingVideo = null;
         }
       },
-      onStateChange: (e) => {
+      onStateChange: function(e) {
         if (e.data === YT.PlayerState.ENDED) _ytPlayer.seekTo(0);
       }
     }
@@ -2199,7 +2092,11 @@ window.onYouTubeIframeAPIReady = function() {
 };
 
 function stopSound() {
-  if (_ytPlayer && _ytReady) { try { _ytPlayer.pauseVideo(); } catch(e){} }
+  if (_isIOS) {
+    if (_iosAudio) { _iosAudio.pause(); _iosAudio.src = ''; _iosAudio = null; }
+  } else {
+    if (_ytPlayer && _ytReady) { try { _ytPlayer.pauseVideo(); } catch(e){} }
+  }
   const ctrl = document.getElementById('sound-controls');
   if (ctrl) ctrl.style.display = 'none';
   _currentSound = 'none';
@@ -2207,25 +2104,36 @@ function stopSound() {
 
 function playAmbient(type) {
   if (type === 'none') { stopSound(); return; }
-  const videoId = SOUND_VIDEOS[type];
-  if (!videoId) return;
-  const vol = parseInt(document.getElementById('sound-volume')?.value || 40);
-  if (_ytReady && _ytPlayer) {
-    _ytPlayer.loadVideoById({ videoId, startSeconds: 0 });
-    _ytPlayer.setVolume(vol);
-    _ytPlayer.playVideo();
+  const vol = parseInt(document.getElementById('sound-volume') ? document.getElementById('sound-volume').value : 40);
+  if (_isIOS) {
+    if (_iosAudio) { _iosAudio.pause(); _iosAudio = null; }
+    const url = SOUND_MP3[type];
+    if (!url) return;
+    _iosAudio = new Audio(url);
+    _iosAudio.loop = true;
+    _iosAudio.volume = vol / 100;
+    _iosAudio.play().catch(function(){});
   } else {
-    _ytPendingVideo = videoId;
-    loadYTApi();
+    const videoId = SOUND_VIDEOS[type];
+    if (!videoId) return;
+    if (_ytReady && _ytPlayer) {
+      _ytPlayer.loadVideoById({ videoId: videoId, startSeconds: 0 });
+      _ytPlayer.setVolume(vol);
+      _ytPlayer.playVideo();
+    } else {
+      _ytPendingVideo = videoId;
+      loadYTApi();
+    }
   }
   const ctrl = document.getElementById('sound-controls');
   if (ctrl) ctrl.style.display = 'flex';
   const icon = document.getElementById('sound-icon');
-  if (icon) icon.textContent = SOUND_ICONS[type] || '\U0001F3B5';
+  if (icon) icon.textContent = SOUND_ICONS[type] || '🎵';
 }
 
 function setSoundVolume(val) {
-  if (_ytPlayer && _ytReady) _ytPlayer.setVolume(parseInt(val));
+  if (_isIOS) { if (_iosAudio) _iosAudio.volume = val / 100; }
+  else { if (_ytPlayer && _ytReady) _ytPlayer.setVolume(parseInt(val)); }
   const lbl = document.getElementById('sound-vol-label');
   if (lbl) lbl.textContent = val + '%';
 }
@@ -2233,9 +2141,11 @@ function setSoundVolume(val) {
 function toggleSoundMute() {
   const btn = document.getElementById('sound-mute-btn');
   _isMuted = !_isMuted;
-  if (_ytPlayer && _ytReady) { _isMuted ? _ytPlayer.mute() : _ytPlayer.unMute(); }
-  if (btn) btn.textContent = _isMuted ? '\u25B6' : '\u23F8';
+  if (_isIOS) { if (_iosAudio) _iosAudio.muted = _isMuted; }
+  else { if (_ytPlayer && _ytReady) { _isMuted ? _ytPlayer.mute() : _ytPlayer.unMute(); } }
+  if (btn) btn.textContent = _isMuted ? '▶' : '⏸';
 }
+
 
 function setSound(btn) {
   document.querySelectorAll('.sound-opt').forEach(b => b.classList.remove('active'));
