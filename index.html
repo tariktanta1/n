@@ -794,8 +794,9 @@ mark { background: rgba(200,241,53,0.25); color: var(--theme-text); border-radiu
 #lock-btn:hover{opacity:0.85}
 #lock-logo{font-size:32px;margin-bottom:-8px}
 </style>
-<div id="lockscreen"><div class="pwa-text"><strong>Tariktanta</strong><br>Ana ekrana ekle, uygulama gibi kullan</div><button class="pwa-btn" id="pwa-install-btn">Ekle</button><button class="pwa-close" onclick="document.getElementById('pwa-banner').classList.remove('show');localStorage.setItem('pwa-dismissed','1')">×</button></div>
+<div class="pwa-banner" id="pwa-banner"><div class="pwa-text"><strong>Tariktanta</strong><br>Ana ekrana ekle, uygulama gibi kullan</div><button class="pwa-btn" id="pwa-install-btn">Ekle</button><button class="pwa-close" onclick="document.getElementById('pwa-banner').classList.remove('show');localStorage.setItem('pwa-dismissed','1')">×</button></div>
 <div class="ptr-indicator" id="ptr-indicator">↓ Yenile</div>
+<div id="lockscreen">
   <div id="lock-logo">🔒</div>
   <h2>Tariktanta</h2>
   <p class="lock-sub">Şifrenizi girin</p>
