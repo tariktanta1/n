@@ -65,11 +65,14 @@
       menu.style.left = leftPos + 'px';
     }
 
+    var _toggleLock = false;
     function toggleDrop(id) {
+      if (_toggleLock) return;
+      _toggleLock = true;
+      setTimeout(function () { _toggleLock = false; }, 300);
       var dd = document.getElementById(id);
       if (!dd) return;
       var isOpen = dd.classList.contains('open');
-      // diğerlerini kapat
       document.querySelectorAll('.dropdown').forEach(function (d) { d.classList.remove('open'); });
       if (!isOpen) {
         _positionMenu(dd);
@@ -102,21 +105,22 @@
         });
       });
 
-      // ── iOS / TOUCH: drop-label butonlara touchend ──
+      // ── iOS / TOUCH: drop-label butonlara doğrudan touchstart ──
+      var _touchStartY = 0;
       document.querySelectorAll('.drop-label').forEach(function (btn) {
-        var touchMoved = false;
-        btn.addEventListener('touchstart', function () { touchMoved = false; }, { passive: true });
-        btn.addEventListener('touchmove', function () { touchMoved = true; }, { passive: true });
+        btn.addEventListener('touchstart', function (e) {
+          _touchStartY = e.touches[0].clientY;
+        }, { passive: true });
         btn.addEventListener('touchend', function (e) {
-          if (touchMoved) return;
+          // Scroll hareketi değilse işle
+          var dy = Math.abs(e.changedTouches[0].clientY - _touchStartY);
+          if (dy > 10) return;
           e.preventDefault();
-          e.stopPropagation();
-          // onclick içindeki toggleDrop('id') çağrısını parse et ve çalıştır
+          e.stopImmediatePropagation();
           var fn = btn.getAttribute('onclick') || '';
-          var match = fn.match(/toggleDrop\(['"]([^'"]+)['"]\)/);
-          if (match) {
-            toggleDrop(match[1]);
-          }
+          var m = fn.match(/toggleDrop\(['"]([^'"]+)['"]\)/) || fn.match(/toggleAppsMenu/);
+          if (m && m[0].indexOf('toggleAppsMenu') !== -1) { toggleAppsMenu(); }
+          else if (m) { toggleDrop(m[1]); }
         }, { passive: false });
       });
 
