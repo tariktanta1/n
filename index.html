@@ -874,8 +874,8 @@ window.addEventListener('load',function(){
     </div>
   </div>
   <div class="dropdown" id="drop-apps" style="margin-left:8px">
-    <div class="drop-label" onclick="toggleDrop('drop-apps')" style="color:#a78bfa">UYGULAMALAR</div>
-    <div class="drop-menu" id="dropmenu-apps" style="min-width:180px;right:0;left:auto">
+    <div class="drop-label" onclick="(function(){var d=document.getElementById('drop-apps');var isOpen=d.classList.contains('open');document.querySelectorAll('.dropdown').forEach(function(x){x.classList.remove('open');});if(!isOpen)d.classList.add('open');})()" style="color:#a78bfa;cursor:pointer">UYGULAMALAR</div>
+    <div class="drop-menu" id="dropmenu-apps" style="min-width:180px;right:0;left:auto;position:absolute;z-index:9999">
       <div class="drop-week-label">📱 Hızlı Aç</div>
       <button class="drop-item" onclick="openApp('instagram')">📸 Instagram</button>
       <button class="drop-item" onclick="openApp('x')">𝕏 X (Twitter)</button>
