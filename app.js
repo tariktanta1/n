@@ -81,10 +81,16 @@
     }
 
     function initDropdowns() {
-      // Scroll'da kapat
+      // ── Scroll'da kapat (iOS'ta dokunurken olan mikro kaymaları yok saymak için) ──
       var switcher = document.querySelector('.app-switcher');
       if (switcher) {
-        switcher.addEventListener('scroll', closeAllDrops, { passive: true });
+        var lastScroll = switcher.scrollLeft;
+        switcher.addEventListener('scroll', function () {
+          if (Math.abs(switcher.scrollLeft - lastScroll) > 10) {
+            closeAllDrops();
+          }
+          lastScroll = switcher.scrollLeft;
+        }, { passive: true });
       }
 
       // ── MASAÜSTÜ: hover ile aç/kapat ──
@@ -104,18 +110,28 @@
         });
       }
 
-      // ── HEM MASAÜSTÜ HEM iOS: drop-label'a click ──
-      // (iOS'ta <button> elementi click'i native destekler, touchend gerekmez)
+      // ── HEM MASAÜSTÜ HEM iOS: drop-label'a click & touchstart ──
+      // iOS'ta daha hızlı ve kesin açılması için touchstart da eklendi.
       document.querySelectorAll('.drop-label').forEach(function (btn) {
         var dropId = btn.getAttribute('data-drop-id');
-        btn.addEventListener('click', function (e) {
+        function handleToggle(e) {
           e.stopPropagation();
+          // Eğer touchstart çalıştıysa click'i yoksaymak için bayrak koyuyoruz
+          if (e.type === 'touchstart') {
+            btn.dataset.touched = '1';
+          } else if (e.type === 'click' && btn.dataset.touched === '1') {
+            btn.dataset.touched = '0';
+            return;
+          }
+
           if (dropId === 'apps-menu') {
             toggleAppsMenu();
           } else if (dropId) {
             toggleDrop(dropId);
           }
-        });
+        }
+        btn.addEventListener('click', handleToggle);
+        btn.addEventListener('touchstart', handleToggle, { passive: true });
       });
 
       // ── drop-item'lara click ──
