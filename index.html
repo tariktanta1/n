@@ -3381,66 +3381,116 @@
 
   <div class="app-switcher">
     <div class="app-logo" onclick="switchApp('dashboard','','')">Tariktanta</div>
+
     <div class="dropdown" id="drop-hukuk">
-      <div class="drop-label" id="droplabel-hukuk" onclick="switchApp('hukuk','','hukuk')">HUKUK</div>
+      <div class="drop-label" id="droplabel-hukuk" onclick="toggleDrop('drop-hukuk')">HUKUK</div>
       <div class="drop-menu" id="dropmenu-hukuk">
-        <div class="drop-week-label">📅 Mevcut Hafta</div>
-        <button class="drop-item active-item" id="btn-hukuk"
-          onclick="switchApp('hukuk','2. Hafta — Hukuki Çeviri','hukuk')">⚖️ 2. Hafta — Hukuki Çeviri</button>
+        <div class="drop-week-label">📅 Haftalar</div>
+        <!-- Week 2 links to your existing panel-hukuk -->
+        <button class="drop-item active-item" onclick="switchApp('hukuk','2. Hafta — Hukuki Çeviri','hukuk')">⚖️ 2.
+          Hafta — Hukuki Çeviri</button>
+        <button class="drop-item" onclick="switchApp('hukuk-w3','3. Hafta','hukuk')">⚖️ 3. Hafta</button>
+        <button class="drop-item" onclick="switchApp('hukuk-w4','4. Hafta','hukuk')">⚖️ 4. Hafta</button>
+        <button class="drop-item" onclick="switchApp('hukuk-w5','5. Hafta','hukuk')">⚖️ 5. Hafta</button>
+        <button class="drop-item" onclick="switchApp('hukuk-w6','6. Hafta','hukuk')">⚖️ 6. Hafta</button>
+        <button class="drop-item" onclick="switchApp('hukuk-w7','7. Hafta','hukuk')">⚖️ 7. Hafta</button>
       </div>
     </div>
+
     <div class="dropdown" id="drop-davos">
-      <div class="drop-label" id="droplabel-davos" onclick="switchApp('davos','','davos')">ARDIL</div>
+      <div class="drop-label" id="droplabel-davos" onclick="toggleDrop('drop-davos')">ARDIL</div>
       <div class="drop-menu" id="dropmenu-davos">
-        <div class="drop-week-label">📅 Mevcut Hafta</div>
-        <button class="drop-item active-item" id="btn-davos"
-          onclick="switchApp('davos','2. Hafta — Davos Summit','davos')">🎙️ 2. Hafta — Davos Summit</button>
+        <div class="drop-week-label">📅 Haftalar</div>
+        <!-- Week 2 links to your existing panel-davos -->
+        <button class="drop-item active-item" onclick="switchApp('davos','2. Hafta — Davos Summit','davos')">🎙️ 2.
+          Hafta — Davos Summit</button>
+        <button class="drop-item" onclick="switchApp('davos-w3','3. Hafta','davos')">🎙️ 3. Hafta</button>
+        <button class="drop-item" onclick="switchApp('davos-w4','4. Hafta','davos')">🎙️ 4. Hafta</button>
+        <button class="drop-item" onclick="switchApp('davos-w5','5. Hafta','davos')">🎙️ 5. Hafta</button>
+        <button class="drop-item" onclick="switchApp('davos-w6','6. Hafta','davos')">🎙️ 6. Hafta</button>
+        <button class="drop-item" onclick="switchApp('davos-w7','7. Hafta','davos')">🎙️ 7. Hafta</button>
       </div>
     </div>
+
     <div class="dropdown" id="drop-gobilim">
-      <div class="drop-label" onclick="switchApp('gobilim','','gobilim')">GÖSTERGEBİLİM</div>
+      <div class="drop-label" onclick="toggleDrop('drop-gobilim')">GÖSTERGEBİLİM</div>
       <div class="drop-menu">
-        <div class="drop-week-label">📅 Yakında</div>
-        <button class="drop-item" onclick="switchApp('gobilim','Çeviri Göstergebilimi II','gobilim')">📐 Çeviri
-          Göstergebilimi II</button>
+        <div class="drop-week-label">📅 Haftalar</div>
+        <button class="drop-item" onclick="switchApp('gobilim-w2','2. Hafta','gobilim')">📐 2. Hafta</button>
+        <button class="drop-item" onclick="switchApp('gobilim-w3','3. Hafta','gobilim')">📐 3. Hafta</button>
+        <button class="drop-item" onclick="switchApp('gobilim-w4','4. Hafta','gobilim')">📐 4. Hafta</button>
+        <button class="drop-item" onclick="switchApp('gobilim-w5','5. Hafta','gobilim')">📐 5. Hafta</button>
+        <button class="drop-item" onclick="switchApp('gobilim-w6','6. Hafta','gobilim')">📐 6. Hafta</button>
+        <button class="drop-item" onclick="switchApp('gobilim-w7','7. Hafta','gobilim')">📐 7. Hafta</button>
       </div>
     </div>
+
     <div class="dropdown" id="drop-etik">
-      <div class="drop-label" onclick="switchApp('etik','','etik')">ETİK</div>
+      <div class="drop-label" onclick="toggleDrop('drop-etik')">ETİK</div>
       <div class="drop-menu">
-        <div class="drop-week-label">📅 Yakında</div>
-        <button class="drop-item" onclick="switchApp('etik','Çeviride Etik & Mesleki Sorumluluklar','etik')">⚡ Etik &
-          Mesleki Sorumluluklar</button>
+        <div class="drop-week-label">📅 Haftalar</div>
+        <button class="drop-item" onclick="switchApp('etik-w2','2. Hafta','etik')">⚡ 2. Hafta</button>
+        <button class="drop-item" onclick="switchApp('etik-w3','3. Hafta','etik')">⚡ 3. Hafta</button>
+        <button class="drop-item" onclick="switchApp('etik-w4','4. Hafta','etik')">⚡ 4. Hafta</button>
+        <button class="drop-item" onclick="switchApp('etik-w5','5. Hafta','etik')">⚡ 5. Hafta</button>
+        <button class="drop-item" onclick="switchApp('etik-w6','6. Hafta','etik')">⚡ 6. Hafta</button>
+        <button class="drop-item" onclick="switchApp('etik-w7','7. Hafta','etik')">⚡ 7. Hafta</button>
       </div>
     </div>
+
     <div class="dropdown" id="drop-rusca4">
-      <div class="drop-label" onclick="switchApp('rusca4','','rusca4')">RUSÇA IV</div>
+      <div class="drop-label" onclick="toggleDrop('drop-rusca4')">RUSÇA IV</div>
       <div class="drop-menu">
-        <div class="drop-week-label">📅 Yakında</div>
-        <button class="drop-item" onclick="switchApp('rusca4','Rusça IV','rusca4')">🇷🇺 Rusça IV</button>
+        <div class="drop-week-label">📅 Haftalar</div>
+        <button class="drop-item" onclick="switchApp('rusca4-w2','2. Hafta','rusca4')">🇷🇺 2. Hafta</button>
+        <button class="drop-item" onclick="switchApp('rusca4-w3','3. Hafta','rusca4')">🇷🇺 3. Hafta</button>
+        <button class="drop-item" onclick="switchApp('rusca4-w4','4. Hafta','rusca4')">🇷🇺 4. Hafta</button>
+        <button class="drop-item" onclick="switchApp('rusca4-w5','5. Hafta','rusca4')">🇷🇺 5. Hafta</button>
+        <button class="drop-item" onclick="switchApp('rusca4-w6','6. Hafta','rusca4')">🇷🇺 6. Hafta</button>
+        <button class="drop-item" onclick="switchApp('rusca4-w7','7. Hafta','rusca4')">🇷🇺 7. Hafta</button>
       </div>
     </div>
+
     <div class="dropdown" id="drop-rusca6">
-      <div class="drop-label" onclick="switchApp('rusca6','','rusca6')">RUSÇA VI</div>
+      <div class="drop-label" onclick="toggleDrop('drop-rusca6')">RUSÇA VI</div>
       <div class="drop-menu">
-        <div class="drop-week-label">📅 Yakında</div>
-        <button class="drop-item" onclick="switchApp('rusca6','Rusça VI','rusca6')">🇷🇺 Rusça VI</button>
+        <div class="drop-week-label">📅 Haftalar</div>
+        <button class="drop-item" onclick="switchApp('rusca6-w2','2. Hafta','rusca6')">🇷🇺 2. Hafta</button>
+        <button class="drop-item" onclick="switchApp('rusca6-w3','3. Hafta','rusca6')">🇷🇺 3. Hafta</button>
+        <button class="drop-item" onclick="switchApp('rusca6-w4','4. Hafta','rusca6')">🇷🇺 4. Hafta</button>
+        <button class="drop-item" onclick="switchApp('rusca6-w5','5. Hafta','rusca6')">🇷🇺 5. Hafta</button>
+        <button class="drop-item" onclick="switchApp('rusca6-w6','6. Hafta','rusca6')">🇷🇺 6. Hafta</button>
+        <button class="drop-item" onclick="switchApp('rusca6-w7','7. Hafta','rusca6')">🇷🇺 7. Hafta</button>
       </div>
     </div>
+
     <div class="dropdown" id="drop-isaret">
-      <div class="drop-label" onclick="switchApp('isaret','','isaret')">İŞARET</div>
+      <div class="drop-label" onclick="toggleDrop('drop-isaret')">İŞARET</div>
       <div class="drop-menu">
-        <div class="drop-week-label">📅 Yakında</div>
-        <button class="drop-item" onclick="switchApp('isaret','Türk İşaret Dili','isaret')">🤟 Türk İşaret Dili</button>
+        <div class="drop-week-label">📅 Haftalar</div>
+        <button class="drop-item" onclick="switchApp('isaret-w2','2. Hafta','isaret')">🤟 2. Hafta</button>
+        <button class="drop-item" onclick="switchApp('isaret-w3','3. Hafta','isaret')">🤟 3. Hafta</button>
+        <button class="drop-item" onclick="switchApp('isaret-w4','4. Hafta','isaret')">🤟 4. Hafta</button>
+        <button class="drop-item" onclick="switchApp('isaret-w5','5. Hafta','isaret')">🤟 5. Hafta</button>
+        <button class="drop-item" onclick="switchApp('isaret-w6','6. Hafta','isaret')">🤟 6. Hafta</button>
+        <button class="drop-item" onclick="switchApp('isaret-w7','7. Hafta','isaret')">🤟 7. Hafta</button>
       </div>
     </div>
+
     <div class="dropdown" id="drop-tibbi">
-      <div class="drop-label" onclick="switchApp('tibbi','','tibbi')">TIBBİ BİTKİ</div>
+      <div class="drop-label" onclick="toggleDrop('drop-tibbi')">TIBBİ BİTKİ</div>
       <div class="drop-menu">
-        <div class="drop-week-label">📅 Yakında</div>
-        <button class="drop-item" onclick="switchApp('tibbi','Tıbbi Bitki','tibbi')">🌿 Tıbbi Bitki</button>
+        <div class="drop-week-label">📅 Haftalar</div>
+        <button class="drop-item" onclick="switchApp('tibbi-w2','2. Hafta','tibbi')">🌿 2. Hafta</button>
+        <button class="drop-item" onclick="switchApp('tibbi-w3','3. Hafta','tibbi')">🌿 3. Hafta</button>
+        <button class="drop-item" onclick="switchApp('tibbi-w4','4. Hafta','tibbi')">🌿 4. Hafta</button>
+        <button class="drop-item" onclick="switchApp('tibbi-w5','5. Hafta','tibbi')">🌿 5. Hafta</button>
+        <button class="drop-item" onclick="switchApp('tibbi-w6','6. Hafta','tibbi')">🌿 6. Hafta</button>
+        <button class="drop-item" onclick="switchApp('tibbi-w7','7. Hafta','tibbi')">🌿 7. Hafta</button>
       </div>
     </div>
+
+    <!-- UYGULAMALAR ve sağ panele dokunulmadı -->
     <div class="switcher-right">
       <div class="dropdown" id="drop-apps">
         <div class="drop-label" onclick="toggleAppsMenu()" style="color:#a78bfa">UYGULAMALAR</div>
@@ -3961,7 +4011,8 @@
         </table>
         <div class="highlight-box mt-24">
           <p><strong>📅 Resmi Gazete:</strong> 1 Şubat 2003 öncesi → <strong>ATRG</strong> | Sonrası →
-            <strong>ABRG</strong></p>
+            <strong>ABRG</strong>
+          </p>
         </div>
       </div>
     </div>
@@ -3996,7 +4047,8 @@
           <div class="card card-p">
             <h4>Sayılar</h4>
             <p>4+ basamak sağdan üçlü gruplar: <span style="color:var(--accent3)">326.197</span>. Kesirler virgülle:
-              <span style="color:var(--accent3)">7,7 milyar</span>.</p>
+              <span style="color:var(--accent3)">7,7 milyar</span>.
+            </p>
           </div>
           <div class="card card-p">
             <h4>Tekil-Çoğul</h4>
