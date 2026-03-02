@@ -874,6 +874,19 @@ window.addEventListener('load',function(){
     </div>
   </div>
   <div class="switcher-right">
+    <div class="dropdown" id="drop-apps">
+      <div class="drop-label" onclick="toggleDrop('apps')" style="color:#a78bfa">UYGULAMALAR</div>
+      <div class="drop-menu" id="dropmenu-apps" style="min-width:200px">
+        <div class="drop-week-label">📱 Hızlı Aç</div>
+        <button class="drop-item" onclick="openApp('instagram')">📸 Instagram</button>
+        <button class="drop-item" onclick="openApp('x')">𝕏 X (Twitter)</button>
+        <button class="drop-item" onclick="openApp('youtube')">▶️ YouTube</button>
+        <button class="drop-item" onclick="openApp('tiktok')">🎵 TikTok</button>
+        <button class="drop-item" onclick="openApp('spotify')">🎧 Spotify</button>
+        <button class="drop-item" onclick="openApp('github')">🐙 GitHub</button>
+        <button class="drop-item" onclick="openApp('coc')">⚔️ Clash of Clans</button>
+      </div>
+    </div>
     <button class="search-btn" onclick="openSearch()">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       Ara <kbd>⌘K</kbd>
@@ -1548,9 +1561,32 @@ function initDashboard() {
   });
 }
 
-// ════════════════════════════════════════════════
-// THEME
-// ════════════════════════════════════════════════
+// ── UYGULAMA AÇICI ──
+function openApp(app) {
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  const apps = {
+    instagram: { ios: 'instagram://',           web: 'https://www.instagram.com' },
+    x:         { ios: 'twitter://',              web: 'https://x.com' },
+    youtube:   { ios: 'youtube://',              web: 'https://www.youtube.com' },
+    tiktok:    { ios: 'snssdk1180://',           web: 'https://www.tiktok.com' },
+    spotify:   { ios: 'spotify://',              web: 'https://open.spotify.com' },
+    github:    { ios: 'github://',               web: 'https://github.com' },
+    coc:       { ios: 'clashofclans://',         web: 'https://supercell.com/en/games/clashofclans/' },
+  };
+  const a = apps[app];
+  if (!a) return;
+  if (isIOS) {
+    // iOS: önce uygulama scheme dene, 1.5sn içinde açılmazsa web'e git
+    const start = Date.now();
+    window.location.href = a.ios;
+    setTimeout(() => {
+      if (Date.now() - start < 2000) window.open(a.web, '_blank');
+    }, 1500);
+  } else {
+    window.open(a.web, '_blank');
+  }
+}
+
 function toggleTheme() {
   const html = document.documentElement;
   const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
