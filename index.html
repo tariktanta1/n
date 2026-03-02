@@ -16,19 +16,12 @@
     rel="stylesheet">
   <style>
     :root {
-      --theme-bg: #050608; /* Daha derin siyah kontrast için güncellendi */
-      --theme-surface: #0e1116;
-      --theme-border: #1a1d23;
-      --theme-text: #f0f2f5;
-      --theme-muted: #666e7a;
+      --theme-bg: #08090d;
+      --theme-surface: #111318;
+      --theme-border: #1e2028;
+      --theme-text: #e8eaf0;
+      --theme-muted: #555;
       --theme-accent: #c8f135;
-      --theme-accent-rgb: 200, 241, 53;
-    }
-
-    /* 3D Tilt Pürüzsüzleştirme */
-    .course-card, .session-card {
-      transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s ease, border-color 0.3s ease !important;
-      will-change: transform;
     }
 
     [data-theme="light"] {
@@ -1112,7 +1105,7 @@
 
     #panel-hukuk .badge-g {
       border-color: var(--accent3);
-      color: var(--accent3) ;
+      color: var(--accent3);
       background: rgba(52, 211, 153, 0.08)
     }
 
@@ -2228,7 +2221,8 @@
 
     #panel-davos .dtracker-item {
       display: flex;
-      align-items: center; gap: 10px;
+      align-items: center;
+      gap: 10px;
       cursor: pointer;
       padding: 8px 12px;
       border-radius: 6px;
@@ -3223,100 +3217,12 @@
     [data-theme="light"] #cursor-glow {
       background: radial-gradient(circle, rgba(90, 122, 0, 0.04) 0%, transparent 70%);
     }
-
-    /* YENİ MODÜLLER: SÖZLÜK VE TAKVİM İÇİN STİLLER */
-    .quick-tools-container {
-      padding: 20px 40px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 20px;
-    }
-
-    .tool-card {
-      background: var(--theme-surface);
-      border: 1px solid var(--theme-border);
-      border-radius: 16px;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .tool-header {
-      font-family: 'Syne', sans-serif;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--theme-accent);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .dictionary-input-wrap {
-      display: flex;
-      gap: 8px;
-    }
-
-    .dict-input {
-      flex: 1;
-      background: var(--theme-bg);
-      border: 1px solid var(--theme-border);
-      border-radius: 8px;
-      padding: 10px 14px;
-      color: var(--theme-text);
-      font-size: 13px;
-      outline: none;
-    }
-
-    .dict-input:focus {
-      border-color: var(--theme-accent);
-    }
-
-    .dict-btn {
-      background: var(--theme-accent);
-      color: #08090d;
-      border: none;
-      border-radius: 8px;
-      padding: 0 16px;
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .dict-frame {
-      width: 100%;
-      height: 300px;
-      border-radius: 12px;
-      border: 1px solid var(--theme-border);
-      background: white;
-      display: none;
-    }
-
-    .calendar-wrap {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 12px;
-    }
-
-    .calendar-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 4px;
-      text-align: center;
-    }
-
-    .cal-day-name { color: var(--theme-muted); padding: 4px; font-size: 10px; }
-    .cal-date { padding: 8px; border-radius: 6px; color: var(--theme-text); cursor: pointer; transition: all 0.2s; }
-    .cal-date:hover { background: rgba(255,255,255,0.05); }
-    .cal-date.today { background: var(--theme-accent); color: #08090d; font-weight: 800; }
-    .cal-date.has-event { border-bottom: 2px solid var(--theme-accent); }
-
   </style>
 </head>
 
 <body>
   <div id="cursor-glow"></div>
+  <!-- UYGULAMALAR POPUP MENÜ - fixed pozisyon, overflow sorununu aşar -->
   <div id="apps-popup"
     style="display:none;position:fixed;top:52px;right:12px;background:var(--theme-surface);border:1px solid var(--theme-border);border-radius:10px;padding:6px;min-width:190px;z-index:99999;box-shadow:0 8px 32px rgba(0,0,0,0.5);flex-direction:column;gap:2px">
     <div
@@ -3425,10 +3331,6 @@
       opacity: 0.85
     }
 
-    #lock-btn:active {
-        transform: scale(0.95);
-    }
-
     #lock-logo {
       font-size: 32px;
       margin-bottom: -8px
@@ -3484,6 +3386,7 @@
       <div class="drop-label" id="droplabel-hukuk" onclick="toggleDrop('drop-hukuk')">HUKUK</div>
       <div class="drop-menu" id="dropmenu-hukuk">
         <div class="drop-week-label">📅 Haftalar</div>
+        <!-- Week 2 links to your existing panel-hukuk -->
         <button class="drop-item active-item" onclick="switchApp('hukuk','2. Hafta — Hukuki Çeviri','hukuk')">⚖️ 2.
           Hafta — Hukuki Çeviri</button>
         <button class="drop-item" onclick="switchApp('hukuk-w3','3. Hafta','hukuk')">⚖️ 3. Hafta</button>
@@ -3498,6 +3401,7 @@
       <div class="drop-label" id="droplabel-davos" onclick="toggleDrop('drop-davos')">ARDIL</div>
       <div class="drop-menu" id="dropmenu-davos">
         <div class="drop-week-label">📅 Haftalar</div>
+        <!-- Week 2 links to your existing panel-davos -->
         <button class="drop-item active-item" onclick="switchApp('davos','2. Hafta — Davos Summit','davos')">🎙️ 2.
           Hafta — Davos Summit</button>
         <button class="drop-item" onclick="switchApp('davos-w3','3. Hafta','davos')">🎙️ 3. Hafta</button>
@@ -3586,6 +3490,7 @@
       </div>
     </div>
 
+    <!-- UYGULAMALAR ve sağ panele dokunulmadı -->
     <div class="switcher-right">
       <div class="dropdown" id="drop-apps">
         <div class="drop-label" onclick="toggleAppsMenu()" style="color:#a78bfa">UYGULAMALAR</div>
@@ -3666,22 +3571,6 @@
       <canvas class="wave-canvas" id="wave-canvas" height="36"></canvas>
     </div>
 
-    <div class="quick-tools-container">
-      <div class="tool-card">
-        <div class="tool-header">📖 Hızlı Sözlük <span>Tureng / Cambridge</span></div>
-        <div class="dictionary-input-wrap">
-          <input type="text" id="dict-query" class="dict-input" placeholder="Kelime yaz..." onkeydown="if(event.key==='Enter') searchDict()">
-          <button class="dict-btn" onclick="searchDict()">Ara</button>
-        </div>
-        <iframe id="dict-frame" class="dict-frame" src="about:blank"></iframe>
-      </div>
-      <div class="tool-card">
-        <div class="tool-header">📅 Akademik Takvim <span>Mart 2026</span></div>
-        <div class="calendar-wrap" id="calendar-widget">
-           </div>
-      </div>
-    </div>
-
     <div class="word-of-day" id="word-of-day-widget">
       <div class="wod-label">💡 Günün Terimi</div>
       <div class="wod-term" id="wod-term"><span class="skeleton"
@@ -3709,7 +3598,7 @@
       <div class="container">
         <div class="hero-tag">Çalışma Dosyası · Week 2</div>
         <h1>Hukuki <span>Çeviri</span><br>Teori & Pratik</h1>
-        <p class="hero-sub">Deborah Cao · Legal Translation  +  AB Mevzuatı Çeviri Rehberi · Kapsamlı ders
+        <p class="hero-sub">Deborah Cao · Legal Translation &nbsp;+&nbsp; AB Mevzuatı Çeviri Rehberi · Kapsamlı ders
           notları</p>
         <div class="hero-badges">
           <span class="badge badge-y">Legal Translation — EN</span>
@@ -4966,6 +4855,8 @@
         const saved = localStorage.getItem('tariktanta-lastpanel');
         if (saved) {
           const { app, dropId } = JSON.parse(saved);
+          // Her zaman dashboard'da başla
+          // if (app && app !== 'dashboard') { switchApp(app, '', dropId); return; }
         }
       } catch (e) { }
     }
@@ -5356,4 +5247,433 @@
       { cat: '🔴 Ekonomi & Ticaret', color: '#f87171', items: [['tariffs', 'gümrük tarifeleri', 'Toplantının ana kelimesi'], ['trade levies', 'ticaret vergileri/harçları', ''], ['protectionism', 'korumacılık', ''], ['economic nationalism', 'ekonomik milliyetçilik', ''], ['fiscal discipline', 'mali disiplin', 'Milei\'nin ana argümanı'], ['fiscal reform', 'mali reform', ''], ['hyperinflation', 'hiperenflasyon', ''], ['debt restructuring', 'borç yeniden yapılandırması', ''], ['productivity', 'verimlilik / üretkenlik', ''], ['export controls', 'ihracat kısıtlamaları', ''], ['value chains', 'değer zincirleri', ''], ['supply chain', 'tedarik zinciri', ''], ['foreign direct investment (FDI)', 'doğrudan yabancı yatırım (DYY)', ''], ['inclusive growth', 'kapsayıcı büyüme', ''], ['headwinds', 'olumsuz koşullar', 'Ekonomide "engel" anlamında']] },
       { cat: '🟢 Yapay Zeka & Teknoloji', color: '#4ade80', items: [['AI governance', 'yapay zeka yönetişimi', ''], ['AI sovereignty', 'yapay zeka egemenliği', ''], ['generative AI', 'üretici yapay zeka', ''], ['compute power / compute', 'hesaplama gücü / kapasitesi', ''], ['data centres', 'veri merkezleri', ''], ['AI agents', 'yapay zeka ajanları', ''], ['automation', 'otomasyon', ''], ['reskilling / upskilling', 'yeniden beceri kazandırma', ''], ['workforce preparedness', 'işgücü hazırlığı', ''], ['cybersecurity', 'siber güvenlik', ''], ['democratization of AI', 'yapay zekanın demokratikleşmesi', ''], ['digital infrastructure', 'dijital altyapı', ''], ['scalable', 'ölçeklenebilir', '']] },
       { cat: '🟡 Enerji & İklim', color: '#fbbf24', items: [['energy security', 'enerji güvenliği', ''], ['energy trilemma', 'enerji trilemması', 'güvenlik+erişilebilirlik+sürdürülebilirlik'], ['energy transition', 'enerji dönüşümü', ''], ['decarbonization', 'karbonsuzlaştırma', ''], ['nuclear renaissance', 'nükleer rönesans', ''], ['renewables', 'yenilenebilir enerji kaynakları', ''], ['net-zero', 'net sıfır (emisyon)', 'Sıfır karbon DEMEYİN!'], ['just transition', 'adil geçiş', ''], ['planetary boundaries', 'gezegenin ekolojik sınırları', ''], ['dispatchable sources', 'talebe göre devreye giren kaynaklar', ''], ['intermittent renewables', 'aralıklı yenilenebilir kaynaklar', ''], ['critical minerals', 'kritik mineraller', ''], ['rare earths', 'nadir toprak elementleri', '']] },
-      { cat: '🟣 Yönetişim & Toplum', color: '#a78bfa', items: [['mult
+      { cat: '🟣 Yönetişim & Toplum', color: '#a78bfa', items: [['multistakeholder', 'çok paydaşlı', 'WEF\'in özgün terimi'], ['public-private cooperation', 'kamu-özel sektör işbirliği', ''], ['civil society', 'sivil toplum', ''], ['polarization', 'kutuplaşma', ''], ['social cohesion', 'sosyal uyum', ''], ['trust deficit', 'güven açığı', ''], ['accountability', 'hesap verebilirlik', ''], ['transparency', 'şeffaflık', ''], ['governance', 'yönetişim', 'government ≠ governance!'], ['humanitarian aid', 'insani yardım', ''], ['structural not cyclical', 'yapısal, döngüsel değil', '']] }
+    ];
+    const PHRASES = [
+      { en: '"If we\'re not at the table, we\'re on the menu."', tr: '"Masada olmazsak, menüde oluruz."', ctx: 'Mark Carney (Kanada Başbakanı)' },
+      { en: '"A rupture, not a transition."', tr: '"Bu bir geçiş değil, köklü bir kopuş."', ctx: 'Carney — dünya düzeninin değişimini anlatırken' },
+      { en: '"We are not in Kansas anymore."', tr: '"Artık eski dünyada değiliz."', ctx: 'Kristalina Georgieva (IMF)' },
+      { en: '"Learn to think the unthinkable."', tr: '"Düşünülemezi düşünmeyi öğrenmek."', ctx: 'Georgieva — dışsal şoklara hazırlık' },
+      { en: '"Exogenous shocks"', tr: '"Dışsal şoklar"', ctx: 'Dışarıdan gelen öngörülemeyen krizler' },
+      { en: '"Structural, not cyclical"', tr: '"Yapısal, döngüsel değil"', ctx: 'Ekonomistlerin çok kullandığı ayrım' },
+      { en: '"Echo chamber of consensus"', tr: '"Mutabakat yankı odası"', ctx: 'WEF Başkanı Borge Brende' },
+      { en: '"Level playing field"', tr: '"Eşit rekabet ortamı"', ctx: 'Ticaret oturumlarında çok geçer' },
+      { en: '"Double down"', tr: '"Kararlılığı artırmak, ısrar etmek"', ctx: 'Bir stratejiye sıkı bağlı kalmak' },
+      { en: '"At a pivotal moment"', tr: '"Kritik bir dönüm noktasında"', ctx: 'Neredeyse her Davos konuşmasında' },
+      { en: '"Unlock opportunities"', tr: '"Fırsatları açığa çıkarmak"', ctx: 'WEF\'in favori fiili' },
+      { en: '"In the wake of"', tr: '"…nin ardından, akabinde"', ctx: 'Nedensellik zinciri kurarken' },
+      { en: '"Loomed large"', tr: '"Gölge düşürdü, ağır bastı"', ctx: 'Tehdidin baskın olduğunu ifade eder' },
+      { en: '"Fraught moment"', tr: '"Gergin / çalkantılı an"', ctx: '"Fraught" = çok sorun/gerginlik yüklü' },
+      { en: '"Bright spots"', tr: '"Parlak noktalar / umut veren alanlar"', ctx: 'Karamsarlık içinde olumlu işaretler' },
+      { en: '"Systemic fault lines"', tr: '"Sistemik kırık hatları"', ctx: 'Sistemdeki yapısal zayıflık' },
+      { en: '"Geopolitical noise"', tr: '"Jeopolitik gürültü"', ctx: 'Dikkat dağıtıcı jeopolitik gelişmeler' },
+      { en: '"To exist is to change."', tr: '"Var olmak değişmektir."', ctx: 'İsviçre Federal Konseyi Başkanı Parmelin' },
+      { en: '"A who\'s who"', tr: '"Seçkin isimler topluluğu"', ctx: 'Trump\'ın kullandığı ifade' },
+      { en: '"Impartial platform"', tr: '"Tarafsız platform"', ctx: 'WEF\'in kendini tanımlamak için kullandığı ifade' },
+    ];
+    const FLASHCARDS_D = TERMS.flatMap(cat => cat.items.map(t => ({ en: t[0], tr: t[1], note: t[2] })));
+    const QUIZ_Q = [
+      { q: '"Gümrük tarifeleri" İngilizcede nasıl denir?', opts: ['tariffs', 'levies', 'duties', 'hepsinin hepsi doğru'], ans: 3, exp: 'Tariffs, levies ve duties; hepsi gümrük/vergi anlamında kullanılabilir.' },
+      { q: '"Çok taraflılık" terimini bul.', opts: ['multilateralism', 'bilateralism', 'unilateralism', 'multistakeholderism'], ans: 0, exp: '"Multilateralism" = çok taraflılık.' },
+      { q: '"Net sıfır" derken neyi kastediyoruz?', opts: ['Hiç emisyon üretmemek', 'Salınan emisyonu telafi ederek sıfırlamak', 'Yenilenebilir enerjiye geçiş', 'Nükleer santral kullanımı'], ans: 1, exp: 'Net-zero: atmosfere salınan karbon miktarını uzaklaştırılan miktarla sıfırlamak.' },
+      { q: '"Dispatchable sources" ne demek?', opts: ['İhracat yapılabilen kaynaklar', 'Talebe göre devreye giren kaynaklar', 'Dağıtılabilir doğal kaynaklar', 'Yayılabilir enerji türleri'], ans: 1, exp: 'Nükleer, doğalgaz gibi "istendiğinde açılabilen" enerji kaynakları.' },
+      { q: '"Governance" ve "government" arasındaki fark?', opts: ['Aynı anlama gelir', 'Governance = yönetişim (geniş), Government = hükümet', 'Government = yönetişim, Governance = hükümet', 'Governance sadece kurumsal şirketler için'], ans: 1, exp: '"Governance" = daha geniş, kamu-özel-sivil toplumu kapsayan yönetim anlayışı.' },
+      { q: 'Georgieva\'nın Davos 2026\'daki en ünlü ifadesi?', opts: ['If you\'re not at the table...', 'We are not in Kansas anymore', 'To exist is to change', 'The state is the problem'], ans: 1, exp: 'Georgieva, Wizard of Oz\'dan alıntıyla konuştu.' },
+      { q: '"Just transition" Türkçesi nedir?', opts: ['Adalet geçişi', 'Hızlı geçiş', 'Adil geçiş', 'Doğru geçiş'], ans: 2, exp: '"Just" burada "adil" anlamında.' },
+      { q: '"Reskilling" ne demek?', opts: ['Tekrar ölçeklendirmek', 'Yeniden beceri kazandırmak', 'Beceri değerlendirmesi', 'Eğitim bütçesi artırmak'], ans: 1, exp: '"Reskilling" = işgücüne yeni beceriler öğretmek.' },
+      { q: '"Headwinds" ekonomi bağlamında ne anlama gelir?', opts: ['Rüzgar enerjisi potansiyeli', 'Olumsuz koşullar / engeller', 'Büyüme hızlanması', 'Döviz kuru dalgalanmaları'], ans: 1, exp: 'Ekonomide: büyümeyi yavaşlatan dış etkenler.' },
+      { q: '"Multistakeholder" modeli kimin felsefesidir?', opts: ['IMF', 'NATO', 'WEF (Dünya Ekonomik Forumu)', 'BM Güvenlik Konseyi'], ans: 2, exp: 'WEF\'in kuruluşundan bu yana benimsediği model.' },
+      { q: '"Exogenous shock" Türkçesi?', opts: ['İçsel kriz', 'Dışsal şok', 'Ekonomik çöküş', 'Yapısal sorun'], ans: 1, exp: '"Exogenous" = dışarıdan gelen.' },
+      { q: '"Level playing field" en iyi nasıl çevrilir?', opts: ['Düz oyun alanı', 'Eşit rekabet ortamı', 'Adil saha', 'Standart koşullar'], ans: 1, exp: 'Spor metaforu: herkesin eşit koşullarda rekabet ettiği alan.' },
+    ];
+    const PRACTICE = [
+      { en: 'Globalization has not failed — it has simply become more complex, more contested, and more consequential than ever before.', tr: 'Küreselleşme başarısız olmadı — sadece her zamankinden daha karmaşık, daha tartışmalı ve daha belirleyici bir hal aldı.' },
+      { en: 'Energy security must now be elevated to the same level as national security in every country\'s strategic agenda.', tr: 'Enerji güvenliği, her ülkenin stratejik gündeminde artık ulusal güvenlikle eş düzeye taşınmalıdır.' },
+      { en: 'In a world defined by great power rivalry, middle powers that fail to act collectively will find themselves not at the table, but on the menu.', tr: 'Büyük güç rekabetinin şekillendirdiği bu dünyada, birlikte hareket edemeyen orta güçler masada oturanlar arasında değil, menüde yer alan unsurlar arasında kalacak.' },
+      { en: 'These disruptions are structural, not cyclical — the world we once knew is not coming back.', tr: 'Bu aksaklıklar döngüsel değil, yapısaldır — bir zamanlar bildiğimiz dünya geri dönmeyecek.' },
+      { en: 'We need to deploy innovation at scale, responsibly, and with equity in mind.', tr: 'İnovasyonu ölçekli, sorumlu ve hakkaniyetli bir biçimde hayata geçirmeliyiz.' },
+      { en: 'The question is no longer whether artificial intelligence will transform our economies, but whether that transformation will be inclusive or extractive.', tr: 'Artık asıl soru, yapay zekanın ekonomilerimizi dönüştürüp dönüştürmeyeceği değil; bu dönüşümün kapsayıcı mı yoksa dışlayıcı mı olacağıdır.' },
+      { en: 'Nuclear power is no longer a fringe option; it is increasingly seen as a cornerstone of any credible net-zero strategy.', tr: 'Nükleer enerji artık marjinal bir seçenek değil; güvenilir herhangi bir net-sıfır stratejisinin temel taşı olarak giderek daha fazla benimsenmektedir.' },
+      { en: 'Democracy is not in decline because people have stopped believing in its values; it is under pressure because institutions have failed to deliver on its promises.', tr: 'Demokrasi, insanların değerlerine inanmayı bırakması nedeniyle gerilemiyor; kurumların bu değerlerin vaadini yerine getirememesi yüzünden baskı altında.' },
+    ];
+    const SPEAKERS = [
+      { name: 'Donald Trump', role: 'ABD Başkanı · Açılış konuşmacısı' },
+      { name: 'Mark Carney', role: 'Kanada Başbakanı · "At the table" sözü' },
+      { name: 'Emmanuel Macron', role: 'Fransa Cumhurbaşkanı · Avrupa savunması' },
+      { name: 'Ursula von der Leyen', role: 'AB Komisyonu Başkanı' },
+      { name: 'He Lifeng', role: 'Çin Başbakan Yardımcısı · Ticaret' },
+      { name: 'Javier Milei', role: 'Arjantin Cumhurbaşkanı · Mali reform' },
+      { name: 'Kristalina Georgieva', role: 'IMF Başkanı · "Kansas" sözü' },
+      { name: 'Jensen Huang', role: 'NVIDIA CEO · AI & GPU' },
+      { name: 'Fatih Birol', role: 'IEA Direktörü · Enerji güvenliği' },
+      { name: 'Mark Rutte', role: 'NATO Genel Sekreteri' },
+      { name: 'Volodymyr Zelenskyy', role: 'Ukrayna Cumhurbaşkanı' },
+      { name: 'Daniel Noboa', role: 'Ekvador Cumhurbaşkanı · Narco-terör' },
+      { name: 'Borge Brende', role: 'WEF Başkanı' },
+      { name: 'Karin Keller-Sutter', role: 'İsviçre Federal Konseyi Başkanı' },
+    ];
+    const NUMBERS = [
+      { val: '2.5×', label: 'Küresel elektrik talebinin genel enerji talebine kıyasla büyüme hızı (IEA)' },
+      { val: '39%', label: 'Yapay zeka nedeniyle geçerliliğini yitirecek mevcut becerilerin oranı' },
+      { val: '25%', label: 'Kadınların erkeklere kıyasla daha fazla kötü sağlıkta geçirdikleri yaşam süresi' },
+      { val: '$1T+', label: 'Küresel AI altyapı yatırımı beklentisi (2025-2030)' },
+      { val: '1.5°C', label: 'Paris Anlaşması sıcaklık hedefi' },
+      { val: '56.', label: 'WEF\'nin düzenlediği Yıllık Toplantı sayısı' },
+    ];
+    const ABBREVS = [
+      { short: 'WEF', full: 'World Economic Forum', tr: 'Dünya Ekonomik Forumu' },
+      { short: 'IMF', full: 'International Monetary Fund', tr: 'Uluslararası Para Fonu' },
+      { short: 'IEA', full: 'International Energy Agency', tr: 'Uluslararası Enerji Ajansı' },
+      { short: 'NATO', full: 'North Atlantic Treaty Organisation', tr: 'Kuzey Atlantik Antlaşması Örgütü' },
+      { short: 'WTO', full: 'World Trade Organization', tr: 'Dünya Ticaret Örgütü' },
+      { short: 'EU', full: 'European Union', tr: 'Avrupa Birliği' },
+      { short: 'AI', full: 'Artificial Intelligence', tr: 'Yapay Zeka' },
+      { short: 'FDI', full: 'Foreign Direct Investment', tr: 'Doğrudan Yabancı Yatırım' },
+      { short: 'GDP', full: 'Gross Domestic Product', tr: 'Gayri Safi Yurt İçi Hasıla (GSYİH)' },
+      { short: 'G7/G20', full: 'Group of Seven / Twenty', tr: 'Yediler / Yirmiler Grubu' },
+    ];
+
+    // ════════════════════════════════════════════════
+    // DAVOS RENDER
+    // ════════════════════════════════════════════════
+    function dRenderSessions() { const grid = document.getElementById('dSessionGrid'); const tracker = document.getElementById('dSessionTracker'); SESSIONS.forEach((s, i) => { const card = document.createElement('div'); card.className = 'session-card'; card.style.setProperty('--card-color', s.color); card.innerHTML = `<div class="session-num">${s.num}</div><div class="session-name">${s.name}</div><div class="session-desc">${s.desc}</div><div class="session-detail">${s.detail}</div>`; card.onclick = () => { card.classList.toggle('open'); dMarkTracked('sess_' + i); }; grid.appendChild(card); const ti = document.createElement('div'); ti.className = 'dtracker-item' + (dIsTracked('sess_' + i) ? ' checked' : ''); ti.id = 'dti_' + i; ti.innerHTML = `<div class="dtracker-check">✓</div><label>${s.name}</label>`; ti.onclick = () => { dToggleTracked('sess_' + i, 'dti_' + i); }; tracker.appendChild(ti); }); }
+    function dRenderTerms() { const c = document.getElementById('dTermListContainer'); TERMS.forEach(cat => { const sec = document.createElement('div'); sec.className = 'term-section'; sec.style.setProperty('--cat-color', cat.color); sec.innerHTML = `<div class="term-section-title">${cat.cat}</div>`; const grid = document.createElement('div'); grid.className = 'term-grid'; cat.items.forEach(([en, tr, note]) => { grid.innerHTML += `<div class="term-row"><div class="dterm-en">${en}</div><div class="dterm-tr">${tr}</div><div class="dterm-note">${note}</div></div>`; }); sec.appendChild(grid); c.appendChild(sec); }); }
+    function dRenderPhrases() { const c = document.getElementById('dPhraseContainer'); PHRASES.forEach(p => { c.innerHTML += `<div class="phrase-card"><div class="phrase-en">${p.en}</div><div class="phrase-tr">${p.tr}</div><div class="phrase-context">📌 ${p.ctx}</div></div>`; }); }
+    function dRenderPractice() { const c = document.getElementById('dPracticeContainer'); PRACTICE.forEach((p, i) => { const div = document.createElement('div'); div.className = 'practice-card'; div.innerHTML = `<div class="practice-num">CÜMLE ${i + 1} / ${PRACTICE.length}<button class="done-btn" id="ddone_${i}" onclick="dTogglePracticeDone(${i})">✓</button></div><div class="practice-en">${p.en}</div><button class="show-answer-btn" onclick="dShowAnswer(${i})">Türkçeyi Gör ▾</button><div class="practice-tr" id="dptr_${i}">${p.tr}</div>`; c.appendChild(div); }); }
+    function dShowAnswer(i) { document.getElementById('dptr_' + i).classList.add('visible'); }
+    function dTogglePracticeDone(i) { document.getElementById('ddone_' + i).classList.toggle('done'); dUpdateProgress(); }
+    function dRenderSpeakers() { const g = document.getElementById('dSpeakerGrid'); SPEAKERS.forEach(s => { g.innerHTML += `<div class="speaker-card"><div class="speaker-name">${s.name}</div><div class="speaker-role">${s.role}</div></div>`; }); const ng = document.getElementById('dNumberGrid'); NUMBERS.forEach(n => { ng.innerHTML += `<div class="number-card"><div class="number-val">${n.val}</div><div class="number-label">${n.label}</div></div>`; }); const ag = document.getElementById('dAbbrGrid'); ABBREVS.forEach(a => { ag.innerHTML += `<div class="abbr-card"><div class="abbr-short">${a.short}</div><div><div class="abbr-full">${a.full}</div><div class="abbr-tr">${a.tr}</div></div></div>`; }); }
+
+    // DAVOS FLASHCARDS
+    let dFlashIndex = 0, dShuffledCards = [...FLASHCARDS_D].sort(() => Math.random() - 0.5), dKnown = [], dRetry = [];
+    function dGetCurrentQueue() { if (dRetry.length > 0) return dRetry; return dShuffledCards.filter(c => !dKnown.includes(c)); }
+    function dRenderFlashcard() { const queue = dGetCurrentQueue(); if (queue.length === 0) { document.getElementById('dFlashEN').textContent = '🎉 Tüm kartları biliyorsun!'; document.getElementById('dFlashTR').textContent = 'Karıştır ve tekrar başla.'; document.getElementById('dFlashNote').textContent = ''; document.getElementById('dFlashCounter').textContent = 'Tamamlandı!'; dUpdateLeitnerStats(); return; } const card = queue[dFlashIndex % queue.length]; document.getElementById('dFlashEN').textContent = card.en; document.getElementById('dFlashTR').textContent = card.tr; document.getElementById('dFlashNote').textContent = card.note || ''; document.getElementById('dFlashCounter').textContent = `${dFlashIndex % queue.length + 1} / ${queue.length}`; document.getElementById('dMainFlashcard').classList.remove('flipped'); dUpdateLeitnerStats(); }
+    function dFlipCard() { document.getElementById('dMainFlashcard').classList.toggle('flipped'); }
+    function dNextCard() { const q = dGetCurrentQueue(); dFlashIndex = (dFlashIndex + 1) % Math.max(1, q.length); dRenderFlashcard(); }
+    function dPrevCard() { const q = dGetCurrentQueue(); dFlashIndex = (dFlashIndex - 1 + Math.max(1, q.length)) % Math.max(1, q.length); dRenderFlashcard(); }
+    function dMarkKnow() { const queue = dGetCurrentQueue(); const c = queue[dFlashIndex % queue.length]; if (!dKnown.includes(c)) dKnown.push(c); dRetry = dRetry.filter(x => x !== c); dFlashIndex = 0; dRenderFlashcard(); }
+    function dMarkDunno() { const queue = dGetCurrentQueue(); const c = queue[dFlashIndex % queue.length]; if (!dRetry.includes(c)) dRetry.push(c); dFlashIndex = (dFlashIndex + 1) % Math.max(1, queue.length); dRenderFlashcard(); }
+    function dUpdateLeitnerStats() { const pending = dShuffledCards.filter(c => !dKnown.includes(c) && !dRetry.includes(c)).length; document.getElementById('d-stat-pending').textContent = pending; document.getElementById('d-stat-known').textContent = dKnown.length; document.getElementById('d-stat-retry').textContent = dRetry.length; }
+
+    // DAVOS QUIZ
+    let dQuizQuestions = [], dQuizCur = 0, dQuizScore = 0, dQuizAnswered = false;
+    function dStartQuiz() { dQuizQuestions = [...QUIZ_Q].sort(() => Math.random() - 0.5).slice(0, 12); dQuizCur = 0; dQuizScore = 0; dQuizAnswered = false; document.getElementById('dQuizScore').textContent = '0'; document.getElementById('dQuizTotal').textContent = dQuizQuestions.length; document.getElementById('dQuizComplete').style.display = 'none'; document.getElementById('dQuizCard').style.display = 'block'; dRenderQuizQ(); }
+    function dRenderQuizQ() { if (dQuizCur >= dQuizQuestions.length) { dEndQuiz(); return; } dQuizAnswered = false; const q = dQuizQuestions[dQuizCur]; document.getElementById('dQuizCurrent').textContent = dQuizCur + 1; const opts = q.opts.map((o, i) => `<button class="quiz-option" onclick="dAnswerQuiz(${i})">${o}</button>`).join(''); document.getElementById('dQuizCard').innerHTML = `<div class="quiz-type">SORU ${dQuizCur + 1} / ${dQuizQuestions.length}</div><div class="quiz-q">${q.q}</div><div class="quiz-options">${opts}</div><div class="quiz-feedback" id="dqfb"></div><button class="quiz-next" id="dqnext" onclick="dNextQuizQ()">Sonraki Soru →</button>`; }
+    function dAnswerQuiz(i) { if (dQuizAnswered) return; dQuizAnswered = true; const q = dQuizQuestions[dQuizCur]; const opts = document.querySelectorAll('#dQuizCard .quiz-option'); opts.forEach(o => o.disabled = true); const fb = document.getElementById('dqfb'); if (i === q.ans) { opts[i].classList.add('correct'); dQuizScore++; document.getElementById('dQuizScore').textContent = dQuizScore; fb.className = 'quiz-feedback correct-fb show'; fb.textContent = '✓ Doğru! ' + q.exp; } else { opts[i].classList.add('wrong'); opts[q.ans].classList.add('correct'); fb.className = 'quiz-feedback wrong-fb show'; fb.textContent = '✗ Yanlış. ' + q.exp; } document.getElementById('dqnext').classList.add('show'); }
+    function dNextQuizQ() { dQuizCur++; if (dQuizCur >= dQuizQuestions.length) dEndQuiz(); else dRenderQuizQ(); }
+    function dEndQuiz() { document.getElementById('dQuizCard').style.display = 'none'; const comp = document.getElementById('dQuizComplete'); comp.style.display = 'block'; document.getElementById('dFinalScore').textContent = dQuizScore + ' / ' + dQuizQuestions.length; sessionStorage.setItem('dQuizDone', '1'); dUpdateProgress(); }
+    const D_SECTIONS = ['oturumlar', 'terminoloji', 'kaliplar', 'flashcard', 'quiz', 'pratik', 'konusmaci'];
+    function dShowSection(id, btn) { D_SECTIONS.forEach(s => { document.getElementById('dsec-' + s).classList.remove('active'); }); document.querySelectorAll('.dnav-btn').forEach(b => b.classList.remove('active')); const target = document.getElementById('dsec-' + id); target.classList.add('active'); if (btn) btn.classList.add('active'); sessionStorage.setItem('dvisited_' + id, '1'); dUpdateProgress(); setTimeout(() => { const top = target.getBoundingClientRect().top + window.pageYOffset - 160; window.scrollTo({ top, behavior: 'smooth' }); }, 50); }
+    function dUpdateProgress() { let score = 0, total = 10; D_SECTIONS.forEach(s => { if (sessionStorage.getItem('dvisited_' + s)) score += 1; }); SESSIONS.forEach((_, i) => { if (dIsTracked('sess_' + i)) score += 0.1; }); if (sessionStorage.getItem('dQuizDone')) score += 2; const pct = Math.min(100, Math.round((score / total) * 100)); document.getElementById('dProgressFill').style.width = pct + '%'; document.getElementById('dProgressPct').textContent = pct + '%'; }
+    function dIsTracked(key) { return sessionStorage.getItem('d_' + key) === '1'; }
+    function dMarkTracked(key) { sessionStorage.setItem('d_' + key, '1'); dUpdateProgress(); }
+    function dToggleTracked(key, elId) { if (dIsTracked(key)) sessionStorage.removeItem('d_' + key); else sessionStorage.setItem('d_' + key, '1'); const el = document.getElementById(elId); if (el) el.classList.toggle('checked', dIsTracked(key)); dUpdateProgress(); }
+
+    // ════════════════════════════════════════════════
+    // PWA
+    // ════════════════════════════════════════════════
+    function registerSW() { if ('serviceWorker' in navigator) { const swCode = `const CACHE='tariktanta-v2';const ASSETS=['/'];self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS))));self.addEventListener('fetch',e=>e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).then(res=>{const clone=res.clone();caches.open(CACHE).then(c=>c.put(e.request,clone));return res;}).catch(()=>caches.match('/')))));self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k))))));`; const blob = new Blob([swCode], { type: 'application/javascript' }); const url = URL.createObjectURL(blob); navigator.serviceWorker.register(url).catch(() => { }); } }
+
+    // ════════════════════════════════════════════════
+    // INIT
+    // ════════════════════════════════════════════════
+    function initApp() {
+      loadTheme();
+      initDropdowns();    // ← HOVER DROPDOWN
+      initDashboard();
+      pomoRender();       // ← POMODORO
+      hRenderCard();
+      dRenderSessions();
+      dRenderTerms();
+      dRenderPhrases();
+      dRenderPractice();
+      dRenderSpeakers();
+      dRenderFlashcard();
+      dStartQuiz();
+      dUpdateProgress();
+      buildSearchIndex();
+      registerSW();
+      restoreLastPanel();
+      setTimeout(function () { setLang(_currentLang); }, 150); // ← localStorage SON PANEL
+      initPremium();
+    }
+
+    // ════════════════════════════════════════════════
+    // PREMIUM ÖZELLİKLER
+    // ════════════════════════════════════════════════
+    function initPremium() {
+      initCursorGlow();
+      initWordOfDay();
+      initPWABanner();
+      initPullToRefresh();
+      initSoundEngine();
+      init3DTilt();
+    }
+
+    // ── CURSOR GLOW ──
+    function initCursorGlow() {
+      const glow = document.getElementById('cursor-glow');
+      if (!glow) return;
+      // Sadece gerçek mouse varsa aktif et (touch-only cihazlarda kapalı)
+      let hasMouse = false;
+      window.addEventListener('mousemove', function onFirstMove(e) {
+        hasMouse = true;
+        window.removeEventListener('mousemove', onFirstMove);
+        glow.style.opacity = '1';
+      }, { once: true, passive: true });
+      document.addEventListener('mousemove', e => {
+        if (!hasMouse) return;
+        glow.style.left = e.clientX + 'px';
+        glow.style.top = e.clientY + 'px';
+      }, { passive: true });
+      document.addEventListener('mouseleave', () => { glow.style.opacity = '0'; });
+      document.addEventListener('mouseenter', () => { if (hasMouse) glow.style.opacity = '1'; });
+    }
+
+    // ── GÜNÜN TERİMİ ──
+    const WOD_LIST = [
+      { term: 'Break down', def: '🔤 Phrasal Verb — Çökmek · "The negotiations broke down." → Müzakereler çöktü.', type: 'phrasal' },
+      { term: 'Carry out', def: '🔤 Phrasal Verb — Yürütmek · "Carry out the terms of the contract." → Sözleşmeyi uygulamak.', type: 'phrasal' },
+      { term: 'Draw up', def: '🔤 Phrasal Verb — Taslak hazırlamak · "Draw up an agreement." → Anlaşma taslağı hazırlamak.', type: 'phrasal' },
+      { term: 'Back out', def: '🔤 Phrasal Verb — Caymak · "Back out of a deal." → Anlaşmadan caymak.', type: 'phrasal' },
+      { term: 'Set out', def: '🔤 Phrasal Verb — Belirtmek · "Set out the conditions." → Koşulları belirtmek.', type: 'phrasal' },
+      { term: 'Come into force', def: '🔤 Phrasal Verb — Yürürlüğe girmek · "The law came into force." → Kanun yürürlüğe girdi.', type: 'phrasal' },
+      { term: 'Rule out', def: '🔤 Phrasal Verb — Dışlamak · "Rule out any ambiguity." → Her türlü belirsizliği elemek.', type: 'phrasal' },
+      { term: 'Stand by', def: '🔤 Phrasal Verb — Uymak · "Stand by the agreement." → Anlaşmaya uymak.', type: 'phrasal' },
+      { term: 'Phase out', def: '🔤 Phrasal Verb — Aşamalı kaldırmak · "Phase out fossil fuels." → Fosil yakıtları kaldırmak.', type: 'phrasal' },
+      { term: 'Look into', def: '🔤 Phrasal Verb — İncelemek · "Look into the matter." → Konuyu incelemek.', type: 'phrasal' },
+      { term: 'Put forward', def: '🔤 Phrasal Verb — Öne sürmek · "Put forward a proposal." → Teklif sunmak.', type: 'phrasal' },
+      { term: 'Call off', def: '🔤 Phrasal Verb — İptal etmek · "Call off the negotiations." → Müzakereleri iptal etmek.', type: 'phrasal' },
+      { term: 'Force Majeure', def: '📚 Terminoloji — Mücbir sebep · Tarafların kontrolü dışındaki olağanüstü olaylar.', type: 'term' },
+      { term: 'Habeas Corpus', def: '📚 Terminoloji — Kişi özgürlüğü güvencesi · Yasadışı tutukluluğa karşı hukuki ilke.', type: 'term' },
+      { term: 'Simultaneous Interpreting', def: '📚 Terminoloji — Simultane çeviri · Konuşmayla eş zamanlı sözlü çeviri.', type: 'term' },
+      { term: 'Net-zero Emissions', def: '📚 Terminoloji — Net sıfır emisyon · Atmosfere salınan karbonu dengeleyerek sıfıra indirmek.', type: 'term' },
+      { term: 'Due Diligence', def: '📚 Terminoloji — Gerekli özen · İşlem öncesi risklerin kapsamlı araştırılması.', type: 'term' },
+      { term: 'Consecutive Interpreting', def: '📚 Terminoloji — Konsekütif çeviri · Konuşmacı duraksadıktan sonra yapılan çeviri.', type: 'term' },
+      { term: 'Localization', def: '📚 Terminoloji — Yerelleştirme · İçeriği hedef kitlenin kültürüne uyarlama.', type: 'term' },
+      { term: 'Source Text', def: '📚 Terminoloji — Kaynak metin · Çevirinin yapıldığı özgün dildeki metin.', type: 'term' },
+      { term: 'Target Text', def: '📚 Terminoloji — Erek metin · Çeviri sonucu elde edilen hedef dildeki metin.', type: 'term' },
+      { term: 'Sworn Translation', def: '📚 Terminoloji — Yeminli çeviri · Resmi makamlarca onaylanan hukuki çeviri.', type: 'term' },
+      { term: 'Register', def: '📚 Terminoloji — Dil kullanım düzeyi · Bağlama göre değişen resmiyet biçimi.', type: 'term' },
+      { term: 'Equivalence', def: '📚 Terminoloji — Eşdeğerlik · Kaynak ve erek metin arasındaki anlam-işlev dengesi.', type: 'term' },
+    ];
+    function initWordOfDay() {
+      const el = document.getElementById('word-of-day-widget');
+      if (!el) return;
+      const idx = Math.floor(Math.random() * WOD_LIST.length);
+      const w = WOD_LIST[idx];
+      // Label'ı hemen set et, skeleton bekleme
+      const labelEl = document.querySelector('#word-of-day-widget .wod-label');
+      if (labelEl) labelEl.textContent = w.type === 'phrasal' ? '🔤 Günün Phrasal Verbi' : '📚 Günün Terimi';
+      const termEl = document.getElementById('wod-term');
+      const defEl = document.getElementById('wod-def');
+      if (termEl) termEl.innerHTML = w.term;
+      if (defEl) defEl.innerHTML = w.def;
+    }
+
+    // ── PWA BANNER ──
+    let _deferredPrompt = null;
+    window.addEventListener('beforeinstallprompt', e => {
+      e.preventDefault();
+      _deferredPrompt = e;
+      if (!localStorage.getItem('pwa-dismissed')) {
+        setTimeout(() => document.getElementById('pwa-banner').classList.add('show'), 3000);
+      }
+    });
+    function initPWABanner() {
+      const btn = document.getElementById('pwa-install-btn');
+      if (!btn) return;
+      btn.onclick = async () => {
+        if (_deferredPrompt) {
+          _deferredPrompt.prompt();
+          await _deferredPrompt.userChoice;
+          _deferredPrompt = null;
+        }
+        document.getElementById('pwa-banner').classList.remove('show');
+      };
+    }
+
+    // ── PULL TO REFRESH ──
+    function initPullToRefresh() {
+      let startY = 0, pulling = false;
+      const ind = document.getElementById('ptr-indicator');
+      document.addEventListener('touchstart', e => { startY = e.touches[0].clientY; }, { passive: true });
+      document.addEventListener('touchmove', e => {
+        if (window.scrollY === 0 && e.touches[0].clientY - startY > 60) {
+          pulling = true;
+          ind.textContent = '↓ Bırak — Yenile';
+          ind.classList.add('ptr-ready');
+        }
+      }, { passive: true });
+      document.addEventListener('touchend', () => {
+        if (pulling) { setTimeout(() => location.reload(), 200); }
+        pulling = false;
+        ind.classList.remove('ptr-ready');
+        ind.textContent = '↓ Yenile';
+      }, { passive: true });
+    }
+
+    // ── SES MOTORU (YouTube IFrame API) ──
+    // Reklamsız ambient YouTube videoları (sadece ses, görünmez player)
+    const SOUND_VIDEOS = {
+      rain: 'mPZkdNFkNps',
+      forest: 'xNN7iTA57jM',
+      wind: 'bGKth93bHUw',
+      fire: 'L_LUpnjgPso',
+      piano: 'lTRiuFIWV54',
+      ocean: 'bn9F19Hi1Lk',
+    };
+    const SOUND_MP3 = {
+      rain: 'https://cdn.freesound.org/previews/346/346170_5121236-lq.mp3',
+      forest: 'https://cdn.freesound.org/previews/416/416079_7037-lq.mp3',
+      wind: 'https://cdn.freesound.org/previews/553/553736_6381832-lq.mp3',
+      fire: 'https://cdn.freesound.org/previews/349/349813_5121236-lq.mp3',
+      piano: 'https://cdn.freesound.org/previews/476/476178_8418129-lq.mp3',
+      ocean: 'https://cdn.freesound.org/previews/402/402543_6381832-lq.mp3',
+    };
+    const SOUND_ICONS = { rain: '🌧️', forest: '🐦', wind: '💨', fire: '🔥', piano: '🎹', ocean: '🌊' };
+    const _isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    let _ytPlayer = null, _ytReady = false, _ytPendingVideo = null, _currentSound = 'none', _isMuted = false;
+    let _iosAudio = null;
+
+    function loadYTApi() {
+      if (_isIOS) return;
+      if (document.getElementById('yt-api-script')) return;
+      const tag = document.createElement('script');
+      tag.id = 'yt-api-script';
+      tag.src = 'https://www.youtube.com/iframe_api';
+      document.head.appendChild(tag);
+    }
+
+    window.onYouTubeIframeAPIReady = function () {
+      if (_isIOS) return;
+      const div = document.createElement('div');
+      div.id = 'yt-player-container';
+      div.style.cssText = 'position:fixed;bottom:-9999px;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;z-index:-1';
+      document.body.appendChild(div);
+      _ytPlayer = new YT.Player('yt-player-container', {
+        width: '1', height: '1',
+        videoId: 'mPZkdNFkNps',
+        playerVars: { autoplay: 0, controls: 0, loop: 1, disablekb: 1, fs: 0, modestbranding: 1, rel: 0, playsinline: 1 },
+        events: {
+          onReady: function (e) {
+            _ytReady = true;
+            e.target.setVolume(40);
+            e.target.pauseVideo();
+            if (_ytPendingVideo) {
+              e.target.loadVideoById({ videoId: _ytPendingVideo, startSeconds: 0 });
+              e.target.playVideo();
+              _ytPendingVideo = null;
+            }
+          },
+          onStateChange: function (e) {
+            if (e.data === YT.PlayerState.ENDED) _ytPlayer.seekTo(0);
+          }
+        }
+      });
+    };
+
+        function getIosAudio() {
+      if (!_iosAudio) {
+        _iosAudio = new Audio();
+        _iosAudio.loop = true;
+      }
+      return _iosAudio;
+    }
+
+    function stopSound() {
+      if (_isIOS) {
+        if (_iosAudio) { _iosAudio.pause(); }
+      } else {
+        if (_ytPlayer && _ytReady) { try { _ytPlayer.pauseVideo(); } catch (e) { } }
+      }
+      const ctrl = document.getElementById('sound-controls');
+      if (ctrl) ctrl.style.display = 'none';
+      _currentSound = 'none';
+    }
+
+    function playAmbient(type) {
+      if (type === 'none') { stopSound(); return; }
+      const vol = parseInt(document.getElementById('sound-volume') ? document.getElementById('sound-volume').value : 40);
+      if (_isIOS) {
+        const audio = getIosAudio();
+        audio.pause();
+        const url = SOUND_MP3[type];
+        if (!url) return;
+        audio.src = url;
+        audio.volume = vol / 100;
+        audio.play().catch(function () { });
+      } else {
+        const videoId = SOUND_VIDEOS[type];
+        if (!videoId) return;
+        if (_ytReady && _ytPlayer) {
+          _ytPlayer.loadVideoById({ videoId: videoId, startSeconds: 0 });
+          _ytPlayer.setVolume(vol);
+          _ytPlayer.playVideo();
+        } else {
+          _ytPendingVideo = videoId;
+          loadYTApi();
+        }
+      }
+      const ctrl = document.getElementById('sound-controls');
+      if (ctrl) ctrl.style.display = 'flex';
+      const icon = document.getElementById('sound-icon');
+      if (icon) icon.textContent = SOUND_ICONS[type] || '🎵';
+    }
+
+    function setSoundVolume(val) {
+      if (_isIOS) { if (_iosAudio) _iosAudio.volume = val / 100; }
+      else { if (_ytPlayer && _ytReady) _ytPlayer.setVolume(parseInt(val)); }
+      const lbl = document.getElementById('sound-vol-label');
+      if (lbl) lbl.textContent = val + '%';
+    }
+
+    function toggleSoundMute() {
+      const btn = document.getElementById('sound-mute-btn');
+      _isMuted = !_isMuted;
+      if (_isIOS) { if (_iosAudio) _iosAudio.muted = _isMuted; }
+      else { if (_ytPlayer && _ytReady) { _isMuted ? _ytPlayer.mute() : _ytPlayer.unMute(); } }
+      if (btn) btn.textContent = _isMuted ? '▶' : '⏸';
+    }
+
+
+    function setSound(btn) {
+      document.querySelectorAll('.sound-opt').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      _currentSound = btn.dataset.sound;
+      playAmbient(_currentSound);
+    }
+
+    function initSoundEngine() { loadYTApi(); }
+
+
+    // ── 3D KART TİLT ──
+    function init3DTilt() {
+      function applyTilt(el) {
+        el.addEventListener('mousemove', e => {
+          const r = el.getBoundingClientRect();
+          const x = (e.clientX - r.left) / r.width - 0.5;
+          const y = (e.clientY - r.top) / r.height - 0.5;
+          el.style.transform = `perspective(600px) rotateY(${x * 10}deg) rotateX(${-y * 10}deg) translateY(-2px)`;
+        }, { passive: true });
+        el.addEventListener('mouseleave', () => {
+          el.style.transform = '';
+        });
+      }
+      // course kartlara uygula
+      document.querySelectorAll('.course-card').forEach(applyTilt);
+      // Ardıl session kartlara da
+      document.querySelectorAll('.session-card').forEach(applyTilt);
+      // Dinamik eklenen kartlar için observer
+      const obs = new MutationObserver(muts => {
+        muts.forEach(m => m.addedNodes.forEach(n => {
+          if (n.classList && (n.classList.contains('course-card') || n.classList.contains('session-card'))) applyTilt(n);
+        }));
+      });
+      obs.observe(document.body, { childList: true, subtree: true });
+    }
+
+  </script>
+</body>
+
+</html>
