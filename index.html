@@ -26,7 +26,7 @@
   <div id="apps-popup"
     style="display:none;position:fixed;top:52px;right:12px;background:var(--theme-surface);border:1px solid var(--theme-border);border-radius:16px;padding:12px;min-width:280px;z-index:99999;box-shadow:0 12px 40px rgba(0,0,0,0.6);">
     <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--theme-muted);padding:4px 6px 10px;border-bottom:1px solid var(--theme-border);margin-bottom:10px;">
-      📱 Hızlı Aç</div>
+      <span id="apps-quick-open">📱 Hızlı Aç</span></div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
       <button class="app-grid-btn" onclick="openApp('instagram')">
         <img src="https://cdn.simpleicons.org/instagram/E1306C" width="22" height="22" alt="">
@@ -60,15 +60,15 @@
   </div>
 
   <div class="pwa-banner" id="pwa-banner">
-    <div class="pwa-text"><strong>Tariktanta</strong><br>Ana ekrana ekle, uygulama gibi kullan</div><button
-      class="pwa-btn" id="pwa-install-btn">Ekle</button><button class="pwa-close"
+    <div class="pwa-text"><strong>Tariktanta</strong><br><span id="pwa-sub">Ana ekrana ekle, uygulama gibi kullan</span></div><button
+      class="pwa-btn" id="pwa-install-btn"><span id="pwa-install-text">Ekle</span></button><button class="pwa-close"
       onclick="document.getElementById('pwa-banner').classList.remove('show');localStorage.setItem('pwa-dismissed','1')">×</button>
   </div>
-  <div class="ptr-indicator" id="ptr-indicator">↓ Yenile</div>
+  <div class="ptr-indicator" id="ptr-indicator"><span id="ptr-text">↓ Yenile</span></div>
   <div id="lockscreen">
     <div id="lock-logo">🔒</div>
     <h2>Tariktanta</h2>
-    <p class="lock-sub">Şifreyi gir</p>
+    <p class="lock-sub" id="lock-sub">Şifreyi gir</p>
     <input type="password" id="lock-input" maxlength="4" placeholder="••••" inputmode="numeric" pattern="[0-9]*"
       autocomplete="off" onkeydown="if(event.key==='Enter') lockCheck()" />
   </div>
@@ -80,7 +80,7 @@
           <circle cx="11" cy="11" r="8" />
           <path d="m21 21-4.35-4.35" />
         </svg>
-        <input type="text" id="global-search-input" placeholder="Terim ara… (Türkçe veya İngilizce)"
+        <input type="text" id="global-search-input" id="search-input-field" placeholder="Terim ara… (Türkçe veya İngilizce)"
           oninput="globalSearch(this.value)" />
         <button class="search-close-btn" onclick="closeSearch()">ESC</button>
       </div>
@@ -254,7 +254,7 @@
         </div>
         <div class="pomo-controls">
           <button class="pomo-btn" id="pomoStartBtn" onclick="pomoToggle()">▶ Başlat</button>
-          <button class="pomo-btn" onclick="pomoReset()">↺ Sıfırla</button>
+          <button class="pomo-btn" id="pomoResetBtn" onclick="pomoReset()">↺ Sıfırla</button>
         </div>
         <div class="pomo-sessions" id="pomoDotsWrap">
           <div class="pomo-dot" id="pd0"></div>
@@ -265,18 +265,18 @@
       </div>
       <!-- HIZLI SÖZLÜK -->
       <div class="tool-box" style="margin:0;">
-        <div class="tool-box-label">📖 Hızlı Sözlük</div>
+        <div class="tool-box-label" id="dict-label">📖 Hızlı Sözlük</div>
         <div class="dict-input-row">
           <input
             type="text"
             id="q-dict"
             class="dict-input"
-            placeholder="İngilizce kelime yaz, Enter'a bas..."
+            id="dict-input" placeholder="İngilizce kelime yaz, Enter'a bas..."
             onkeydown="if(event.key==='Enter') runDict()"
             autocomplete="off"
             spellcheck="false"
           >
-          <button class="pomo-btn" onclick="runDict()">ARA</button>
+          <button class="pomo-btn" id="dict-btn" onclick="runDict()">ARA</button>
         </div>
         <div id="dict-result"></div>
       </div>
@@ -304,31 +304,31 @@
     </div>
 
     <div class="word-of-day" id="word-of-day-widget">
-      <div class="wod-label">💡 Günün Terimi</div>
+      <div class="wod-label" id="wod-label-main">💡 Günün Terimi</div>
       <div class="wod-term" id="wod-term"><span class="skeleton"
           style="display:inline-block;width:160px;height:22px"></span></div>
       <div class="wod-def" id="wod-def"><span class="skeleton"
           style="display:inline-block;width:240px;height:14px;margin-top:6px"></span></div>
     </div>
-    <div class="dash-section-title">— TÜM DERSLER</div>
+    <div class="dash-section-title" id="section-all-courses">— TÜM DERSLER</div>
     <div class="course-grid" id="course-grid"></div>
-    <div class="dash-section-title">— HAFTALIK PROGRAM</div>
+    <div class="dash-section-title" id="section-weekly">— HAFTALIK PROGRAM</div>
     <div class="schedule-section">
       <div class="schedule-grid" id="schedule-grid"></div>
     </div>
     <div class="shortcuts-bar">
-      <div class="shortcut-hint"><kbd>⌘K</kbd> Global arama</div>
+      <div class="shortcut-hint"><kbd>⌘K</kbd> <span id="shortcut-search">Global arama</span></div>
       <div class="shortcut-hint"><kbd>D</kbd> Dashboard</div>
-      <div class="shortcut-hint"><kbd>1–7</kbd> Ders geçiş</div>
+      <div class="shortcut-hint"><kbd>1–7</kbd> <span id="shortcut-courses">Ders geçiş</span></div>
       <div class="shortcut-hint"><kbd>T</kbd> Tema</div>
-      <div class="shortcut-hint"><kbd>ESC</kbd> Kapat</div>
+      <div class="shortcut-hint"><kbd>ESC</kbd> <span id="shortcut-close">Kapat</span></div>
     </div>
   </div>
 
   <div class="app-panel" id="panel-hukuk">
     <div class="hero">
       <div class="container">
-        <div class="hero-tag">Çalışma Dosyası · Week 2</div>
+        <div class="hero-tag" id="hukuk-hero-tag">Çalışma Dosyası · Week 2</div>
         <h1>Hukuki <span>Çeviri</span><br>Teori & Pratik</h1>
         <p class="hero-sub">Deborah Cao · Legal Translation &nbsp;+&nbsp; AB Mevzuatı Çeviri Rehberi · Kapsamlı ders
           notları</p>
@@ -340,17 +340,17 @@
       </div>
     </div>
     <nav class="hnav">
-      <a onclick="hScrollTo('tanim')">Tanım</a>
-      <a onclick="hScrollTo('siniflandirma')">Sınıflandırma</a>
-      <a onclick="hScrollTo('zorluklar')">Zorluklar</a>
-      <a onclick="hScrollTo('metin-turleri')">Metin Türleri</a>
-      <a onclick="hScrollTo('ab-genel')">AB Rehberi</a>
-      <a onclick="hScrollTo('ab-duzenlemeler')">AB Düzenlemeleri</a>
-      <a onclick="hScrollTo('ab-bolumler')">Bölümler & Kalıplar</a>
-      <a onclick="hScrollTo('ab-atiflar')">Atıflar</a>
-      <a onclick="hScrollTo('ab-yazim')">Yazım Kuralları</a>
-      <a onclick="hScrollTo('ab-ifadeler')">Sık İfadeler</a>
-      <a onclick="hScrollTo('htest')">Leitner Testi</a>
+      <a id="hnav-tanim" onclick="hScrollTo('tanim')">Tanım</a>
+      <a id="hnav-sinif" onclick="hScrollTo('siniflandirma')">Sınıflandırma</a>
+      <a id="hnav-zorluk" onclick="hScrollTo('zorluklar')">Zorluklar</a>
+      <a id="hnav-metin" onclick="hScrollTo('metin-turleri')">Metin Türleri</a>
+      <a id="hnav-ab" onclick="hScrollTo('ab-genel')">AB Rehberi</a>
+      <a id="hnav-abduz" onclick="hScrollTo('ab-duzenlemeler')">AB Düzenlemeleri</a>
+      <a id="hnav-abolum" onclick="hScrollTo('ab-bolumler')">Bölümler & Kalıplar</a>
+      <a id="hnav-atif" onclick="hScrollTo('ab-atiflar')">Atıflar</a>
+      <a id="hnav-yazim" onclick="hScrollTo('ab-yazim')">Yazım Kuralları</a>
+      <a id="hnav-ifade" onclick="hScrollTo('ab-ifadeler')">Sık İfadeler</a>
+      <a id="hnav-test" onclick="hScrollTo('htest')">Leitner Testi</a>
     </nav>
     <div class="section" id="tanim">
       <div class="container">
@@ -905,7 +905,7 @@
     <div class="section" id="htest">
       <div class="container">
         <div class="section-header">
-          <div class="section-num">11</div>
+          <div class="section-num" id="hfc-section-num">11</div>
           <div class="section-title-wrap">
             <div class="section-source">Leitner Sistemi</div>
             <div class="section-title">Flashcard <span class="accent3">Leitner Testi</span></div>
@@ -982,105 +982,105 @@
 
   <div class="app-panel" id="panel-davos">
     <header>
-      <div class="dtag">🎙️ Ardıl Çeviri · Hazırlık Dosyası</div>
+      <div class="dtag" id="davos-tag">🎙️ Ardıl Çeviri · Hazırlık Dosyası</div>
       <h1>DAVOS <span>2026</span><br>Çalışma Rehberi</h1>
       <p class="dsubtitle">WEF 56. Yıllık Toplantısı · 19–23 Ocak 2026 · İsviçre, Davos<br>Tema: <em>"A Spirit of
           Dialogue"</em></p>
     </header>
     <div class="progress-strip">
-      <span class="progress-label">GENEL İLERLEME</span>
+      <span class="progress-label" id="progress-label">GENEL İLERLEME</span>
       <div class="progress-bar">
         <div class="progress-fill" id="dProgressFill"></div>
       </div>
       <span class="progress-pct" id="dProgressPct">0%</span>
     </div>
     <nav>
-      <button class="dnav-btn active" onclick="dShowSection('oturumlar', this)">📋 Oturumlar</button>
-      <button class="dnav-btn" onclick="dShowSection('terminoloji', this)">📚 Terminoloji</button>
-      <button class="dnav-btn" onclick="dShowSection('kaliplar', this)">💬 Kalıplar</button>
-      <button class="dnav-btn" onclick="dShowSection('flashcard', this)">🃏 Flash Kart</button>
-      <button class="dnav-btn" onclick="dShowSection('quiz', this)">🧠 Quiz</button>
-      <button class="dnav-btn" onclick="dShowSection('pratik', this)">🎤 Çeviri Pratiği</button>
-      <button class="dnav-btn" onclick="dShowSection('konusmaci', this)">👤 Konuşmacılar</button>
+      <button class="dnav-btn active" id="dnav-oturumlar" onclick="dShowSection('oturumlar', this)">📋 Oturumlar</button>
+      <button class="dnav-btn" id="dnav-terminoloji" onclick="dShowSection('terminoloji', this)">📚 Terminoloji</button>
+      <button class="dnav-btn" id="dnav-kaliplar" onclick="dShowSection('kaliplar', this)">💬 Kalıplar</button>
+      <button class="dnav-btn" id="dnav-flashcard" onclick="dShowSection('flashcard', this)">🃏 Flash Kart</button>
+      <button class="dnav-btn" id="dnav-quiz" onclick="dShowSection('quiz', this)">🧠 Quiz</button>
+      <button class="dnav-btn" id="dnav-pratik" onclick="dShowSection('pratik', this)">🎤 Çeviri Pratiği</button>
+      <button class="dnav-btn" id="dnav-konusmaci" onclick="dShowSection('konusmaci', this)">👤 Konuşmacılar</button>
     </nav>
     <main>
       <div class="dsection active" id="dsec-oturumlar">
-        <p class="dsection-title">Tüm Oturumlar</p>
-        <p class="dsection-desc">Her karta tıkla → ayrıntıları, anahtar soruları ve dikkat noktalarını gör.</p>
+        <p class="dsection-title" id="dsec-title-oturumlar">Tüm Oturumlar</p>
+        <p class="dsection-desc" id="dsec-desc-oturumlar">Her karta tıkla → ayrıntıları, anahtar soruları ve dikkat noktalarını gör.</p>
         <div class="dtracker">
-          <div class="dtracker-title">✅ Okuduklarım</div>
+          <div class="dtracker-title" id="dtracker-title">✅ Okuduklarım</div>
           <div class="dtracker-items" id="dSessionTracker"></div>
         </div>
         <div class="session-grid" id="dSessionGrid"></div>
       </div>
       <div class="dsection" id="dsec-terminoloji">
-        <p class="dsection-title">Terminoloji Sözlüğü</p>
-        <p class="dsection-desc">İngilizce → Türkçe. Hover ile kategorileri renklendir.</p>
+        <p class="dsection-title" id="dsec-title-terminoloji">Terminoloji Sözlüğü</p>
+        <p class="dsection-desc" id="dsec-desc-terminoloji">İngilizce → Türkçe. Hover ile kategorileri renklendir.</p>
         <div id="dTermListContainer"></div>
       </div>
       <div class="dsection" id="dsec-kaliplar">
-        <p class="dsection-title">Zor Kalıplar & Deyimsel İfadeler</p>
-        <p class="dsection-desc">Ardıl çeviride anında aklına gelmesi gereken ifadeler.</p>
+        <p class="dsection-title" id="dsec-title-kaliplar">Zor Kalıplar & Deyimsel İfadeler</p>
+        <p class="dsection-desc" id="dsec-desc-kaliplar">Ardıl çeviride anında aklına gelmesi gereken ifadeler.</p>
         <div id="dPhraseContainer"></div>
       </div>
       <div class="dsection" id="dsec-flashcard">
-        <p class="dsection-title">Flash Kart — Leitner Sistemi</p>
-        <p class="dsection-desc">Karta tıkla → Türkçeyi gör. Bil/Bilmiyorum ile akıllı tekrar.</p>
+        <p class="dsection-title" id="dsec-title-flashcard">Flash Kart — Leitner Sistemi</p>
+        <p class="dsection-desc" id="dsec-desc-flashcard">Karta tıkla → Türkçeyi gör. Bil/Bilmiyorum ile akıllı tekrar.</p>
         <div class="flashcard-area">
           <div class="dflashcard" id="dMainFlashcard" onclick="dFlipCard()">
             <div class="dflashcard-inner">
               <div class="dflashcard-front">
-                <div class="dflashcard-hint">İNGİLİZCE — tıkla</div>
+                <div class="dflashcard-hint" id="dflash-hint-front">İNGİLİZCE — tıkla</div>
                 <div class="dflashcard-word" id="dFlashEN">–</div>
               </div>
               <div class="dflashcard-back">
-                <div class="dflashcard-hint">TÜRKÇE KARŞILIĞI</div>
+                <div class="dflashcard-hint" id="dflash-hint-back">TÜRKÇE KARŞILIĞI</div>
                 <div class="dflashcard-word" id="dFlashTR">–</div>
                 <div class="dflashcard-note" id="dFlashNote">–</div>
               </div>
             </div>
           </div>
           <div class="flash-controls">
-            <button class="flash-btn" onclick="dPrevCard()">← Önceki</button>
+            <button class="flash-btn" id="dflash-prev" onclick="dPrevCard()">← Önceki</button>
             <span class="flash-counter" id="dFlashCounter">1 / ?</span>
-            <button class="flash-btn primary" onclick="dNextCard()">Sonraki →</button>
+            <button class="flash-btn primary" id="dflash-next" onclick="dNextCard()">Sonraki →</button>
           </div>
           <div class="flash-controls" style="margin-top:12px">
-            <button class="flash-btn know-btn" onclick="dMarkKnow()">✓ Biliyorum</button>
-            <button class="flash-btn dunno-btn" onclick="dMarkDunno()">✗ Bilmiyorum</button>
+            <button class="flash-btn know-btn" id="dflash-know" onclick="dMarkKnow()">✓ Biliyorum</button>
+            <button class="flash-btn dunno-btn" id="dflash-dunno" onclick="dMarkDunno()">✗ Bilmiyorum</button>
           </div>
           <div class="leitner-stats" id="d-leitner-stats">
-            <span>📦 Bekleyen: <strong id="d-stat-pending">?</strong></span>
-            <span>✅ Bilen: <strong id="d-stat-known">0</strong></span>
-            <span>🔁 Tekrar: <strong id="d-stat-retry">0</strong></span>
+            <span id="dstat-pending-label">📦 Bekleyen: <strong id="d-stat-pending">?</strong></span>
+            <span id="dstat-known-label">✅ Bilen: <strong id="d-stat-known">0</strong></span>
+            <span id="dstat-retry-label">🔁 Tekrar: <strong id="d-stat-retry">0</strong></span>
           </div>
         </div>
       </div>
       <div class="dsection" id="dsec-quiz">
-        <p class="dsection-title">Quiz</p>
-        <p class="dsection-desc">Terminolojiyi test et. Her turda 12 soru, karışık sıra.</p>
+        <p class="dsection-title" id="dsec-title-quiz">Quiz</p>
+        <p class="dsection-desc" id="dsec-desc-quiz">Terminolojiyi test et. Her turda 12 soru, karışık sıra.</p>
         <div class="quiz-container">
           <div class="quiz-header">
-            <div class="quiz-score">PUAN: <span id="dQuizScore">0</span> / <span id="dQuizTotal">12</span></div>
-            <div class="quiz-score">SORU: <span id="dQuizCurrent">1</span></div>
+            <div class="quiz-score"><span id="quiz-score-label">PUAN</span>: <span id="dQuizScore">0</span> / <span id="dQuizTotal">12</span></div>
+            <div class="quiz-score"><span id="quiz-q-label">SORU</span>: <span id="dQuizCurrent">1</span></div>
           </div>
           <div id="dQuizCard" class="quiz-card"></div>
           <div id="dQuizComplete" class="quiz-complete">
-            <h2>Tur Bitti! 🎉</h2>
+            <h2 id="quiz-complete-title">Tur Bitti! 🎉</h2>
             <div class="final-score" id="dFinalScore">–</div>
-            <p style="color:#7a8090;font-size:14px;">Skor / 12</p>
-            <button class="quiz-restart" onclick="dStartQuiz()">Tekrar Başla</button>
+            <p style="color:#7a8090;font-size:14px;" id="quiz-score-sub">Skor / 12</p>
+            <button class="quiz-restart" id="quiz-restart-btn" onclick="dStartQuiz()">Tekrar Başla</button>
           </div>
         </div>
       </div>
       <div class="dsection" id="dsec-pratik">
-        <p class="dsection-title">Çeviri Pratiği</p>
-        <p class="dsection-desc">Davos tarzı cümleler. Önce kendin dene → sonra cevabı gör.</p>
+        <p class="dsection-title" id="dsec-title-pratik">Çeviri Pratiği</p>
+        <p class="dsection-desc" id="dsec-desc-pratik">Davos tarzı cümleler. Önce kendin dene → sonra cevabı gör.</p>
         <div id="dPracticeContainer"></div>
       </div>
       <div class="dsection" id="dsec-konusmaci">
-        <p class="dsection-title">Önemli Konuşmacılar</p>
-        <p class="dsection-desc">İsimler, unvanlar ve konuştukları konular.</p>
+        <p class="dsection-title" id="dsec-title-konusmaci">Önemli Konuşmacılar</p>
+        <p class="dsection-desc" id="dsec-desc-konusmaci">İsimler, unvanlar ve konuştukları konular.</p>
         <div class="speaker-grid" id="dSpeakerGrid"></div>
         <p class="dsection-title" style="font-size:20px;margin-bottom:12px;">Sayılar & Veriler</p>
         <div class="number-grid" id="dNumberGrid"></div>

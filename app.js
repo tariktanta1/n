@@ -519,6 +519,233 @@ function setLang(lang) {
     if (isEN) wodLabel.textContent = isPhrasal ? '🔤 Phrasal Verb of the Day' : '📚 Term of the Day';
     else wodLabel.textContent = isPhrasal ? '🔤 Gunun Phrasal Verbi' : '📚 Gunun Terimi';
   }
+
+  // Sayfa başlığı
+  document.title = isEN ? 'Tariktanta · Study Station' : 'Tariktanta · Çalışma İstasyonu';
+
+  // Pomodoro reset
+  const pomoReset = document.getElementById('pomoResetBtn');
+  if (pomoReset) pomoReset.textContent = isEN ? '↺ Reset' : '↺ Sıfırla';
+
+  // Pomodoro mode
+  const pomoMode = document.getElementById('pomoMode');
+  if (pomoMode) {
+    const txt = pomoMode.textContent;
+    if (isEN) {
+      pomoMode.textContent = txt.replace('Çalışma', 'Work').replace('Kısa Mola', 'Short Break').replace('Uzun Mola', 'Long Break');
+    } else {
+      pomoMode.textContent = txt.replace('Work', 'Çalışma').replace('Short Break', 'Kısa Mola').replace('Long Break', 'Uzun Mola');
+    }
+  }
+
+  // Dict
+  const dictLabel = document.getElementById('dict-label');
+  if (dictLabel) dictLabel.textContent = isEN ? '📖 Quick Dictionary' : '📖 Hızlı Sözlük';
+  const dictInput = document.getElementById('dict-input');
+  if (dictInput) dictInput.placeholder = isEN ? 'Type an English word, press Enter…' : 'İngilizce kelime yaz, Enter'a bas...';
+  const dictBtn = document.getElementById('dict-btn');
+  if (dictBtn) dictBtn.textContent = isEN ? 'SEARCH' : 'ARA';
+
+  // Section titles
+  const secCourses = document.getElementById('section-all-courses');
+  if (secCourses) secCourses.textContent = isEN ? '— ALL COURSES' : '— TÜM DERSLER';
+  const secWeekly = document.getElementById('section-weekly');
+  if (secWeekly) secWeekly.textContent = isEN ? '— WEEKLY SCHEDULE' : '— HAFTALIK PROGRAM';
+
+  // WOD main label
+  const wodMain = document.getElementById('wod-label-main');
+  if (wodMain && !wodMain.textContent.includes('Phrasal')) {
+    wodMain.textContent = isEN ? '📚 Term of the Day' : '💡 Günün Terimi';
+  }
+
+  // Shortcuts
+  const sSearch = document.getElementById('shortcut-search');
+  if (sSearch) sSearch.textContent = isEN ? 'Global search' : 'Global arama';
+  const sCourses = document.getElementById('shortcut-courses');
+  if (sCourses) sCourses.textContent = isEN ? 'Switch course' : 'Ders geçiş';
+  const sClose = document.getElementById('shortcut-close');
+  if (sClose) sClose.textContent = isEN ? 'Close' : 'Kapat';
+
+  // Lock screen
+  const lockSub = document.getElementById('lock-sub');
+  if (lockSub) lockSub.textContent = isEN ? 'Enter password' : 'Şifreyi gir';
+
+  // Apps popup
+  const appsQuick = document.getElementById('apps-quick-open');
+  if (appsQuick) appsQuick.textContent = isEN ? '📱 Quick Launch' : '📱 Hızlı Aç';
+
+  // PWA
+  const pwaSub = document.getElementById('pwa-sub');
+  if (pwaSub) pwaSub.textContent = isEN ? 'Add to home screen, use like an app' : 'Ana ekrana ekle, uygulama gibi kullan';
+  const pwaInstall = document.getElementById('pwa-install-text');
+  if (pwaInstall) pwaInstall.textContent = isEN ? 'Add' : 'Ekle';
+
+  // Pull to refresh
+  const ptrText = document.getElementById('ptr-text');
+  if (ptrText) ptrText.textContent = isEN ? '↓ Refresh' : '↓ Yenile';
+
+  // Search input placeholder
+  const searchField = document.getElementById('search-input-field');
+  if (searchField) searchField.placeholder = isEN ? 'Search term… (Turkish or English)' : 'Terim ara… (Türkçe veya İngilizce)';
+
+  // Hukuk panel nav
+  const hnavMap = {
+    'hnav-tanim': [isEN ? 'Definition' : 'Tanım'],
+    'hnav-sinif': [isEN ? 'Classification' : 'Sınıflandırma'],
+    'hnav-zorluk': [isEN ? 'Challenges' : 'Zorluklar'],
+    'hnav-metin': [isEN ? 'Text Types' : 'Metin Türleri'],
+    'hnav-ab': [isEN ? 'EU Guide' : 'AB Rehberi'],
+    'hnav-abduz': [isEN ? 'EU Regulations' : 'AB Düzenlemeleri'],
+    'hnav-abolum': [isEN ? 'Sections & Phrases' : 'Bölümler & Kalıplar'],
+    'hnav-atif': [isEN ? 'Citations' : 'Atıflar'],
+    'hnav-yazim': [isEN ? 'Style Rules' : 'Yazım Kuralları'],
+    'hnav-ifade': [isEN ? 'Common Phrases' : 'Sık İfadeler'],
+    'hnav-test': [isEN ? 'Leitner Test' : 'Leitner Testi'],
+  };
+  Object.entries(hnavMap).forEach(function(e) {
+    var el = document.getElementById(e[0]);
+    if (el) el.textContent = e[1][0];
+  });
+
+  // Hukuk hero tag
+  const hTag = document.getElementById('hukuk-hero-tag');
+  if (hTag) hTag.textContent = isEN ? 'Study File · Week 2' : 'Çalışma Dosyası · Week 2';
+
+  // Davos panel
+  const davosTag = document.getElementById('davos-tag');
+  if (davosTag) davosTag.textContent = isEN ? '🎙️ Consecutive Interpreting · Study File' : '🎙️ Ardıl Çeviri · Hazırlık Dosyası';
+  const progressLabel = document.getElementById('progress-label');
+  if (progressLabel) progressLabel.textContent = isEN ? 'OVERALL PROGRESS' : 'GENEL İLERLEME';
+
+  // Davos nav
+  const dnavMap = {
+    'dnav-oturumlar': isEN ? '📋 Sessions' : '📋 Oturumlar',
+    'dnav-terminoloji': isEN ? '📚 Terminology' : '📚 Terminoloji',
+    'dnav-kaliplar': isEN ? '💬 Phrases' : '💬 Kalıplar',
+    'dnav-flashcard': isEN ? '🃏 Flash Card' : '🃏 Flash Kart',
+    'dnav-quiz': isEN ? '🧠 Quiz' : '🧠 Quiz',
+    'dnav-pratik': isEN ? '🎤 Practice' : '🎤 Çeviri Pratiği',
+    'dnav-konusmaci': isEN ? '👤 Speakers' : '👤 Konuşmacılar',
+  };
+  Object.entries(dnavMap).forEach(function(e) {
+    var el = document.getElementById(e[0]);
+    if (el) el.textContent = e[1];
+  });
+
+  // Davos section titles & descs
+  const dsecMap = {
+    'dsec-title-oturumlar': [isEN ? 'All Sessions' : 'Tüm Oturumlar'],
+    'dsec-desc-oturumlar': [isEN ? 'Click each card → see details, key questions and highlights.' : 'Her karta tıkla → ayrıntıları, anahtar soruları ve dikkat noktalarını gör.'],
+    'dtracker-title': [isEN ? '✅ Read' : '✅ Okuduklarım'],
+    'dsec-title-terminoloji': [isEN ? 'Terminology Glossary' : 'Terminoloji Sözlüğü'],
+    'dsec-desc-terminoloji': [isEN ? 'English → Turkish. Hover to highlight categories.' : 'İngilizce → Türkçe. Hover ile kategorileri renklendir.'],
+    'dsec-title-kaliplar': [isEN ? 'Difficult Phrases & Idioms' : 'Zor Kalıplar & Deyimsel İfadeler'],
+    'dsec-desc-kaliplar': [isEN ? 'Phrases you need to recall instantly in consecutive interpreting.' : 'Ardıl çeviride anında aklına gelmesi gereken ifadeler.'],
+    'dsec-title-flashcard': [isEN ? 'Flash Card — Leitner System' : 'Flash Kart — Leitner Sistemi'],
+    'dsec-desc-flashcard': [isEN ? 'Click card → see Turkish. Smart review with Know/Don't Know.' : 'Karta tıkla → Türkçeyi gör. Bil/Bilmiyorum ile akıllı tekrar.'],
+    'dflash-hint-front': [isEN ? 'ENGLISH — click' : 'İNGİLİZCE — tıkla'],
+    'dflash-hint-back': [isEN ? 'TURKISH EQUIVALENT' : 'TÜRKÇE KARŞILIĞI'],
+    'dflash-prev': [isEN ? '← Previous' : '← Önceki'],
+    'dflash-next': [isEN ? 'Next →' : 'Sonraki →'],
+    'dflash-know': [isEN ? '✓ I Know' : '✓ Biliyorum'],
+    'dflash-dunno': [isEN ? '✗ Don't Know' : '✗ Bilmiyorum'],
+    'dsec-title-quiz': [isEN ? 'Quiz' : 'Quiz'],
+    'dsec-desc-quiz': [isEN ? 'Test your vocabulary. 12 questions per round, random order.' : 'Terminolojiyi test et. Her turda 12 soru, karışık sıra.'],
+    'quiz-score-label': [isEN ? 'SCORE' : 'PUAN'],
+    'quiz-q-label': [isEN ? 'QUESTION' : 'SORU'],
+    'quiz-complete-title': [isEN ? 'Round Complete! 🎉' : 'Tur Bitti! 🎉'],
+    'quiz-score-sub': [isEN ? 'Score / 12' : 'Skor / 12'],
+    'quiz-restart-btn': [isEN ? 'Restart' : 'Tekrar Başla'],
+    'dsec-title-pratik': [isEN ? 'Translation Practice' : 'Çeviri Pratiği'],
+    'dsec-desc-pratik': [isEN ? 'Davos-style sentences. Try first → then reveal the answer.' : 'Davos tarzı cümleler. Önce kendin dene → sonra cevabı gör.'],
+    'dsec-title-konusmaci': [isEN ? 'Key Speakers' : 'Önemli Konuşmacılar'],
+    'dsec-desc-konusmaci': [isEN ? 'Names, titles and topics they covered.' : 'İsimler, unvanlar ve konuştukları konular.'],
+  };
+  Object.entries(dsecMap).forEach(function(e) {
+    var el = document.getElementById(e[0]);
+    if (el) el.textContent = e[1][0];
+  });
+
+  // Leitner stats
+  const pendingLabel = document.getElementById('dstat-pending-label');
+  if (pendingLabel) {
+    const pending = document.getElementById('d-stat-pending');
+    const val = pending ? pending.textContent : '?';
+    pendingLabel.innerHTML = (isEN ? '📦 Pending: ' : '📦 Bekleyen: ') + '<strong id="d-stat-pending">' + val + '</strong>';
+  }
+  const knownLabel = document.getElementById('dstat-known-label');
+  if (knownLabel) {
+    const known = document.getElementById('d-stat-known');
+    const val = known ? known.textContent : '0';
+    knownLabel.innerHTML = (isEN ? '✅ Known: ' : '✅ Bilen: ') + '<strong id="d-stat-known">' + val + '</strong>';
+  }
+  const retryLabel = document.getElementById('dstat-retry-label');
+  if (retryLabel) {
+    const retry = document.getElementById('d-stat-retry');
+    const val = retry ? retry.textContent : '0';
+    retryLabel.innerHTML = (isEN ? '🔁 Retry: ' : '🔁 Tekrar: ') + '<strong id="d-stat-retry">' + val + '</strong>';
+  }
+
+  // Placeholder paneller (hafta notları)
+  document.querySelectorAll('.placeholder-sub').forEach(function(el) {
+    if (el.textContent.includes('henüz eklenmedi') || el.textContent.includes('hazır')) {
+      el.textContent = isEN ? 'Notes for this week have not been added yet.' : 'Bu haftanın notları henüz eklenmedi.';
+    }
+  });
+  document.querySelectorAll('.placeholder-badge').forEach(function(el) {
+    if (el.textContent.includes('Yakında') || el.textContent.includes('Coming')) {
+      el.textContent = isEN ? 'Coming Soon · Drop your notes' : 'Yakında · Hafta notlarını at';
+    }
+  });
+
+  // Placeholder titles (Hukuk, Ardıl hafta panelleri)
+  document.querySelectorAll('.placeholder-title').forEach(function(el) {
+    const t = el.textContent;
+    if (isEN) {
+      el.textContent = t
+        .replace('Hukuk Çevirisi', 'Legal Translation')
+        .replace('Ardıl Çeviri', 'Consecutive Interpreting')
+        .replace('Çeviri Göstergebilimi II', 'Translation Semiotics II')
+        .replace('Çeviride Etik', 'Ethics in Translation')
+        .replace('Türk İşaret Dili', 'Turkish Sign Language')
+        .replace('Tıbbi Bitki', 'Medicinal Plants')
+        .replace('Rusça IV', 'Russian IV')
+        .replace('Rusça VI', 'Russian VI')
+        .replace('. Hafta', '. Week')
+        .replace('Hafta', 'Week');
+    } else {
+      el.textContent = t
+        .replace('Legal Translation', 'Hukuk Çevirisi')
+        .replace('Consecutive Interpreting', 'Ardıl Çeviri')
+        .replace('Translation Semiotics II', 'Çeviri Göstergebilimi II')
+        .replace('Ethics in Translation', 'Çeviride Etik')
+        .replace('Turkish Sign Language', 'Türk İşaret Dili')
+        .replace('Medicinal Plants', 'Tıbbi Bitki')
+        .replace('. Week', '. Hafta');
+    }
+  });
+
+  // Drop week labels (hafta menüsü başlığı)
+  document.querySelectorAll('.drop-week-label').forEach(function(el) {
+    el.textContent = isEN ? '📅 Weeks' : '📅 Haftalar';
+  });
+
+  // Course cards (dinamik render edilmiş)
+  document.querySelectorAll('.course-tag').forEach(function(el) {
+    if (el.textContent.includes('Aktif') || el.textContent.includes('Active')) {
+      el.textContent = isEN ? '● Active' : '● Aktif';
+    } else {
+      el.textContent = isEN ? '○ Coming Soon' : '○ Yakında';
+    }
+  });
+
+  // Today banner day name - schedule day names
+  document.querySelectorAll('.schedule-day-header .day-name').forEach(function(el) {
+    const dayMapTR = {'Pazartesi':'Monday','Salı':'Tuesday','Çarşamba':'Wednesday','Perşembe':'Thursday','Cuma':'Friday'};
+    const dayMapEN = {'Monday':'Pazartesi','Tuesday':'Salı','Wednesday':'Çarşamba','Thursday':'Perşembe','Friday':'Cuma'};
+    if (isEN && dayMapTR[el.textContent]) el.textContent = dayMapTR[el.textContent];
+    else if (!isEN && dayMapEN[el.textContent]) el.textContent = dayMapEN[el.textContent];
+  });
 }
 
 // ── UYGULAMA AÇICI ──
