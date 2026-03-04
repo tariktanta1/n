@@ -7,7 +7,9 @@ constconst WEEK_AVAILABILITY = {
   'tibbi':   { 2: false, 3: false, 4: false, 5: false, 6: false, 7: false },
   'rusca4':  { 2: false, 3: false, 4: false, 5: false, 6: false, 7: false },
   'rusca6':  { 2: false, 3: false, 4: false, 5: false, 6: false, 7: false },
-};function lockCheck() {
+};
+
+function lockCheck() {
   const val = document.getElementById('lock-input').value;
   if (val === '3131') {
     document.getElementById('lockscreen').style.display = 'none';
