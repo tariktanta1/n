@@ -1,9 +1,9 @@
-const WEEK_AVAILABILITY = {
+constconst WEEK_AVAILABILITY = {
   'davos':   { 2: true,  3: false, 4: false, 5: false, 6: false, 7: false },
   'hukuk':   { 2: true,  3: false, 4: false, 5: false, 6: false, 7: false },
   'gobilim': { 2: false, 3: false, 4: false, 5: false, 6: false, 7: false },
   'etik':    { 2: false, 3: false, 4: false, 5: false, 6: false, 7: false },
-  'isaret':  { 2: false, 3: false, 4: false, 5: false, 6: false, 7: false },
+  'termin':  { 2: false, 3: false, 4: false, 5: false, 6: false, 7: false },
   'tibbi':   { 2: false, 3: false, 4: false, 5: false, 6: false, 7: false },
   'rusca4':  { 2: false, 3: false, 4: false, 5: false, 6: false, 7: false },
   'rusca6':  { 2: false, 3: false, 4: false, 5: false, 6: false, 7: false },
@@ -44,7 +44,7 @@ window.addEventListener('load', function () {
 const SCHEDULE = {
   'Pazartesi': [{ name: 'Ardıl Çeviriye Giriş', time: '09:30–13:15', panel: 'davos', color: '#c8f135', icon: '🎙️' }, { name: 'Hukuk Çevirisi', time: '13:30–16:15', panel: 'hukuk', color: '#e8c547', icon: '⚖️' }],
   'Salı': [{ name: 'Çeviri Göstergebilimi II', time: '11:30–14:30', panel: 'gobilim', color: '#a78bfa', icon: '📐' }],
-  'Çarşamba': [{ name: 'Çeviride Etik', time: '08:30–11:15', panel: 'etik', color: '#f97316', icon: '⚡' }, { name: 'Türk İşaret Dili', time: '09:30–12:15', panel: 'isaret', color: '#4ade80', icon: '🤟' }, { name: 'Tıbbi Bitki', time: '13:00–14:45', panel: 'tibbi', color: '#fb923c', icon: '🌿' }],
+  'Çarşamba': [{ name: 'Çeviride Etik', time: '08:30–11:15', panel: 'etik', color: '#f97316', icon: '⚡' }, { name: 'Çevirmenler İçin Terminoloji', time: '09:30–12:15', panel: 'termin', color: '#4ade80', icon: '📖' }, { name: 'Tıbbi Bitki', time: '13:00–14:45', panel: 'tibbi', color: '#fb923c', icon: '🌿' }],
   'Perşembe': [{ name: 'Rusça IV', time: '11:30–14:15', panel: 'rusca4', color: '#38bdf8', icon: '🇷🇺' }, { name: 'Rusça VI', time: '14:30–17:15', panel: 'rusca6', color: '#38bdf8', icon: '🇷🇺' }]
 };
 const COURSES = [
@@ -52,7 +52,7 @@ const COURSES = [
   { id: 'hukuk',   name: 'Hukuk Çevirisi (Seçmeli)',        icon: '⚖️',  color: '#e8c547', desc: 'Deborah Cao · AB Mevzuatı Çeviri Rehberi', room: 'FEF 140',  day: 'Pazartesi', time: '13:30–16:15', available: true  },
   { id: 'gobilim', name: 'Çeviri Göstergebilimi II',         icon: '📐',  color: '#a78bfa', desc: 'Göstergebilim · Öztürk Kasar modeli',        room: 'FEF 228',  day: 'Salı',      time: '13:30–14:30', available: false },
   { id: 'etik',    name: 'Çeviride Etik',                   icon: '⚡',  color: '#f97316', desc: 'Mesleki sorumluluklar · Etik ilkeler',       room: 'FEF 33',   day: 'Çarşamba',  time: '08:30–11:15', available: false },
-  { id: 'isaret',  name: 'Türk İşaret Dili (Seçmeli)',      icon: '🤟',  color: '#4ade80', desc: 'TİD terminoloji ve görseller',               room: '225',      day: 'Çarşamba',  time: '09:30–12:15', available: false },
+  { id: 'termin',  name: 'Çevirmenler İçin Terminoloji',    icon: '📖',  color: '#4ade80', desc: 'Terminoloji teorisi ve uygulama',           room: 'FEF 235',  day: 'Çarşamba',  time: '09:30–12:15', available: false },
   { id: 'tibbi',   name: 'Tıbbi Bitki (Seçmeli)',            icon: '🌿',  color: '#fb923c', desc: 'Tıbbi terminoloji · Bitki sözlüğü',          room: '',         day: 'Çarşamba',  time: '13:00–14:45', available: false },
   { id: 'rusca4',  name: 'Rusça IV',                         icon: '🇷🇺', color: '#38bdf8', desc: 'Orta ileri Rusça terminoloji',              room: 'YDYO 226', day: 'Perşembe',  time: '11:30–14:15', available: false },
   { id: 'rusca6',  name: 'Rusça VI',                         icon: '🇷🇺', color: '#38bdf8', desc: 'İleri düzey Rusça terminoloji',             room: 'YDYO 226', day: 'Perşembe',  time: '14:30–17:15', available: false },
@@ -117,41 +117,11 @@ function initDropdowns() {
     }, { passive: true });
   }
 
-  // ── MASAÜSTÜ: hover ile aç/kapat ──
-  var isTouch = window.matchMedia('(pointer: coarse)').matches;
-  if (!isTouch) {
-    document.querySelectorAll('.dropdown').forEach(function (dd) {
-      var leaveTimer;
-      var menu = document.querySelector('.drop-menu[data-parent-id="' + dd.id + '"]');
-
-      function onEnter() {
-        clearTimeout(leaveTimer);
-        closeAllDrops();
-        _positionMenu(dd);
-        dd.classList.add('open');
-        if (menu) menu.style.display = 'flex';
-      }
-      function onLeave() {
-        leaveTimer = setTimeout(function () {
-          dd.classList.remove('open');
-          if (menu) menu.style.display = 'none';
-        }, 150);
-      }
-
-      dd.addEventListener('mouseenter', onEnter);
-      dd.addEventListener('mouseleave', onLeave);
-      if (menu) {
-        menu.addEventListener('mouseenter', onEnter);
-        menu.addEventListener('mouseleave', onLeave);
-      }
-    });
-  }
-
   // ── HEM MASAÜSTÜ HEM iOS: drop-label'a click & touchstart ──
   // iOS'ta daha hızlı ve kesin açılması için touchstart da eklendi.
   const COURSE_DROP_MAP = {
   'drop-davos': 'davos', 'drop-hukuk': 'hukuk', 'drop-gobilim': 'gobilim',
-  'drop-etik': 'etik', 'drop-isaret': 'isaret', 'drop-tibbi': 'tibbi',
+  'drop-etik': 'etik', 'drop-termin': 'termin', 'drop-tibbi': 'tibbi',
   'drop-rusca4': 'rusca4', 'drop-rusca6': 'rusca6'
 };
 
@@ -161,9 +131,14 @@ document.querySelectorAll('.drop-label').forEach(function (btn) {
     e.stopPropagation();
     if (e.type === 'touchstart') {
       btn.dataset.touched = '1';
+      btn.dataset.touchX = e.touches[0].clientX;
+      btn.dataset.touchY = e.touches[0].clientY;
+      return;
     } else if (e.type === 'click' && btn.dataset.touched === '1') {
       btn.dataset.touched = '0';
-      return;
+      const dx = Math.abs(e.clientX - parseFloat(btn.dataset.touchX || 0));
+      const dy = Math.abs(e.clientY - parseFloat(btn.dataset.touchY || 0));
+      if (dx > 10 || dy > 10) return;
     }
     if (dropId === 'apps-menu') {
       toggleAppsMenu();
@@ -607,7 +582,7 @@ document.addEventListener('keydown', function (e) {
   if (k === 'd') { switchApp('dashboard', '', ''); return; }
   if (k === 't') { toggleTheme(); return; }
   if (k === '/') { e.preventDefault(); openSearch(); return; }
-  const sc = { '1': 'hukuk', '2': 'davos', '3': 'gobilim', '4': 'rusca4', '5': 'rusca6', '6': 'etik', '7': 'isaret', '8': 'tibbi' };
+  const sc = { '1': 'hukuk', '2': 'davos', '3': 'gobilim', '4': 'rusca4', '5': 'rusca6', '6': 'etik', '7': 'termin', '8': 'tibbi' };
   if (sc[k]) { switchApp(sc[k], '', sc[k]); }
 });
 
