@@ -59,43 +59,6 @@ const COURSES = [
 ];
 
 // ════════════════════════════════════════════════
-// VERİ YEDEKLEME — localStorage
-// ════════════════════════════════════════════════
-function saveProgress() {
-  try {
-    const data = {
-      hKnown: hKnown.map(c => hCards.indexOf(c)),
-      hRetry: hRetry.map(c => hCards.indexOf(c)),
-      dKnown: dKnown.map(c => FLASHCARDS_D.indexOf(c)),
-      dRetry: dRetry.map(c => FLASHCARDS_D.indexOf(c)),
-    };
-    localStorage.setItem('tariktanta-progress', JSON.stringify(data));
-  } catch(e) {}
-}
-
-function loadProgress() {
-  try {
-    const raw = localStorage.getItem('tariktanta-progress');
-    if (!raw) return;
-    const data = JSON.parse(raw);
-    if (data.hKnown) hKnown = data.hKnown.map(i => hCards[i]).filter(Boolean);
-    if (data.hRetry) hRetry = data.hRetry.map(i => hCards[i]).filter(Boolean);
-    if (data.dKnown) dKnown = data.dKnown.map(i => FLASHCARDS_D[i]).filter(Boolean);
-    if (data.dRetry) dRetry = data.dRetry.map(i => FLASHCARDS_D[i]).filter(Boolean);
-  } catch(e) {}
-}
-
-// ════════════════════════════════════════════════
-// HAPTİC FEEDBACK
-// ════════════════════════════════════════════════
-function haptic(type) {
-  if (!navigator.vibrate) return;
-  if (type === 'success') navigator.vibrate(40);
-  else if (type === 'error') navigator.vibrate([40, 60, 40]);
-  else if (type === 'light') navigator.vibrate(20);
-}
-
-// ════════════════════════════════════════════════
 // DROPDOWN
 // ════════════════════════════════════════════════
 
@@ -254,15 +217,9 @@ function switchApp(app, label, dropId, fromPopState) {
       });
     }
   }
-  // URL routing düzeltmesi — hash'i doğru panel ID ile güncelle
   if (!fromPopState) {
-    try {
-      const _urlId = app === 'davos' ? 'ardil' : app;
-      history.pushState({ app, dropId }, '', '#' + _urlId);
-    } catch (e) { }
+    try { const _urlId = app === 'davos' ? 'ardil' : app; history.pushState({ app, dropId }, '', '#' + _urlId); } catch (e) { }
   }
-  // Mobil bottom nav aktif item
-  updateBottomNav(app);
   try { localStorage.setItem('tariktanta-lastpanel', JSON.stringify({ app, dropId })); } catch (e) { }
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -275,42 +232,11 @@ window.addEventListener('popstate', function (e) {
   }
 });
 
-// URL routing düzeltmesi — sayfa açılınca hash'i oku
-function restoreFromHash() {
-  const hash = window.location.hash.replace('#', '');
-  if (!hash) return false;
-  // hash → panel id map
-  const hashMap = {
-    'ardil': 'davos',
-    'davos': 'davos',
-    'hukuk': 'hukuk',
-    'gobilim': 'gobilim',
-    'etik': 'etik',
-    'termin': 'termin',
-    'tibbi': 'tibbi',
-    'rusca4': 'rusca4',
-    'rusca6': 'rusca6',
-    'dashboard': 'dashboard',
-  };
-  // hafta panelleri için (örn: hukuk-w3)
-  const weekMatch = hash.match(/^(.+)-(w\d)$/);
-  if (weekMatch) {
-    const panelId = hash;
-    const el = document.getElementById('panel-' + panelId);
-    if (el) { switchApp(panelId, '', weekMatch[1], true); return true; }
-  }
-  const appId = hashMap[hash];
-  if (appId) { switchApp(appId, '', appId, true); return true; }
-  return false;
-}
-
 function restoreLastPanel() {
-  if (restoreFromHash()) return;
   try {
     const saved = localStorage.getItem('tariktanta-lastpanel');
     if (saved) {
       const { app, dropId } = JSON.parse(saved);
-      if (app) switchApp(app, '', dropId || '', true);
     }
   } catch (e) { }
 }
@@ -320,43 +246,6 @@ document.addEventListener('click', function (e) {
   if (!e.target.closest('.dropdown') && !e.target.closest('.body-menu')) closeAllDrops();
   if (!e.target.closest('#search-overlay') && !e.target.closest('.search-btn')) closeSearch();
 });
-
-// ════════════════════════════════════════════════
-// MOBİL BOTTOM NAVIGATION
-// ════════════════════════════════════════════════
-function initBottomNav() {
-  const nav = document.createElement('nav');
-  nav.id = 'bottom-nav';
-  nav.innerHTML = `
-    <button class="bnav-item active" data-app="dashboard" onclick="switchApp('dashboard','','');haptic('light')">
-      <span class="bnav-icon">🏠</span>
-      <span class="bnav-label">Ana Sayfa</span>
-    </button>
-    <button class="bnav-item" data-app="davos" onclick="switchApp('davos','','davos');haptic('light')">
-      <span class="bnav-icon">🎙️</span>
-      <span class="bnav-label">Ardıl</span>
-    </button>
-    <button class="bnav-item" data-app="hukuk" onclick="switchApp('hukuk','','hukuk');haptic('light')">
-      <span class="bnav-icon">⚖️</span>
-      <span class="bnav-label">Hukuk</span>
-    </button>
-    <button class="bnav-item" data-app="search" onclick="openSearch();haptic('light')">
-      <span class="bnav-icon">🔍</span>
-      <span class="bnav-label">Ara</span>
-    </button>
-    <button class="bnav-item" data-app="theme" onclick="toggleTheme();haptic('light')">
-      <span class="bnav-icon" id="bnav-theme-icon">🌙</span>
-      <span class="bnav-label">Tema</span>
-    </button>
-  `;
-  document.body.appendChild(nav);
-}
-
-function updateBottomNav(app) {
-  document.querySelectorAll('.bnav-item[data-app]').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.app === app);
-  });
-}
 
 // ════════════════════════════════════════════════
 // POMODORO
@@ -416,12 +305,10 @@ function pomoToggle() {
           pomoSession++;
           pomoIsBreak = true;
           pomoRemaining = (pomoSession % 4 === 0) ? POMO_LONG : POMO_SHORT;
-          haptic('success');
           try { const ctx = new AudioContext(); const o = ctx.createOscillator(); const g = ctx.createGain(); o.connect(g); g.connect(ctx.destination); o.frequency.value = 880; g.gain.setValueAtTime(0.3, ctx.currentTime); g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5); o.start(); o.stop(ctx.currentTime + 0.5); } catch (e) { }
         } else {
           pomoIsBreak = false;
           pomoRemaining = POMO_WORK;
-          haptic('light');
           try { const ctx = new AudioContext(); const o = ctx.createOscillator(); const g = ctx.createGain(); o.connect(g); g.connect(ctx.destination); o.frequency.value = 440; g.gain.setValueAtTime(0.3, ctx.currentTime); g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5); o.start(); o.stop(ctx.currentTime + 0.5); } catch (e) { }
         }
         pomoRunning = true;
@@ -564,6 +451,7 @@ function setLang(lang) {
     if (el) el.textContent = entry[1];
   });
 
+  // Sıra: drop-gobilim, drop-etik, drop-termin, drop-tibbi, drop-rusca4, drop-rusca6
   const noIdLabels = isEN
     ? ['SEMIOTICS', 'ETHICS', 'TERMINOLOGY', 'MEDICINAL', 'RUSSIAN IV', 'RUSSIAN VI']
     : ['GÖSTERGEBİLİM', 'ETİK', 'TERMİNOLOJİ', 'TIBBİ BİTKİ', 'RUSÇA IV', 'RUSÇA VI'];
@@ -627,16 +515,11 @@ function toggleTheme() {
   const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
   html.setAttribute('data-theme', next);
   document.getElementById('theme-btn').textContent = next === 'dark' ? '🌙' : '☀️';
-  const bnavIcon = document.getElementById('bnav-theme-icon');
-  if (bnavIcon) bnavIcon.textContent = next === 'dark' ? '🌙' : '☀️';
   localStorage.setItem('tariktanta-theme', next);
 }
 function loadTheme() {
   const saved = localStorage.getItem('tariktanta-theme');
-  if (saved) {
-    document.documentElement.setAttribute('data-theme', saved);
-    document.getElementById('theme-btn').textContent = saved === 'dark' ? '🌙' : '☀️';
-  }
+  if (saved) { document.documentElement.setAttribute('data-theme', saved); document.getElementById('theme-btn').textContent = saved === 'dark' ? '🌙' : '☀️'; }
 }
 
 // ════════════════════════════════════════════════
@@ -697,62 +580,18 @@ const hCards = [
   { q: "'By way of derogation from Article …' ifadesinin Türkçesi?", a: "… maddesine istisna olarak,", topic: "Özel İfadeler" },
   { q: "'This Regulation establishes...' çevirisinde ne dikkat edilmeli?", a: "'-mektedir' eki KULLANILMAZ. Doğrusu: 'Bu Tüzük ile … tesis edilir.'", topic: "Zaman Kipleri" },
   { q: "Approximation vs Harmonization of laws farkı?", a: "Approximation = yaklaştırılması | Harmonization = uyumlaştırılması", topic: "Karıştırılan Terimler" },
-  { q: "Hukuki dili 'sui generis' yapan nedir?", a: "Evrensel bilgi aktaran diğer teknik çeviri türlerinden farklı; ulusal/kültürel bağlama sıkı bağlıdır.", topic: "Teorik Temel" },
+  { q: "Hukuki dili 'sui generis' yapan nedir?", a: "Evrensel bilgi aktaran diğer teknik çevirilerden farklı; ulusal/kültürel bağlama sıkı bağlıdır.", topic: "Teorik Temel" },
   { q: "Inter alia ne demek?", a: "Diğerlerinin yanı sıra", topic: "Özel İfadeler" },
   { q: "AB mevzuatında başlık sıralaması nasıldır?", a: "Konu (on/concerning) → Tarih → Numara → Kurum adı", topic: "Biçimsel Kurallar" },
   { q: "'Done at Brussels, 12 March 2020.' Türkçesi?", a: "Brüksel'de, 12 Mart 2020 tarihinde düzenlenmiştir.", topic: "İmza Bölümü" }
 ];
 let hKnown = [], hRetry = [], hShuffled = [...hCards], hCurrentIndex = 0;
 function hGetCurrentQueue() { if (hRetry.length > 0) return hRetry; return hShuffled.filter(c => !hKnown.includes(c)); }
-
-// TOUCH SWIPE — Hukuk Flashcard
-function initHukukSwipe() {
-  const card = document.getElementById('hflashcard');
-  if (!card) return;
-  let startX = 0, startY = 0, isDragging = false;
-
-  card.addEventListener('touchstart', e => {
-    startX = e.touches[0].clientX;
-    startY = e.touches[0].clientY;
-    isDragging = false;
-  }, { passive: true });
-
-  card.addEventListener('touchmove', e => {
-    const dx = e.touches[0].clientX - startX;
-    const dy = e.touches[0].clientY - startY;
-    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 10) {
-      isDragging = true;
-      card.style.transform = `translateX(${dx * 0.4}px) rotate(${dx * 0.03}deg)`;
-      card.style.opacity = 1 - Math.abs(dx) / 400;
-    }
-  }, { passive: true });
-
-  card.addEventListener('touchend', e => {
-    const dx = e.changedTouches[0].clientX - startX;
-    card.style.transform = '';
-    card.style.opacity = '';
-    if (!isDragging) return;
-    if (dx > 60) {
-      haptic('success');
-      card.style.transform = 'translateX(120%) rotate(15deg)';
-      card.style.opacity = '0';
-      card.style.transition = 'transform 0.3s, opacity 0.3s';
-      setTimeout(() => { card.style.transform = ''; card.style.opacity = ''; card.style.transition = ''; hMarkKnow(); }, 300);
-    } else if (dx < -60) {
-      haptic('error');
-      card.style.transform = 'translateX(-120%) rotate(-15deg)';
-      card.style.opacity = '0';
-      card.style.transition = 'transform 0.3s, opacity 0.3s';
-      setTimeout(() => { card.style.transform = ''; card.style.opacity = ''; card.style.transition = ''; hMarkDunno(); }, 300);
-    }
-  }, { passive: true });
-}
-
-function hRenderCard() { const queue = hGetCurrentQueue(); if (queue.length === 0) { document.getElementById('hfc-question').textContent = '🎉 Tüm kartları biliyorsun!'; document.getElementById('hfc-answer').textContent = 'Karıştır ve tekrar başla.'; document.getElementById('hfc-topic').textContent = ''; document.getElementById('hfc-counter').textContent = 'Tamamlandı!'; hUpdateLeitnerStats(); saveProgress(); return; } const c = queue[hCurrentIndex % queue.length]; const card = document.getElementById('hflashcard'); card.classList.remove('revealed'); document.getElementById('hfc-question').textContent = c.q; document.getElementById('hfc-answer').textContent = c.a; document.getElementById('hfc-hint').textContent = '↑ Cevabı görmek için tıkla'; document.getElementById('hfc-title').textContent = c.q.length > 50 ? c.q.substring(0, 50) + '…' : c.q; document.getElementById('hfc-topic').textContent = '📌 ' + c.topic; document.getElementById('hfc-counter').textContent = (hCurrentIndex % queue.length + 1) + ' / ' + queue.length; hUpdateLeitnerStats(); }
+function hRenderCard() { const queue = hGetCurrentQueue(); if (queue.length === 0) { document.getElementById('hfc-question').textContent = '🎉 Tüm kartları biliyorsun!'; document.getElementById('hfc-answer').textContent = 'Karıştır ve tekrar başla.'; document.getElementById('hfc-topic').textContent = ''; document.getElementById('hfc-counter').textContent = 'Tamamlandı!'; hUpdateLeitnerStats(); return; } const c = queue[hCurrentIndex % queue.length]; const card = document.getElementById('hflashcard'); card.classList.remove('revealed'); document.getElementById('hfc-question').textContent = c.q; document.getElementById('hfc-answer').textContent = c.a; document.getElementById('hfc-hint').textContent = '↑ Cevabı görmek için tıkla'; document.getElementById('hfc-title').textContent = c.q.length > 50 ? c.q.substring(0, 50) + '…' : c.q; document.getElementById('hfc-topic').textContent = '📌 ' + c.topic; document.getElementById('hfc-counter').textContent = (hCurrentIndex % queue.length + 1) + ' / ' + queue.length; hUpdateLeitnerStats(); }
 function hRevealCard() { document.getElementById('hflashcard').classList.add('revealed'); document.getElementById('hfc-hint').textContent = ''; }
-function hMarkKnow() { const queue = hGetCurrentQueue(); const c = queue[hCurrentIndex % queue.length]; if (!hKnown.includes(c)) hKnown.push(c); hRetry = hRetry.filter(x => x !== c); hCurrentIndex = 0; saveProgress(); hRenderCard(); }
-function hMarkDunno() { const queue = hGetCurrentQueue(); const c = queue[hCurrentIndex % queue.length]; if (!hRetry.includes(c)) hRetry.push(c); hCurrentIndex = (hCurrentIndex + 1) % Math.max(1, queue.length); saveProgress(); hRenderCard(); }
-function hShuffleCards() { for (let i = hShuffled.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));[hShuffled[i], hShuffled[j]] = [hShuffled[j], hShuffled[i]]; } hKnown = []; hRetry = []; hCurrentIndex = 0; saveProgress(); hRenderCard(); }
+function hMarkKnow() { const queue = hGetCurrentQueue(); const c = queue[hCurrentIndex % queue.length]; if (!hKnown.includes(c)) hKnown.push(c); hRetry = hRetry.filter(x => x !== c); hCurrentIndex = 0; hRenderCard(); }
+function hMarkDunno() { const queue = hGetCurrentQueue(); const c = queue[hCurrentIndex % queue.length]; if (!hRetry.includes(c)) hRetry.push(c); hCurrentIndex = (hCurrentIndex + 1) % Math.max(1, queue.length); hRenderCard(); }
+function hShuffleCards() { for (let i = hShuffled.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));[hShuffled[i], hShuffled[j]] = [hShuffled[j], hShuffled[i]]; } hKnown = []; hRetry = []; hCurrentIndex = 0; hRenderCard(); }
 function hUpdateLeitnerStats() { const pending = hShuffled.filter(c => !hKnown.includes(c) && !hRetry.includes(c)).length; document.getElementById('h-stat-pending').textContent = pending; document.getElementById('h-stat-known').textContent = hKnown.length; document.getElementById('h-stat-retry').textContent = hRetry.length; }
 function hToggleCheck(el) { el.classList.toggle('done'); const li = el.parentElement; li.querySelector('span').classList.toggle('done-item'); li.classList.toggle('done-item'); }
 
@@ -871,59 +710,22 @@ function dShowAnswer(i) { document.getElementById('dptr_' + i).classList.add('vi
 function dTogglePracticeDone(i) { document.getElementById('ddone_' + i).classList.toggle('done'); dUpdateProgress(); }
 function dRenderSpeakers() { const g = document.getElementById('dSpeakerGrid'); SPEAKERS.forEach(s => { g.innerHTML += `<div class="speaker-card"><div class="speaker-name">${s.name}</div><div class="speaker-role">${s.role}</div></div>`; }); const ng = document.getElementById('dNumberGrid'); NUMBERS.forEach(n => { ng.innerHTML += `<div class="number-card"><div class="number-val">${n.val}</div><div class="number-label">${n.label}</div></div>`; }); const ag = document.getElementById('dAbbrGrid'); ABBREVS.forEach(a => { ag.innerHTML += `<div class="abbr-card"><div class="abbr-short">${a.short}</div><div><div class="abbr-full">${a.full}</div><div class="abbr-tr">${a.tr}</div></div></div>`; }); }
 
-// DAVOS FLASHCARDS + SWIPE
+// DAVOS FLASHCARDS
 let dFlashIndex = 0, dShuffledCards = [...FLASHCARDS_D].sort(() => Math.random() - 0.5), dKnown = [], dRetry = [];
 function dGetCurrentQueue() { if (dRetry.length > 0) return dRetry; return dShuffledCards.filter(c => !dKnown.includes(c)); }
-function dRenderFlashcard() { const queue = dGetCurrentQueue(); if (queue.length === 0) { document.getElementById('dFlashEN').textContent = '🎉 Tüm kartları biliyorsun!'; document.getElementById('dFlashTR').textContent = 'Karıştır ve tekrar başla.'; document.getElementById('dFlashNote').textContent = ''; document.getElementById('dFlashCounter').textContent = 'Tamamlandı!'; dUpdateLeitnerStats(); saveProgress(); return; } const card = queue[dFlashIndex % queue.length]; document.getElementById('dFlashEN').textContent = card.en; document.getElementById('dFlashTR').textContent = card.tr; document.getElementById('dFlashNote').textContent = card.note || ''; document.getElementById('dFlashCounter').textContent = `${dFlashIndex % queue.length + 1} / ${queue.length}`; document.getElementById('dMainFlashcard').classList.remove('flipped'); dUpdateLeitnerStats(); }
+function dRenderFlashcard() { const queue = dGetCurrentQueue(); if (queue.length === 0) { document.getElementById('dFlashEN').textContent = '🎉 Tüm kartları biliyorsun!'; document.getElementById('dFlashTR').textContent = 'Karıştır ve tekrar başla.'; document.getElementById('dFlashNote').textContent = ''; document.getElementById('dFlashCounter').textContent = 'Tamamlandı!'; dUpdateLeitnerStats(); return; } const card = queue[dFlashIndex % queue.length]; document.getElementById('dFlashEN').textContent = card.en; document.getElementById('dFlashTR').textContent = card.tr; document.getElementById('dFlashNote').textContent = card.note || ''; document.getElementById('dFlashCounter').textContent = `${dFlashIndex % queue.length + 1} / ${queue.length}`; document.getElementById('dMainFlashcard').classList.remove('flipped'); dUpdateLeitnerStats(); }
 function dFlipCard() { document.getElementById('dMainFlashcard').classList.toggle('flipped'); }
 function dNextCard() { const q = dGetCurrentQueue(); dFlashIndex = (dFlashIndex + 1) % Math.max(1, q.length); dRenderFlashcard(); }
 function dPrevCard() { const q = dGetCurrentQueue(); dFlashIndex = (dFlashIndex - 1 + Math.max(1, q.length)) % Math.max(1, q.length); dRenderFlashcard(); }
-function dMarkKnow() { const queue = dGetCurrentQueue(); const c = queue[dFlashIndex % queue.length]; if (!dKnown.includes(c)) dKnown.push(c); dRetry = dRetry.filter(x => x !== c); dFlashIndex = 0; saveProgress(); dRenderFlashcard(); }
-function dMarkDunno() { const queue = dGetCurrentQueue(); const c = queue[dFlashIndex % queue.length]; if (!dRetry.includes(c)) dRetry.push(c); dFlashIndex = (dFlashIndex + 1) % Math.max(1, queue.length); saveProgress(); dRenderFlashcard(); }
+function dMarkKnow() { const queue = dGetCurrentQueue(); const c = queue[dFlashIndex % queue.length]; if (!dKnown.includes(c)) dKnown.push(c); dRetry = dRetry.filter(x => x !== c); dFlashIndex = 0; dRenderFlashcard(); }
+function dMarkDunno() { const queue = dGetCurrentQueue(); const c = queue[dFlashIndex % queue.length]; if (!dRetry.includes(c)) dRetry.push(c); dFlashIndex = (dFlashIndex + 1) % Math.max(1, queue.length); dRenderFlashcard(); }
 function dUpdateLeitnerStats() { const pending = dShuffledCards.filter(c => !dKnown.includes(c) && !dRetry.includes(c)).length; document.getElementById('d-stat-pending').textContent = pending; document.getElementById('d-stat-known').textContent = dKnown.length; document.getElementById('d-stat-retry').textContent = dRetry.length; }
-
-// Davos flashcard swipe
-function initDavosSwipe() {
-  const card = document.getElementById('dMainFlashcard');
-  if (!card) return;
-  let startX = 0, startY = 0, isDragging = false;
-
-  card.addEventListener('touchstart', e => {
-    startX = e.touches[0].clientX;
-    startY = e.touches[0].clientY;
-    isDragging = false;
-  }, { passive: true });
-
-  card.addEventListener('touchmove', e => {
-    const dx = e.touches[0].clientX - startX;
-    const dy = e.touches[0].clientY - startY;
-    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 10) {
-      isDragging = true;
-      card.style.transform = `rotateY(${dx * 0.1}deg) translateX(${dx * 0.3}px)`;
-      card.style.opacity = 1 - Math.abs(dx) / 350;
-    }
-  }, { passive: true });
-
-  card.addEventListener('touchend', e => {
-    const dx = e.changedTouches[0].clientX - startX;
-    card.style.transform = '';
-    card.style.opacity = '';
-    if (!isDragging) return;
-    if (dx > 70) {
-      haptic('success');
-      dMarkKnow();
-    } else if (dx < -70) {
-      haptic('error');
-      dMarkDunno();
-    }
-  }, { passive: true });
-}
 
 // DAVOS QUIZ
 let dQuizQuestions = [], dQuizCur = 0, dQuizScore = 0, dQuizAnswered = false;
 function dStartQuiz() { dQuizQuestions = [...QUIZ_Q].sort(() => Math.random() - 0.5).slice(0, 12); dQuizCur = 0; dQuizScore = 0; dQuizAnswered = false; document.getElementById('dQuizScore').textContent = '0'; document.getElementById('dQuizTotal').textContent = dQuizQuestions.length; document.getElementById('dQuizComplete').style.display = 'none'; document.getElementById('dQuizCard').style.display = 'block'; dRenderQuizQ(); }
 function dRenderQuizQ() { if (dQuizCur >= dQuizQuestions.length) { dEndQuiz(); return; } dQuizAnswered = false; const q = dQuizQuestions[dQuizCur]; document.getElementById('dQuizCurrent').textContent = dQuizCur + 1; const opts = q.opts.map((o, i) => `<button class="quiz-option" onclick="dAnswerQuiz(${i})">${o}</button>`).join(''); document.getElementById('dQuizCard').innerHTML = `<div class="quiz-type">SORU ${dQuizCur + 1} / ${dQuizQuestions.length}</div><div class="quiz-q">${q.q}</div><div class="quiz-options">${opts}</div><div class="quiz-feedback" id="dqfb"></div><button class="quiz-next" id="dqnext" onclick="dNextQuizQ()">Sonraki Soru →</button>`; }
-function dAnswerQuiz(i) { if (dQuizAnswered) return; dQuizAnswered = true; const q = dQuizQuestions[dQuizCur]; const opts = document.querySelectorAll('#dQuizCard .quiz-option'); opts.forEach(o => o.disabled = true); const fb = document.getElementById('dqfb'); if (i === q.ans) { opts[i].classList.add('correct'); dQuizScore++; document.getElementById('dQuizScore').textContent = dQuizScore; fb.className = 'quiz-feedback correct-fb show'; fb.textContent = '✓ Doğru! ' + q.exp; haptic('success'); } else { opts[i].classList.add('wrong'); opts[q.ans].classList.add('correct'); fb.className = 'quiz-feedback wrong-fb show'; fb.textContent = '✗ Yanlış. ' + q.exp; haptic('error'); } document.getElementById('dqnext').classList.add('show'); }
+function dAnswerQuiz(i) { if (dQuizAnswered) return; dQuizAnswered = true; const q = dQuizQuestions[dQuizCur]; const opts = document.querySelectorAll('#dQuizCard .quiz-option'); opts.forEach(o => o.disabled = true); const fb = document.getElementById('dqfb'); if (i === q.ans) { opts[i].classList.add('correct'); dQuizScore++; document.getElementById('dQuizScore').textContent = dQuizScore; fb.className = 'quiz-feedback correct-fb show'; fb.textContent = '✓ Doğru! ' + q.exp; } else { opts[i].classList.add('wrong'); opts[q.ans].classList.add('correct'); fb.className = 'quiz-feedback wrong-fb show'; fb.textContent = '✗ Yanlış. ' + q.exp; } document.getElementById('dqnext').classList.add('show'); }
 function dNextQuizQ() { dQuizCur++; if (dQuizCur >= dQuizQuestions.length) dEndQuiz(); else dRenderQuizQ(); }
 function dEndQuiz() { document.getElementById('dQuizCard').style.display = 'none'; const comp = document.getElementById('dQuizComplete'); comp.style.display = 'block'; document.getElementById('dFinalScore').textContent = dQuizScore + ' / ' + dQuizQuestions.length; sessionStorage.setItem('dQuizDone', '1'); dUpdateProgress(); }
 const D_SECTIONS = ['oturumlar', 'terminoloji', 'kaliplar', 'flashcard', 'quiz', 'pratik', 'konusmaci'];
@@ -936,7 +738,7 @@ function dToggleTracked(key, elId) { if (dIsTracked(key)) sessionStorage.removeI
 // ════════════════════════════════════════════════
 // PWA
 // ════════════════════════════════════════════════
-function registerSW() { if ('serviceWorker' in navigator) { const swCode = `const CACHE='tariktanta-v3';const ASSETS=['/','/index.html','/app.js','/styles.css'];self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS).catch(()=>{}))));self.addEventListener('fetch',e=>e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).then(res=>{const clone=res.clone();caches.open(CACHE).then(c=>c.put(e.request,clone));return res;}).catch(()=>caches.match('/')))));self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k))))));`; const blob = new Blob([swCode], { type: 'application/javascript' }); const url = URL.createObjectURL(blob); navigator.serviceWorker.register(url).catch(() => { }); } }
+function registerSW() { if ('serviceWorker' in navigator) { const swCode = `const CACHE='tariktanta-v2';const ASSETS=['/'];self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS))));self.addEventListener('fetch',e=>e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).then(res=>{const clone=res.clone();caches.open(CACHE).then(c=>c.put(e.request,clone));return res;}).catch(()=>caches.match('/')))));self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k))))));`; const blob = new Blob([swCode], { type: 'application/javascript' }); const url = URL.createObjectURL(blob); navigator.serviceWorker.register(url).catch(() => { }); } }
 
 // ════════════════════════════════════════════════
 // INIT
@@ -1020,7 +822,6 @@ function initApp() {
   initDropdowns();
   initDashboard();
   pomoRender();
-  // Önce kartları yükle, sonra progress restore et
   hRenderCard();
   dRenderSessions();
   dRenderTerms();
@@ -1032,15 +833,6 @@ function initApp() {
   dUpdateProgress();
   buildSearchIndex();
   registerSW();
-  // Progress yükle
-  loadProgress();
-  hRenderCard();
-  dRenderFlashcard();
-  // Swipe başlat
-  initHukukSwipe();
-  initDavosSwipe();
-  // Mobil bottom nav
-  initBottomNav();
   restoreLastPanel();
   setTimeout(function () { setLang(_currentLang); }, 150);
   initPremium();
