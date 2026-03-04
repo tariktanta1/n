@@ -3678,3 +3678,278 @@
       font-size: 32px;
       margin-bottom: -8px
     }
+
+/* ════════════════════════════════════════
+   HAFTA SEÇİM PANELİ — Premium Week Selector
+   ════════════════════════════════════════ */
+
+#week-selector-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  display: flex;
+  align-items: flex-end;
+}
+
+.wso-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  animation: wsoFadeIn 0.3s ease;
+}
+
+.wso-panel {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  background: var(--theme-bg);
+  border-top: 1px solid var(--theme-border);
+  border-radius: 28px 28px 0 0;
+  padding: 0 0 40px;
+  max-height: 88vh;
+  overflow-y: auto;
+  animation: wsoSlideUp 0.38s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.wso-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 24px 28px 20px;
+  border-bottom: 1px solid var(--theme-border);
+  position: sticky;
+  top: 0;
+  background: var(--theme-bg);
+  z-index: 2;
+}
+
+.wso-course-icon {
+  font-size: 28px;
+  line-height: 1;
+}
+
+.wso-course-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--theme-text);
+  flex: 1;
+}
+
+.wso-close {
+  background: var(--theme-surface);
+  border: 1px solid var(--theme-border);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: var(--theme-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.wso-close:hover {
+  background: var(--theme-border);
+  color: var(--theme-text);
+}
+
+.wso-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  padding: 24px 20px;
+}
+
+/* 3D Week Card */
+.wso-card {
+  position: relative;
+  border-radius: 20px;
+  padding: 24px 20px;
+  cursor: pointer;
+  border: 1px solid var(--wso-color, #c8f135);
+  background: color-mix(in srgb, var(--wso-color, #c8f135) 6%, var(--theme-surface));
+  transform-style: preserve-3d;
+  transform: perspective(600px) rotateX(0deg) rotateY(0deg);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.2s;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.wso-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, 
+    color-mix(in srgb, var(--wso-color, #c8f135) 25%, transparent) 0%,
+    transparent 60%
+  );
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.wso-card::after {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 12px;
+  right: 12px;
+  height: 3px;
+  background: var(--wso-color, #c8f135);
+  border-radius: 0 0 4px 4px;
+  opacity: 0.6;
+  transition: opacity 0.2s, left 0.2s, right 0.2s;
+}
+
+.wso-card:hover::before, .wso-card:active::before {
+  opacity: 1;
+}
+
+.wso-card:hover::after, .wso-card:active::after {
+  left: 6px;
+  right: 6px;
+  opacity: 1;
+}
+
+.wso-card:hover {
+  border-color: var(--wso-color, #c8f135);
+  box-shadow: 
+    0 0 0 1px color-mix(in srgb, var(--wso-color, #c8f135) 30%, transparent),
+    0 12px 40px color-mix(in srgb, var(--wso-color, #c8f135) 20%, transparent),
+    0 4px 12px rgba(0,0,0,0.4);
+  transform: perspective(600px) translateY(-4px);
+}
+
+.wso-card:active {
+  transform: perspective(600px) translateY(-1px) scale(0.97);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+
+.wso-card.wso-active {
+  border-color: var(--wso-color, #c8f135);
+  box-shadow: 0 0 0 2px var(--wso-color, #c8f135),
+              0 8px 24px color-mix(in srgb, var(--wso-color, #c8f135) 25%, transparent);
+}
+
+.wso-card.wso-active::before {
+  opacity: 1;
+}
+
+.wso-card.wso-locked {
+  opacity: 0.45;
+  cursor: default;
+  pointer-events: none;
+}
+
+.wso-week-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--wso-color, #c8f135);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.wso-week-num .wso-active-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--wso-color, #c8f135);
+  box-shadow: 0 0 6px var(--wso-color, #c8f135);
+  animation: wsoPulse 2s infinite;
+}
+
+.wso-week-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--theme-text);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.wso-week-desc {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  color: var(--theme-muted);
+  line-height: 1.4;
+}
+
+.wso-week-arrow {
+  position: absolute;
+  bottom: 18px;
+  right: 18px;
+  font-size: 16px;
+  color: var(--wso-color, #c8f135);
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.wso-card:hover .wso-week-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Animasyonlar */
+@keyframes wsoFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes wsoSlideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+@keyframes wsoPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+/* Kart stagger animasyonu */
+.wso-card {
+  animation: wsoCardIn 0.4s cubic-bezier(0.32, 0.72, 0, 1) backwards;
+}
+
+@keyframes wsoCardIn {
+  from { opacity: 0; transform: perspective(600px) translateY(20px); }
+  to { opacity: 1; transform: perspective(600px) translateY(0); }
+}
+
+/* Desktop'ta ortalanmış modal */
+@media (min-width: 768px) {
+  #week-selector-overlay {
+    align-items: center;
+    justify-content: center;
+  }
+  .wso-panel {
+    max-width: 560px;
+    border-radius: 24px;
+    margin: 0 auto;
+    animation: wsoScaleIn 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  .wso-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@keyframes wsoScaleIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes wsoSlideDown {
+  from { transform: translateY(0); }
+  to { transform: translateY(110%); }
+}

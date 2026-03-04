@@ -70,7 +70,178 @@ function closeAllDrops() {
   document.querySelectorAll('.body-menu').forEach(function (m) { m.style.display = 'none'; });
 }
 
+
+// ════════════════════════════════════════════════
+// HAFTA SEÇİM PANELİ
+// ════════════════════════════════════════════════
+
+const COURSE_META = {
+  davos:   { name: 'Ardıl Çeviriye Giriş',   icon: '🎙️', color: '#c8f135', weeks: [
+    { id: 'davos',      num: 2, title: 'Davos Summit',   desc: 'WEF · Terminoloji & Pratik', active: true },
+    { id: 'davos-w3',   num: 3, title: '3. Hafta',       desc: '', active: false },
+    { id: 'davos-w4',   num: 4, title: '4. Hafta',       desc: '', active: false },
+    { id: 'davos-w5',   num: 5, title: '5. Hafta',       desc: '', active: false },
+    { id: 'davos-w6',   num: 6, title: '6. Hafta',       desc: '', active: false },
+    { id: 'davos-w7',   num: 7, title: '7. Hafta',       desc: '', active: false },
+  ]},
+  hukuk:   { name: 'Hukuk Çevirisi',          icon: '⚖️',  color: '#e8c547', weeks: [
+    { id: 'hukuk',      num: 2, title: 'Hukuki Çeviri',  desc: 'Deborah Cao · AB Rehberi', active: true },
+    { id: 'hukuk-w3',   num: 3, title: '3. Hafta',       desc: '', active: false },
+    { id: 'hukuk-w4',   num: 4, title: '4. Hafta',       desc: '', active: false },
+    { id: 'hukuk-w5',   num: 5, title: '5. Hafta',       desc: '', active: false },
+    { id: 'hukuk-w6',   num: 6, title: '6. Hafta',       desc: '', active: false },
+    { id: 'hukuk-w7',   num: 7, title: '7. Hafta',       desc: '', active: false },
+  ]},
+  gobilim: { name: 'Çeviri Göstergebilimi II', icon: '📐',  color: '#a78bfa', weeks: [
+    { id: 'gobilim-w2', num: 2, title: '2. Hafta',       desc: 'Öztürk Kasar Modeli', active: false },
+    { id: 'gobilim-w3', num: 3, title: '3. Hafta',       desc: '', active: false },
+    { id: 'gobilim-w4', num: 4, title: '4. Hafta',       desc: '', active: false },
+    { id: 'gobilim-w5', num: 5, title: '5. Hafta',       desc: '', active: false },
+    { id: 'gobilim-w6', num: 6, title: '6. Hafta',       desc: '', active: false },
+    { id: 'gobilim-w7', num: 7, title: '7. Hafta',       desc: '', active: false },
+  ]},
+  etik:    { name: 'Çeviride Etik',            icon: '⚡',  color: '#f97316', weeks: [
+    { id: 'etik-w2',    num: 2, title: '2. Hafta',       desc: 'Mesleki Sorumluluklar', active: false },
+    { id: 'etik-w3',    num: 3, title: '3. Hafta',       desc: '', active: false },
+    { id: 'etik-w4',    num: 4, title: '4. Hafta',       desc: '', active: false },
+    { id: 'etik-w5',    num: 5, title: '5. Hafta',       desc: '', active: false },
+    { id: 'etik-w6',    num: 6, title: '6. Hafta',       desc: '', active: false },
+    { id: 'etik-w7',    num: 7, title: '7. Hafta',       desc: '', active: false },
+  ]},
+  isaret:  { name: 'Türk İşaret Dili',         icon: '🤟',  color: '#4ade80', weeks: [
+    { id: 'isaret-w2',  num: 2, title: '2. Hafta',       desc: 'TİD Terminoloji', active: false },
+    { id: 'isaret-w3',  num: 3, title: '3. Hafta',       desc: '', active: false },
+    { id: 'isaret-w4',  num: 4, title: '4. Hafta',       desc: '', active: false },
+    { id: 'isaret-w5',  num: 5, title: '5. Hafta',       desc: '', active: false },
+    { id: 'isaret-w6',  num: 6, title: '6. Hafta',       desc: '', active: false },
+    { id: 'isaret-w7',  num: 7, title: '7. Hafta',       desc: '', active: false },
+  ]},
+  tibbi:   { name: 'Tıbbi Bitki',              icon: '🌿',  color: '#fb923c', weeks: [
+    { id: 'tibbi-w2',   num: 2, title: '2. Hafta',       desc: 'Tıbbi Terminoloji', active: false },
+    { id: 'tibbi-w3',   num: 3, title: '3. Hafta',       desc: '', active: false },
+    { id: 'tibbi-w4',   num: 4, title: '4. Hafta',       desc: '', active: false },
+    { id: 'tibbi-w5',   num: 5, title: '5. Hafta',       desc: '', active: false },
+    { id: 'tibbi-w6',   num: 6, title: '6. Hafta',       desc: '', active: false },
+    { id: 'tibbi-w7',   num: 7, title: '7. Hafta',       desc: '', active: false },
+  ]},
+  rusca4:  { name: 'Rusça IV',                 icon: '🇷🇺', color: '#38bdf8', weeks: [
+    { id: 'rusca4-w2',  num: 2, title: '2. Hafta',       desc: 'Orta İleri Rusça', active: false },
+    { id: 'rusca4-w3',  num: 3, title: '3. Hafta',       desc: '', active: false },
+    { id: 'rusca4-w4',  num: 4, title: '4. Hafta',       desc: '', active: false },
+    { id: 'rusca4-w5',  num: 5, title: '5. Hafta',       desc: '', active: false },
+    { id: 'rusca4-w6',  num: 6, title: '6. Hafta',       desc: '', active: false },
+    { id: 'rusca4-w7',  num: 7, title: '7. Hafta',       desc: '', active: false },
+  ]},
+  rusca6:  { name: 'Rusça VI',                 icon: '🇷🇺', color: '#38bdf8', weeks: [
+    { id: 'rusca6-w2',  num: 2, title: '2. Hafta',       desc: 'İleri Düzey Rusça', active: false },
+    { id: 'rusca6-w3',  num: 3, title: '3. Hafta',       desc: '', active: false },
+    { id: 'rusca6-w4',  num: 4, title: '4. Hafta',       desc: '', active: false },
+    { id: 'rusca6-w5',  num: 5, title: '5. Hafta',       desc: '', active: false },
+    { id: 'rusca6-w6',  num: 6, title: '6. Hafta',       desc: '', active: false },
+    { id: 'rusca6-w7',  num: 7, title: '7. Hafta',       desc: '', active: false },
+  ]},
+};
+
+function openWeekSelector(courseId) {
+  const meta = COURSE_META[courseId];
+  if (!meta) return;
+
+  const overlay = document.getElementById('week-selector-overlay');
+  const grid = document.getElementById('wso-grid');
+  const icon = document.getElementById('wso-icon');
+  const name = document.getElementById('wso-name');
+
+  icon.textContent = meta.icon;
+  name.textContent = meta.name;
+
+  grid.innerHTML = '';
+  meta.weeks.forEach(function(w, i) {
+    const hasPanel = !!document.getElementById('panel-' + w.id);
+    const card = document.createElement('div');
+    card.className = 'wso-card' + (w.active ? ' wso-active' : '') + (!hasPanel ? ' wso-locked' : '');
+    card.style.setProperty('--wso-color', meta.color);
+    card.style.animationDelay = (i * 0.05) + 's';
+
+    card.innerHTML = \`
+      <div class="wso-week-num">
+        \${w.active ? '<span class="wso-active-dot"></span>' : ''}
+        WEEK \${w.num}
+      </div>
+      <div class="wso-week-title">\${w.num}</div>
+      <div class="wso-week-desc">\${w.desc || (hasPanel ? 'Hafta notları' : 'Yakında eklenecek')}</div>
+      <div class="wso-week-arrow">→</div>
+    \`;
+
+    if (hasPanel) {
+      card.addEventListener('click', function() {
+        closeWeekSelector();
+        setTimeout(function() {
+          switchApp(w.id, w.title, courseId);
+        }, 200);
+      });
+
+      // 3D tilt efekti (mouse/touch)
+      card.addEventListener('mousemove', function(e) {
+        const rect = card.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        card.style.transform = \`perspective(600px) rotateY(\${x * 12}deg) rotateX(\${-y * 12}deg) translateY(-4px)\`;
+      });
+      card.addEventListener('mouseleave', function() {
+        card.style.transform = '';
+      });
+    }
+
+    grid.appendChild(card);
+  });
+
+  overlay.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeWeekSelector() {
+  const overlay = document.getElementById('week-selector-overlay');
+  const panel = document.getElementById('wso-panel');
+  panel.style.animation = 'wsoSlideDown 0.28s cubic-bezier(0.32, 0.72, 0, 1) forwards';
+  setTimeout(function() {
+    overlay.style.display = 'none';
+    panel.style.animation = '';
+    document.body.style.overflow = '';
+  }, 280);
+}
+
+// Swipe down ile kapat (iOS)
+(function() {
+  var startY = 0;
+  document.addEventListener('touchstart', function(e) {
+    if (e.target.closest('#wso-panel')) startY = e.touches[0].clientY;
+  }, { passive: true });
+  document.addEventListener('touchmove', function(e) {
+    if (!startY) return;
+    const panel = document.getElementById('wso-panel');
+    if (!panel) return;
+    const diff = e.touches[0].clientY - startY;
+    if (diff > 0) panel.style.transform = 'translateY(' + diff + 'px)';
+  }, { passive: true });
+  document.addEventListener('touchend', function(e) {
+    if (!startY) return;
+    const panel = document.getElementById('wso-panel');
+    if (!panel) return;
+    const diff = e.changedTouches[0].clientY - startY;
+    if (diff > 80) { closeWeekSelector(); }
+    else { panel.style.transform = ''; }
+    startY = 0;
+  });
+})();
+
 function toggleDrop(id) {
+  // Ders nav'larını hafta seçiciye yönlendir
+  var courseIds = ['drop-davos','drop-hukuk','drop-gobilim','drop-etik','drop-isaret','drop-tibbi','drop-rusca4','drop-rusca6'];
+  if (courseIds.indexOf(id) !== -1) {
+    var courseId = id.replace('drop-', '');
+    openWeekSelector(courseId);
+    return;
+  }
   var dd = document.getElementById(id);
   if (!dd) return;
   var isOpen = dd.classList.contains('open');

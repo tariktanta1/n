@@ -14,15 +14,10 @@
     href="data:application/json,{&quot;name&quot;:&quot;Tariktanta&quot;,&quot;short_name&quot;:&quot;Tariktanta&quot;,&quot;start_url&quot;:&quot;/&quot;,&quot;display&quot;:&quot;standalone&quot;,&quot;background_color&quot;:&quot;#08090d&quot;,&quot;theme_color&quot;:&quot;#08090d&quot;,&quot;icons&quot;:[{&quot;src&quot;:&quot;data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>&quot;,&quot;sizes&quot;:&quot;any&quot;,&quot;type&quot;:&quot;image/svg+xml&quot;}]}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"></noscript>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-  <style>
-    #lockscreen{position:fixed;inset:0;background:#08090d;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:99999;gap:12px}
-    #lockscreen h2{font-size:28px;font-weight:800;color:#e8eaf0;letter-spacing:2px}
-    .lock-sub{font-size:13px;color:#555;letter-spacing:1px}
-    #lock-input{background:#111318;border:1px solid #1e2028;border-radius:12px;color:#e8eaf0;font-size:28px;letter-spacing:8px;padding:14px 20px;text-align:center;width:160px;outline:none}
-  </style>
 </head>
 
 <body>
@@ -70,6 +65,20 @@
       onclick="document.getElementById('pwa-banner').classList.remove('show');localStorage.setItem('pwa-dismissed','1')">×</button>
   </div>
   <div class="ptr-indicator" id="ptr-indicator">↓ Yenile</div>
+
+  <!-- HAFTA SEÇİM PANELİ -->
+  <div id="week-selector-overlay" style="display:none;">
+    <div class="wso-backdrop" onclick="closeWeekSelector()"></div>
+    <div class="wso-panel" id="wso-panel">
+      <div class="wso-header">
+        <div class="wso-course-icon" id="wso-icon"></div>
+        <div class="wso-course-name" id="wso-name"></div>
+        <button class="wso-close" onclick="closeWeekSelector()">✕</button>
+      </div>
+      <div class="wso-grid" id="wso-grid"></div>
+    </div>
+  </div>
+
   <div id="lockscreen">
     <div id="lock-logo">🔒</div>
     <h2>Tariktanta</h2>
