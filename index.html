@@ -114,8 +114,8 @@
   </div>
 
   <div class="app-switcher">
-    <div class="app-logo" data-app="dashboard" data-label="" data-drop="">Tariktanta</div>
-
+    <div class="app-logo-fixed" id="app-logo-fixed" onclick="switchApp('dashboard','','')">Tariktanta</div>
+    <div class="app-switcher-scroll">
     <div class="dropdown" id="drop-davos">
       <button data-drop-id="drop-davos" class="drop-label" id="droplabel-davos">ARDIL</button>
       <div class="drop-menu" id="dropmenu-davos">
@@ -222,6 +222,7 @@
       </div>
     </div>
 
+    </div><!-- /app-switcher-scroll -->
     <div class="switcher-right">
       <div class="dropdown" id="drop-apps">
         <button data-drop-id="apps-menu" class="drop-label" style="color:#a78bfa">UYGULAMALAR</button>
@@ -252,7 +253,17 @@
       <div class="dash-subtitle" id="dash-subtitle">Son sınıf — 8 ders, 1 hedef.</div>
       <div id="motivation-quote"></div>
     </div>
-    <div class="today-banner" id="today-banner">
+    <div id="daily-goal-widget">
+    <svg id="goal-ring-svg" viewBox="0 0 60 60" width="60" height="60">
+      <circle class="goal-ring-bg" cx="30" cy="30" r="24"/>
+      <circle class="goal-ring-fill" id="goal-ring-fill" cx="30" cy="30" r="24" stroke-dasharray="150.8" stroke-dashoffset="150.8"/>
+    </svg>
+    <div class="goal-ring-info">
+      <div class="goal-ring-count"><span id="goal-done">0</span>/<span id="goal-total">20</span></div>
+      <div class="goal-ring-label">günlük hedef</div>
+    </div>
+  </div>
+  <div class="today-banner" id="today-banner">
       <div>
         <div class="today-label">📅 Bugünün Dersleri</div>
         <div class="today-day" id="today-day-name">—</div>
@@ -344,7 +355,7 @@
     </div>
   </div>
 
-  <div class="app-panel" id="panel-hukuk">
+  <div class="app-panel" id="panel-hukuk"><div id="reading-progress-bar"></div>
     <div class="hero">
       <div class="container">
         <div class="hero-tag">Çalışma Dosyası · Week 2</div>
@@ -991,6 +1002,55 @@
       <div class="week-overlay-cards" id="wo-cards"></div>
     </div>
   </div>
+
+  <!-- Keyboard Shortcuts Modal -->
+  <div id="shortcuts-overlay" style="display:none;position:fixed;inset:0;z-index:99990;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);align-items:center;justify-content:center;">
+    <div id="shortcuts-modal">
+      <div class="shortcuts-header">
+        <span class="shortcuts-title">⌨️ Klavye Kısayolları</span>
+        <button onclick="document.getElementById('shortcuts-overlay').style.display='none'" class="shortcuts-close">×</button>
+      </div>
+      <div class="shortcuts-grid">
+        <div class="shortcut-item"><kbd>D</kbd><span>Dashboard</span></div>
+        <div class="shortcut-item"><kbd>T</kbd><span>Tema değiştir</span></div>
+        <div class="shortcut-item"><kbd>/</kbd><span>Arama aç</span></div>
+        <div class="shortcut-item"><kbd>Cmd K</kbd><span>Arama aç</span></div>
+        <div class="shortcut-item"><kbd>?</kbd><span>Bu ekran</span></div>
+        <div class="shortcut-item"><kbd>Esc</kbd><span>Kapat</span></div>
+        <div class="shortcut-item"><kbd>1</kbd><span>Hukuk</span></div>
+        <div class="shortcut-item"><kbd>2</kbd><span>Ardıl</span></div>
+        <div class="shortcut-item"><kbd>3</kbd><span>Göstergebilim</span></div>
+        <div class="shortcut-item"><kbd>4</kbd><span>Rusça IV</span></div>
+        <div class="shortcut-item"><kbd>5</kbd><span>Rusça VI</span></div>
+        <div class="shortcut-item"><kbd>6</kbd><span>Etik</span></div>
+        <div class="shortcut-item"><kbd>7</kbd><span>Terminoloji</span></div>
+        <div class="shortcut-item"><kbd>8</kbd><span>Araştırma</span></div>
+        <div class="shortcut-item"><kbd>Space</kbd><span>Flashcard çevir</span></div>
+        <div class="shortcut-item"><kbd>→</kbd><span>Sonraki kart</span></div>
+        <div class="shortcut-item"><kbd>←</kbd><span>Önceki kart</span></div>
+        <div class="shortcut-item"><kbd>Enter</kbd><span>Biliyorum ✓</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast-container"></div>
+
+  <!-- Session Timer -->
+  <div id="session-timer">⏱ <span id="session-time">00:00</span></div>
+
+  <!-- Command Palette -->
+  <div id="command-palette-overlay" style="display:none;position:fixed;inset:0;z-index:99995;background:rgba(0,0,0,0.6);backdrop-filter:blur(6px);">
+    <div id="command-palette">
+      <div class="cmd-search-wrap">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input id="cmd-input" type="text" placeholder="Ne yapmak istiyorsun?" autocomplete="off" spellcheck="false">
+        <kbd class="cmd-esc">Esc</kbd>
+      </div>
+      <div id="cmd-results"></div>
+    </div>
+  </div>
+
 </body>
 
 </html>

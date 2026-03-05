@@ -21,6 +21,7 @@ function throttle(fn, ms) {
 }
 
 let _davosRendered = false;
+const _scrollPositions = {};
 
 const WEEK_AVAILABILITY = {
   'davos':   { 2: true,  3: false, 4: false, 5: false, 6: false, 7: false },
@@ -230,6 +231,17 @@ function initDropdowns() {
 })();
 
 function switchApp(app, label, dropId, fromPopState) {
+  // Scroll pozisyonunu kaydet
+  document.querySelectorAll('.app-panel.visible').forEach(p => {
+    _scrollPositions[p.id.replace('panel-','')] = window.scrollY;
+  });
+  // Cinematic sweep
+  if (window._cinematicSweep) {
+    window._cinematicSweep.classList.remove('cinematic-active');
+    void window._cinematicSweep.offsetWidth;
+    window._cinematicSweep.classList.add('cinematic-active');
+    setTimeout(() => window._cinematicSweep.classList.remove('cinematic-active'), 500);
+  }
   document.querySelectorAll('.app-panel').forEach(p => p.classList.remove('visible'));
   const panel = document.getElementById('panel-' + app);
   if (panel) {
@@ -254,7 +266,11 @@ function switchApp(app, label, dropId, fromPopState) {
     try { const _urlId = app === 'davos' ? 'ardil' : app; history.pushState({ app, dropId }, '', '#' + _urlId); } catch (e) { }
   }
   try { localStorage.setItem('tariktanta-lastpanel', JSON.stringify({ app, dropId })); } catch (e) { }
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  // Scroll restore: kayıtlı pozisyon varsa oraya git, yoksa başa
+  requestAnimationFrame(() => {
+    const savedY = _scrollPositions[app] !== undefined ? _scrollPositions[app] : 0;
+    window.scrollTo({ top: savedY, behavior: 'instant' });
+  });
 }
 
 window.addEventListener('popstate', function (e) {
@@ -583,11 +599,36 @@ function globalSearch(q) {
 document.addEventListener('keydown', function (e) {
   if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
   const k = e.key.toLowerCase();
-  if ((e.metaKey || e.ctrlKey) && k === 'k') { e.preventDefault(); openSearch(); return; }
-  if (k === 'escape') { closeSearch(); return; }
+  // Command palette
+  if ((e.metaKey || e.ctrlKey) && k === 'k') { e.preventDefault(); openCommandPalette(); return; }
+  // Escape - kapat
+  if (e.key === 'Escape') {
+    closeSearch();
+    closeCommandPalette();
+    document.getElementById('shortcuts-overlay').style.display = 'none';
+    document.getElementById('inactivity-overlay') && document.getElementById('inactivity-overlay').classList.remove('show');
+    return;
+  }
   if (k === 'd') { switchApp('dashboard', '', ''); return; }
   if (k === 't') { toggleTheme(); return; }
   if (k === '/') { e.preventDefault(); openSearch(); return; }
+  // ? = shortcuts overlay
+  if (e.key === '?') { e.preventDefault(); const o = document.getElementById('shortcuts-overlay'); o.style.display = o.style.display === 'none' ? 'flex' : 'none'; return; }
+  // Flashcard kısayolları
+  const hPanel = document.getElementById('panel-hukuk');
+  const dPanel = document.getElementById('panel-davos');
+  if (hPanel && hPanel.classList.contains('visible')) {
+    if (e.key === ' ') { e.preventDefault(); hRevealCard(); return; }
+    if (e.key === 'Enter') { hMarkKnow(); return; }
+    if (e.key === 'ArrowRight') { hMarkKnow(); return; }
+    if (e.key === 'ArrowLeft') { hMarkDunno(); return; }
+  }
+  if (dPanel && dPanel.classList.contains('visible')) {
+    if (e.key === ' ') { e.preventDefault(); dFlipCard(); return; }
+    if (e.key === 'ArrowRight') { dNextCard(); return; }
+    if (e.key === 'ArrowLeft') { dPrevCard(); return; }
+    if (e.key === 'Enter') { dMarkKnow(); return; }
+  }
   const sc = { '1': 'hukuk', '2': 'davos', '3': 'gobilim', '4': 'rusca4', '5': 'rusca6', '6': 'etik', '7': 'termin', '8': 'tibbi' };
   if (sc[k]) { switchApp(sc[k], '', sc[k]); }
 });
@@ -736,7 +777,26 @@ const ABBREVS = [
 // DAVOS RENDER
 // ════════════════════════════════════════════════
 function dRenderSessions() { const grid = document.getElementById('dSessionGrid'); const tracker = document.getElementById('dSessionTracker'); SESSIONS.forEach((s, i) => { const card = document.createElement('div'); card.className = 'session-card'; card.style.setProperty('--card-color', s.color); card.innerHTML = `<div class="session-num">${s.num}</div><div class="session-name">${s.name}</div><div class="session-desc">${s.desc}</div><div class="session-detail">${s.detail}</div>`; card.onclick = () => { card.classList.toggle('open'); dMarkTracked('sess_' + i); }; grid.appendChild(card); const ti = document.createElement('div'); ti.className = 'dtracker-item' + (dIsTracked('sess_' + i) ? ' checked' : ''); ti.id = 'dti_' + i; ti.innerHTML = `<div class="dtracker-check">✓</div><label>${s.name}</label>`; ti.onclick = () => { dToggleTracked('sess_' + i, 'dti_' + i); }; tracker.appendChild(ti); }); }
-function dRenderTerms() { const c = document.getElementById('dTermListContainer'); TERMS.forEach(cat => { const sec = document.createElement('div'); sec.className = 'term-section'; sec.style.setProperty('--cat-color', cat.color); sec.innerHTML = `<div class="term-section-title">${cat.cat}</div>`; const grid = document.createElement('div'); grid.className = 'term-grid'; cat.items.forEach(([en, tr, note]) => { grid.innerHTML += `<div class="term-row"><div class="dterm-en">${en}</div><div class="dterm-tr">${tr}</div><div class="dterm-note">${note}</div></div>`; }); sec.appendChild(grid); c.appendChild(sec); }); }
+function dRenderTerms() {
+  const c = document.getElementById('dTermListContainer');
+  TERMS.forEach((cat, ci) => {
+    const sec = document.createElement('div');
+    sec.className = 'term-section';
+    sec.style.setProperty('--cat-color', cat.color);
+    sec.innerHTML = `<div class="term-section-title">${cat.cat}</div>`;
+    const grid = document.createElement('div');
+    grid.className = 'term-grid';
+    cat.items.forEach(([en, tr, note], i) => {
+      const row = document.createElement('div');
+      row.className = 'term-row stagger-item';
+      row.style.animationDelay = (ci * 0.05 + i * 0.03) + 's';
+      row.innerHTML = `<div class="dterm-en">${en}</div><div class="dterm-tr">${tr}</div><div class="dterm-note">${note}</div><button class="copy-term-btn" data-copy="${en} — ${tr}" title="Kopyala">📋</button>`;
+      grid.appendChild(row);
+    });
+    sec.appendChild(grid);
+    c.appendChild(sec);
+  });
+}
 function dRenderPhrases() { const c = document.getElementById('dPhraseContainer'); PHRASES.forEach(p => { c.innerHTML += `<div class="phrase-card"><div class="phrase-en">${p.en}</div><div class="phrase-tr">${p.tr}</div><div class="phrase-context">📌 ${p.ctx}</div></div>`; }); }
 function dRenderPractice() { const c = document.getElementById('dPracticeContainer'); PRACTICE.forEach((p, i) => { const div = document.createElement('div'); div.className = 'practice-card'; div.innerHTML = `<div class="practice-num">CÜMLE ${i + 1} / ${PRACTICE.length}<button class="done-btn" id="ddone_${i}" onclick="dTogglePracticeDone(${i})">✓</button></div><div class="practice-en">${p.en}</div><button class="show-answer-btn" onclick="dShowAnswer(${i})">Türkçeyi Gör ▾</button><div class="practice-tr" id="dptr_${i}">${p.tr}</div>`; c.appendChild(div); }); }
 function dShowAnswer(i) { document.getElementById('dptr_' + i).classList.add('visible'); }
@@ -750,7 +810,7 @@ function dRenderFlashcard() { const queue = dGetCurrentQueue(); if (queue.length
 function dFlipCard() { document.getElementById('dMainFlashcard').classList.toggle('flipped'); }
 function dNextCard() { const q = dGetCurrentQueue(); dFlashIndex = (dFlashIndex + 1) % Math.max(1, q.length); dRenderFlashcard(); }
 function dPrevCard() { const q = dGetCurrentQueue(); dFlashIndex = (dFlashIndex - 1 + Math.max(1, q.length)) % Math.max(1, q.length); dRenderFlashcard(); }
-function dMarkKnow() { const queue = dGetCurrentQueue(); const c = queue[dFlashIndex % queue.length]; if (!dKnown.includes(c)) dKnown.push(c); dRetry = dRetry.filter(x => x !== c); dFlashIndex = 0; dRenderFlashcard(); }
+function dMarkKnow() { const queue = dGetCurrentQueue(); const c = queue[dFlashIndex % queue.length]; if (!dKnown.includes(c)) { dKnown.push(c); updateDailyGoal(1); } dRetry = dRetry.filter(x => x !== c); dFlashIndex = 0; dRenderFlashcard(); }
 function dMarkDunno() { const queue = dGetCurrentQueue(); const c = queue[dFlashIndex % queue.length]; if (!dRetry.includes(c)) dRetry.push(c); dFlashIndex = (dFlashIndex + 1) % Math.max(1, queue.length); dRenderFlashcard(); }
 function dUpdateLeitnerStats() { const pending = dShuffledCards.filter(c => !dKnown.includes(c) && !dRetry.includes(c)).length; document.getElementById('d-stat-pending').textContent = pending; document.getElementById('d-stat-known').textContent = dKnown.length; document.getElementById('d-stat-retry').textContent = dRetry.length; }
 
@@ -937,6 +997,21 @@ function initPremium() {
   initParallax();
   initStatCounters();
   initConfetti();
+  initHoloCards();
+  initCinematicSweep();
+  initCommandPalette();
+  initKeyboardShortcutsOverlay();
+  initToastSystem();
+  initSessionTimer();
+  initDailyGoal();
+  initReadingProgress();
+  initStaggeredLists();
+  initInlineCopyBtns();
+  initLongPress();
+  initInactivityDetector();
+  initAmbientMode();
+  initShareBtns();
+  initScrollRestore();
 }
 
 function initCursorGlow() {
@@ -1581,3 +1656,450 @@ function launchConfetti() {
 }
 
 // Confetti: quiz bitince otomatik tetiklenir (dEndQuiz override kaldırıldı, güvenli versiyon aşağıda)
+
+// ════════════════════════════════════════════════
+// 🌟 HOLOGRAFİK KART EFEKTİ
+// ════════════════════════════════════════════════
+function initHoloCards() {
+  function attachHolo(el) {
+    el.addEventListener('mousemove', function(e) {
+      const rect = el.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width * 100).toFixed(1);
+      const y = ((e.clientY - rect.top) / rect.height * 100).toFixed(1);
+      el.style.setProperty('--mouse-x', x + '%');
+      el.style.setProperty('--mouse-y', y + '%');
+    }, { passive: true });
+    el.addEventListener('mouseleave', function() {
+      el.style.removeProperty('--mouse-x');
+      el.style.removeProperty('--mouse-y');
+    });
+    // iOS touch
+    el.addEventListener('touchmove', function(e) {
+      const touch = e.touches[0];
+      const rect = el.getBoundingClientRect();
+      const x = ((touch.clientX - rect.left) / rect.width * 100).toFixed(1);
+      const y = ((touch.clientY - rect.top) / rect.height * 100).toFixed(1);
+      el.style.setProperty('--mouse-x', x + '%');
+      el.style.setProperty('--mouse-y', y + '%');
+    }, { passive: true });
+  }
+
+  document.querySelectorAll('.holo-card').forEach(attachHolo);
+
+  // Dinamik eklenen kartları da yakala
+  const observer = new MutationObserver(mutations => {
+    mutations.forEach(m => m.addedNodes.forEach(n => {
+      if (n.nodeType === 1) {
+        if (n.classList && n.classList.contains('holo-card')) attachHolo(n);
+        n.querySelectorAll && n.querySelectorAll('.holo-card').forEach(attachHolo);
+      }
+    }));
+  });
+  observer.observe(document.body, { childList: true, subtree: true });
+}
+
+// ════════════════════════════════════════════════
+// 🎭 CİNEMATİC PANEL GEÇİŞİ
+// ════════════════════════════════════════════════
+function initCinematicSweep() {
+  const sweep = document.createElement('div');
+  sweep.id = 'cinematic-sweep';
+  document.body.appendChild(sweep);
+  // sweep element oluşturuldu, switchApp içinde kullanılıyor
+  window._cinematicSweep = sweep;
+}
+
+// ════════════════════════════════════════════════
+// 🔍 COMMAND PALETTE
+// ════════════════════════════════════════════════
+const CMD_COMMANDS = [
+  { icon: '🏠', label: 'Dashboard', sub: 'D', action: () => switchApp('dashboard','','') },
+  { icon: '⚖️', label: 'Hukuki Çeviri', sub: '1', action: () => switchApp('hukuk','','hukuk') },
+  { icon: '🎙️', label: 'Ardıl Çeviri', sub: '2', action: () => switchApp('davos','','davos') },
+  { icon: '📐', label: 'Göstergebilim', sub: '3', action: () => switchApp('gobilim-w2','','gobilim') },
+  { icon: '🇷🇺', label: 'Rusça IV', sub: '4', action: () => switchApp('rusca4-w2','','rusca4') },
+  { icon: '🇷🇺', label: 'Rusça VI', sub: '5', action: () => switchApp('rusca6-w2','','rusca6') },
+  { icon: '⚡', label: 'Çeviride Etik', sub: '6', action: () => switchApp('etik-w2','','etik') },
+  { icon: '📖', label: 'Terminoloji', sub: '7', action: () => switchApp('termin-w2','','termin') },
+  { icon: '🔬', label: 'Araştırma Becerileri', sub: '8', action: () => switchApp('tibbi-w2','','tibbi') },
+  { icon: '🌙', label: 'Temayı Değiştir', sub: 'T', action: () => toggleTheme() },
+  { icon: '🔍', label: 'Arama', sub: '/', action: () => openSearch() },
+  { icon: '⌨️', label: 'Klavye Kısayolları', sub: '?', action: () => { document.getElementById('shortcuts-overlay').style.display = 'flex'; } },
+  { icon: '🌙', label: 'Ambient Mode', sub: '', action: () => toggleAmbientMode() },
+];
+
+let _cmdActive = -1;
+
+function openCommandPalette() {
+  const overlay = document.getElementById('command-palette-overlay');
+  if (!overlay) return;
+  overlay.style.display = 'block';
+  const input = document.getElementById('cmd-input');
+  input.value = '';
+  _cmdActive = -1;
+  renderCmdResults('');
+  setTimeout(() => input.focus(), 50);
+}
+
+function closeCommandPalette() {
+  const overlay = document.getElementById('command-palette-overlay');
+  if (overlay) overlay.style.display = 'none';
+}
+
+function renderCmdResults(query) {
+  const container = document.getElementById('cmd-results');
+  if (!container) return;
+  const q = query.toLowerCase().trim();
+  const filtered = q ? CMD_COMMANDS.filter(c =>
+    c.label.toLowerCase().includes(q) || c.sub.toLowerCase().includes(q)
+  ) : CMD_COMMANDS;
+
+  container.innerHTML = '';
+  if (!q) {
+    const label = document.createElement('div');
+    label.className = 'cmd-section-label';
+    label.textContent = 'Hızlı Git';
+    container.appendChild(label);
+  }
+  filtered.forEach((cmd, i) => {
+    const item = document.createElement('div');
+    item.className = 'cmd-item' + (i === _cmdActive ? ' cmd-active' : '');
+    item.innerHTML = `<span class="cmd-item-icon">${cmd.icon}</span><span class="cmd-item-label">${cmd.label}</span>${cmd.sub ? `<span class="cmd-item-sub">${cmd.sub}</span>` : ''}`;
+    item.addEventListener('click', () => { cmd.action(); closeCommandPalette(); });
+    container.appendChild(item);
+  });
+}
+
+function initCommandPalette() {
+  const overlay = document.getElementById('command-palette-overlay');
+  if (!overlay) return;
+
+  overlay.addEventListener('click', e => {
+    if (e.target === overlay) closeCommandPalette();
+  });
+
+  const input = document.getElementById('cmd-input');
+  input.addEventListener('input', () => { _cmdActive = -1; renderCmdResults(input.value); });
+
+  input.addEventListener('keydown', e => {
+    const items = document.querySelectorAll('.cmd-item');
+    if (e.key === 'ArrowDown') { e.preventDefault(); _cmdActive = Math.min(_cmdActive + 1, items.length - 1); renderCmdResults(input.value); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); _cmdActive = Math.max(_cmdActive - 1, -1); renderCmdResults(input.value); }
+    else if (e.key === 'Enter') {
+      const q = input.value.toLowerCase().trim();
+      const filtered = q ? CMD_COMMANDS.filter(c => c.label.toLowerCase().includes(q) || c.sub.toLowerCase().includes(q)) : CMD_COMMANDS;
+      const idx = _cmdActive >= 0 ? _cmdActive : 0;
+      if (filtered[idx]) { filtered[idx].action(); closeCommandPalette(); }
+    }
+    else if (e.key === 'Escape') { closeCommandPalette(); }
+  });
+}
+
+// ════════════════════════════════════════════════
+// ⌨️ KEYBOARD SHORTCUTS OVERLAY
+// ════════════════════════════════════════════════
+function initKeyboardShortcutsOverlay() {
+  const overlay = document.getElementById('shortcuts-overlay');
+  if (!overlay) return;
+  overlay.addEventListener('click', e => {
+    if (e.target === overlay) overlay.style.display = 'none';
+  });
+}
+
+// ════════════════════════════════════════════════
+// 🔔 TOAST BİLDİRİM SİSTEMİ
+// ════════════════════════════════════════════════
+function initToastSystem() {
+  window.showToast = function(msg, type = 'info', duration = 2800) {
+    const container = document.getElementById('toast-container');
+    if (!container) return;
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+    toast.textContent = msg;
+    toast.addEventListener('click', () => dismissToast(toast));
+    container.appendChild(toast);
+    setTimeout(() => dismissToast(toast), duration);
+  };
+  function dismissToast(toast) {
+    toast.classList.add('toast-exit');
+    setTimeout(() => toast.remove(), 260);
+  }
+  // Swipe to dismiss toast
+  container => {
+    let sx = 0;
+    document.addEventListener('touchstart', e => {
+      const t = e.target.closest('.toast');
+      if (t) sx = e.touches[0].clientX;
+    }, { passive: true });
+    document.addEventListener('touchend', e => {
+      const t = e.target.closest('.toast');
+      if (t && Math.abs(e.changedTouches[0].clientX - sx) > 60) dismissToast(t);
+    }, { passive: true });
+  };
+}
+
+// ════════════════════════════════════════════════
+// ⏱ SESSION TIMER
+// ════════════════════════════════════════════════
+function initSessionTimer() {
+  const el = document.getElementById('session-time');
+  if (!el) return;
+  const start = Date.now();
+  setInterval(() => {
+    const s = Math.floor((Date.now() - start) / 1000);
+    const m = Math.floor(s / 60);
+    const ss = s % 60;
+    el.textContent = String(m).padStart(2,'0') + ':' + String(ss).padStart(2,'0');
+  }, 1000);
+}
+
+// ════════════════════════════════════════════════
+// 🎯 DAILY GOAL RING
+// ════════════════════════════════════════════════
+function initDailyGoal() {
+  const today = new Date().toDateString();
+  const saved = JSON.parse(localStorage.getItem('tariktanta-dailygoal') || '{}');
+  if (saved.date !== today) {
+    localStorage.setItem('tariktanta-dailygoal', JSON.stringify({ date: today, done: 0 }));
+  }
+  renderDailyGoal();
+}
+
+function updateDailyGoal(delta) {
+  const today = new Date().toDateString();
+  const saved = JSON.parse(localStorage.getItem('tariktanta-dailygoal') || '{"date":"","done":0}');
+  const done = (saved.date === today ? saved.done : 0) + delta;
+  localStorage.setItem('tariktanta-dailygoal', JSON.stringify({ date: today, done }));
+  renderDailyGoal();
+  if (done === 20) { showToast && showToast('🎯 Günlük hedef tamamlandı!', 'success', 3500); launchConfetti(); }
+}
+
+function renderDailyGoal() {
+  const today = new Date().toDateString();
+  const saved = JSON.parse(localStorage.getItem('tariktanta-dailygoal') || '{"date":"","done":0}');
+  const done = saved.date === today ? saved.done : 0;
+  const total = 20;
+  const fill = document.getElementById('goal-ring-fill');
+  const doneEl = document.getElementById('goal-done');
+  if (!fill || !doneEl) return;
+  const circumference = 2 * Math.PI * 24;
+  const offset = circumference - (done / total) * circumference;
+  fill.style.strokeDasharray = circumference;
+  fill.style.strokeDashoffset = offset;
+  doneEl.textContent = done;
+}
+
+// ════════════════════════════════════════════════
+// 📖 READING PROGRESS BAR
+// ════════════════════════════════════════════════
+function initReadingProgress() {
+  const bar = document.getElementById('reading-progress-bar');
+  if (!bar) return;
+  window.addEventListener('scroll', throttle(function() {
+    const panel = document.getElementById('panel-hukuk');
+    if (!panel || !panel.classList.contains('visible')) { bar.style.width = '0%'; return; }
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    if (total <= 0) return;
+    const pct = Math.min(100, (window.scrollY / total) * 100);
+    bar.style.width = pct + '%';
+  }, 16), { passive: true });
+}
+
+// ════════════════════════════════════════════════
+// 🌊 STAGGERED LIST ANİMASYONU
+// ════════════════════════════════════════════════
+function initStaggeredLists() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.animationPlayState = 'running';
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.stagger-item').forEach(el => {
+    el.style.animationPlayState = 'paused';
+    observer.observe(el);
+  });
+
+  // Dinamik olarak eklenenler için
+  const mutObs = new MutationObserver(mutations => {
+    mutations.forEach(m => m.addedNodes.forEach(n => {
+      if (n.nodeType === 1) {
+        const items = n.classList && n.classList.contains('stagger-item') ? [n] : (n.querySelectorAll ? n.querySelectorAll('.stagger-item') : []);
+        items.forEach(el => { el.style.animationPlayState = 'paused'; observer.observe(el); });
+      }
+    }));
+  });
+  mutObs.observe(document.body, { childList: true, subtree: true });
+}
+
+// ════════════════════════════════════════════════
+// 📋 INLINE COPY BUTTONS
+// ════════════════════════════════════════════════
+function initInlineCopyBtns() {
+  document.addEventListener('click', function(e) {
+    const btn = e.target.closest('.copy-term-btn');
+    if (!btn) return;
+    const text = btn.dataset.copy;
+    if (!text) return;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = '✓';
+      btn.classList.add('copied');
+      showToast && showToast('📋 Kopyalandı!', 'success', 1800);
+      setTimeout(() => { btn.textContent = '📋'; btn.classList.remove('copied'); }, 1500);
+    }).catch(() => {
+      // Fallback
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      ta.remove();
+      btn.textContent = '✓';
+      setTimeout(() => { btn.textContent = '📋'; }, 1500);
+    });
+  });
+}
+
+// ════════════════════════════════════════════════
+// 📱 LONG PRESS CONTEXT MENU
+// ════════════════════════════════════════════════
+function initLongPress() {
+  let pressTimer = null;
+  let menu = null;
+
+  function showMenu(x, y, card) {
+    removeMenu();
+    const app = card.dataset.app;
+    const label = card.dataset.label || '';
+    if (!app) return;
+    menu = document.createElement('div');
+    menu.id = 'long-press-menu';
+
+    const items = [
+      { icon: '🚀', label: 'Panele Git', action: () => { switchApp(app, label, card.dataset.drop || ''); } },
+      { icon: '📋', label: 'Ders Adını Kopyala', action: () => { navigator.clipboard.writeText(label || app).catch(() => {}); showToast && showToast('📋 Kopyalandı!', 'success', 1800); } },
+    ];
+    items.forEach(item => {
+      const el = document.createElement('div');
+      el.className = 'lp-item';
+      el.innerHTML = `<span class="lp-item-icon">${item.icon}</span>${item.label}`;
+      el.addEventListener('click', () => { item.action(); removeMenu(); });
+      menu.appendChild(el);
+    });
+
+    // Ekran dışına taşmasın
+    const safeX = Math.min(x, window.innerWidth - 200);
+    const safeY = Math.min(y, window.innerHeight - 120);
+    menu.style.left = safeX + 'px';
+    menu.style.top = safeY + 'px';
+    document.body.appendChild(menu);
+    document.addEventListener('click', removeMenu, { once: true });
+  }
+
+  function removeMenu() {
+    if (menu) { menu.remove(); menu = null; }
+  }
+
+  document.addEventListener('touchstart', function(e) {
+    const card = e.target.closest('.drop-item, .course-card, .today-pill');
+    if (!card) return;
+    pressTimer = setTimeout(() => {
+      const touch = e.touches[0];
+      showMenu(touch.clientX, touch.clientY, card);
+      if (navigator.vibrate) navigator.vibrate(30);
+    }, 500);
+  }, { passive: true });
+
+  document.addEventListener('touchend', () => { clearTimeout(pressTimer); }, { passive: true });
+  document.addEventListener('touchmove', () => { clearTimeout(pressTimer); }, { passive: true });
+}
+
+// ════════════════════════════════════════════════
+// 😴 İNACTİVİTY DETECTOR
+// ════════════════════════════════════════════════
+function initInactivityDetector() {
+  const TIMEOUT = 10 * 60 * 1000; // 10 dakika
+  let timer;
+  let overlay = document.getElementById('inactivity-overlay');
+
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.id = 'inactivity-overlay';
+    overlay.innerHTML = '<p>😴 Hâlâ burada mısın?</p><button onclick="dismissInactivity()">Evet, devam et!</button>';
+    document.body.appendChild(overlay);
+  }
+
+  window.dismissInactivity = function() {
+    overlay.classList.remove('show');
+    resetTimer();
+    // Pomodoro duraklatıldıysa devam ettir
+    const pomoBtn = document.getElementById('pomoStartBtn');
+    if (pomoBtn && pomoBtn.textContent.includes('Devam')) pomoBtn.click();
+  };
+
+  function showInactivity() {
+    overlay.classList.add('show');
+    // Pomodoro çalışıyorsa duraklat
+    const pomoBtn = document.getElementById('pomoStartBtn');
+    if (pomoBtn && pomoBtn.textContent.includes('Durdur')) pomoBtn.click();
+  }
+
+  function resetTimer() {
+    clearTimeout(timer);
+    timer = setTimeout(showInactivity, TIMEOUT);
+  }
+
+  ['mousemove','keydown','touchstart','click','scroll'].forEach(ev => {
+    window.addEventListener(ev, resetTimer, { passive: true });
+  });
+  resetTimer();
+}
+
+// ════════════════════════════════════════════════
+// 🌙 AMBIENT MODE
+// ════════════════════════════════════════════════
+function initAmbientMode() {
+  window.toggleAmbientMode = function() {
+    document.body.classList.toggle('ambient-mode');
+    const isAmbient = document.body.classList.contains('ambient-mode');
+    showToast && showToast(isAmbient ? '🌙 Ambient mode açık — tıkla kapat' : '☀️ Ambient mode kapatıldı', 'info');
+  };
+  // Tıklayınca ambient mode'dan çık
+  document.addEventListener('click', function(e) {
+    if (!document.body.classList.contains('ambient-mode')) return;
+    if (e.target.closest('#live-clock') || e.target.closest('#aurora-canvas')) {
+      document.body.classList.remove('ambient-mode');
+    }
+  });
+}
+
+// ════════════════════════════════════════════════
+// 🔗 SHARE API
+// ════════════════════════════════════════════════
+function initShareBtns() {
+  document.addEventListener('click', function(e) {
+    const btn = e.target.closest('.share-btn');
+    if (!btn) return;
+    const text = btn.dataset.share || document.title;
+    const url = window.location.href;
+    if (navigator.share) {
+      navigator.share({ title: 'Tariktanta', text, url }).catch(() => {});
+    } else {
+      navigator.clipboard.writeText(url).then(() => {
+        showToast && showToast('🔗 Link kopyalandı!', 'success', 2000);
+      }).catch(() => {});
+    }
+  });
+}
+
+// ════════════════════════════════════════════════
+// 📜 SMART SCROLL RESTORE
+// ════════════════════════════════════════════════
+
+function initScrollRestore() {
+  // _scrollPositions objesi global tanımlı, switchApp içinde kullanılıyor
+}
+
