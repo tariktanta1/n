@@ -283,9 +283,20 @@ window.addEventListener('popstate', function (e) {
 
 function restoreLastPanel() {
   try {
+    // Önce URL hash'e bak
+    const hash = location.hash.replace('#', '');
+    if (hash) {
+      const appFromHash = hash === 'ardil' ? 'davos' : hash;
+      switchApp(appFromHash, '', appFromHash, true);
+      return;
+    }
+    // localStorage'dan son paneli restore et
     const saved = localStorage.getItem('tariktanta-lastpanel');
     if (saved) {
       const { app, dropId } = JSON.parse(saved);
+      if (app && app !== 'dashboard') {
+        switchApp(app, '', dropId || '', true);
+      }
     }
   } catch (e) { }
 }
