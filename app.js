@@ -44,7 +44,7 @@ window.addEventListener('load', function () {
 const SCHEDULE = {
   'Pazartesi': [{ name: 'Ardıl Çeviriye Giriş', time: '09:30–13:15', panel: 'davos', color: '#c8f135', icon: '🎙️' }, { name: 'Hukuk Çevirisi', time: '13:30–16:15', panel: 'hukuk', color: '#e8c547', icon: '⚖️' }],
   'Salı': [{ name: 'Çeviri Göstergebilimi II', time: '11:30–14:30', panel: 'gobilim', color: '#a78bfa', icon: '📐' }],
-  'Çarşamba': [{ name: 'Çeviride Etik', time: '08:30–11:15', panel: 'etik', color: '#f97316', icon: '⚡' }, { name: 'Çevirmenler İçin Terminoloji', time: '09:30–12:15', panel: 'termin', color: '#4ade80', icon: '📖' }, { name: 'Tıbbi Bitki', time: '13:00–14:45', panel: 'tibbi', color: '#fb923c', icon: '🌿' }],
+  'Çarşamba': [{ name: 'Çeviride Etik', time: '08:30–11:15', panel: 'etik', color: '#f97316', icon: '⚡' }, { name: 'Çevirmenler İçin Terminoloji', time: '09:30–12:15', panel: 'termin', color: '#4ade80', icon: '📖' }, { name: 'Araştırma Becerileri', time: '13:00–14:45', panel: 'tibbi', color: '#fb923c', icon: '🔬' }],
   'Perşembe': [{ name: 'Rusça IV', time: '11:30–14:15', panel: 'rusca4', color: '#38bdf8', icon: '🇷🇺' }, { name: 'Rusça VI', time: '14:30–17:15', panel: 'rusca6', color: '#38bdf8', icon: '🇷🇺' }]
 };
 const COURSES = [
@@ -53,7 +53,7 @@ const COURSES = [
   { id: 'gobilim', name: 'Çeviri Göstergebilimi II',         icon: '📐',  color: '#a78bfa', desc: 'Göstergebilim · Öztürk Kasar modeli',        room: 'FEF 228',  day: 'Salı',      time: '13:30–14:30', available: false },
   { id: 'etik',    name: 'Çeviride Etik',                   icon: '⚡',  color: '#f97316', desc: 'Mesleki sorumluluklar · Etik ilkeler',       room: 'FEF 33',   day: 'Çarşamba',  time: '08:30–11:15', available: false },
   { id: 'termin',  name: 'Çevirmenler İçin Terminoloji',    icon: '📖',  color: '#4ade80', desc: 'Terminoloji teorisi ve uygulama',           room: 'FEF 235',  day: 'Çarşamba',  time: '09:30–12:15', available: false },
-  { id: 'tibbi',   name: 'Tıbbi Bitki (Seçmeli)',            icon: '🌿',  color: '#fb923c', desc: 'Tıbbi terminoloji · Bitki sözlüğü',          room: '',         day: 'Çarşamba',  time: '13:00–14:45', available: false },
+  { id: 'tibbi',   name: 'Araştırma Becerileri',              icon: '🔬',  color: '#fb923c', desc: 'Akademik araştırma · Kaynak kullanımı',      room: '',         day: 'Çarşamba',  time: '13:00–14:45', available: false },
   { id: 'rusca4',  name: 'Rusça IV',                         icon: '🇷🇺', color: '#38bdf8', desc: 'Orta ileri Rusça terminoloji',              room: 'YDYO 226', day: 'Perşembe',  time: '11:30–14:15', available: false },
   { id: 'rusca6',  name: 'Rusça VI',                         icon: '🇷🇺', color: '#38bdf8', desc: 'İleri düzey Rusça terminoloji',             room: 'YDYO 226', day: 'Perşembe',  time: '14:30–17:15', available: false },
 ];
@@ -453,8 +453,8 @@ function setLang(lang) {
 
   // Sıra: drop-gobilim, drop-etik, drop-termin, drop-tibbi, drop-rusca4, drop-rusca6
   const noIdLabels = isEN
-    ? ['SEMIOTICS', 'ETHICS', 'TERMINOLOGY', 'MEDICINAL', 'RUSSIAN IV', 'RUSSIAN VI']
-    : ['GÖSTERGEBİLİM', 'ETİK', 'TERMİNOLOJİ', 'TIBBİ BİTKİ', 'RUSÇA IV', 'RUSÇA VI'];
+    ? ['SEMIOTICS', 'ETHICS', 'TERMINOLOGY', 'RESEARCH', 'RUSSIAN IV', 'RUSSIAN VI']
+    : ['GÖSTERGEBİLİM', 'ETİK', 'TERMİNOLOJİ', 'ARAŞTIRMA', 'RUSÇA IV', 'RUSÇA VI'];
   const allDropLabels = document.querySelectorAll('.app-switcher .dropdown:not(#drop-hukuk):not(#drop-davos):not(#drop-apps) .drop-label');
   allDropLabels.forEach(function (el, i) { if (noIdLabels[i]) el.textContent = noIdLabels[i]; });
 
