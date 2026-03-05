@@ -283,21 +283,15 @@ window.addEventListener('popstate', function (e) {
 
 function restoreLastPanel() {
   try {
-    // Önce URL hash'e bak
+    // Sadece URL hash varsa git, yoksa dashboard
     const hash = location.hash.replace('#', '');
     if (hash) {
       const appFromHash = hash === 'ardil' ? 'davos' : hash;
       switchApp(appFromHash, '', appFromHash, true);
       return;
     }
-    // localStorage'dan son paneli restore et
-    const saved = localStorage.getItem('tariktanta-lastpanel');
-    if (saved) {
-      const { app, dropId } = JSON.parse(saved);
-      if (app && app !== 'dashboard') {
-        switchApp(app, '', dropId || '', true);
-      }
-    }
+    // localStorage'dan restore KALDIRILDI - site her zaman dashboard'dan açılır
+    switchApp('dashboard', '', '', true);
   } catch (e) { }
 }
 
@@ -978,8 +972,16 @@ function initApp() {
   initDashboard();
   pomoRender();
   hRenderCard();
-  // Lazy render: Davos paneli ilk açılınca render et
-  _davosRendered = false;
+  // Davos render'larını baştan yap - lazy render notları kaybettiriyordu
+  dRenderSessions();
+  dRenderTerms();
+  dRenderPhrases();
+  dRenderPractice();
+  dRenderSpeakers();
+  dRenderFlashcard();
+  dStartQuiz();
+  dUpdateProgress();
+  _davosRendered = true;
   buildSearchIndex();
   registerSW();
   restoreLastPanel();
