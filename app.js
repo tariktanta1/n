@@ -1420,26 +1420,89 @@ function initLiveClock() {
   const dayNames = ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'];
   const monthNames = ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz', 'Tem', 'Ağu', 'Eyl', 'Eki', 'Kas', 'Ara'];
 
+  // Sliding clock yapısı oluştur
+  function buildSlidingClock() {
+    el.innerHTML = '';
+    el.className = 'sliding-clock';
+    // HH:MM:SS — 8 slot (2 rakam + : + 2 rakam + : + 2 rakam)
+    const structure = [
+      { type: 'digit', id: 'sc-h1', max: 2 },
+      { type: 'digit', id: 'sc-h2', max: 9 },
+      { type: 'sep' },
+      { type: 'digit', id: 'sc-m1', max: 5 },
+      { type: 'digit', id: 'sc-m2', max: 9 },
+      { type: 'sep' },
+      { type: 'digit', id: 'sc-s1', max: 5 },
+      { type: 'digit', id: 'sc-s2', max: 9 },
+    ];
+
+    structure.forEach(item => {
+      if (item.type === 'sep') {
+        const sep = document.createElement('span');
+        sep.className = 'sc-sep';
+        sep.textContent = ':';
+        el.appendChild(sep);
+      } else {
+        const col = document.createElement('div');
+        col.className = 'sc-col';
+        col.id = item.id;
+        const drum = document.createElement('div');
+        drum.className = 'sc-drum';
+        // 0–max rakamlarını doldur
+        for (let i = 0; i <= item.max; i++) {
+          const d = document.createElement('div');
+          d.className = 'sc-digit';
+          d.textContent = i;
+          drum.appendChild(d);
+        }
+        col.appendChild(drum);
+        el.appendChild(col);
+      }
+    });
+  }
+
+  function setDigit(id, val, max) {
+    const col = document.getElementById(id);
+    if (!col) return;
+    const drum = col.querySelector('.sc-drum');
+    if (!drum) return;
+    const digitH = col.offsetHeight || 80;
+    // val'ı max+1 içinde clamp et
+    const safeVal = Math.min(val, max);
+    drum.style.transform = `translateY(-${safeVal * digitH}px)`;
+  }
+
   function tick() {
     const now = new Date();
-    const h = String(now.getHours()).padStart(2, '0');
-    const m = String(now.getMinutes()).padStart(2, '0');
-    const s = String(now.getSeconds()).padStart(2, '0');
-    el.textContent = h + ':' + m + ':' + s;
+    const h = now.getHours();
+    const m = now.getMinutes();
+    const s = now.getSeconds();
 
-    const hour = now.getHours();
-    el.className = '';
-    if (hour >= 0  && hour < 6)  el.classList.add('late-night');
-    else if (hour >= 6  && hour < 12) el.classList.add('morning');
-    else if (hour >= 12 && hour < 18) el.classList.add('afternoon');
+    setDigit('sc-h1', Math.floor(h / 10), 2);
+    setDigit('sc-h2', h % 10, 9);
+    setDigit('sc-m1', Math.floor(m / 10), 5);
+    setDigit('sc-m2', m % 10, 9);
+    setDigit('sc-s1', Math.floor(s / 10), 5);
+    setDigit('sc-s2', s % 10, 9);
+
+    // Gün/gece sınıfı
+    el.className = 'sliding-clock';
+    if (h >= 0  && h < 6)  el.classList.add('late-night');
+    else if (h >= 6  && h < 12) el.classList.add('morning');
+    else if (h >= 12 && h < 18) el.classList.add('afternoon');
     else el.classList.add('evening');
 
     if (heroDateEl) {
       heroDateEl.textContent = dayNames[now.getDay()] + ', ' + now.getDate() + ' ' + monthNames[now.getMonth()] + ' ' + now.getFullYear();
     }
   }
-  tick();
-  setInterval(tick, 1000);
+
+  buildSlidingClock();
+  // DOM hazır olunca ilk tick
+  requestAnimationFrame(() => {
+    tick();
+    setInterval(tick, 1000);
+  });
 }
 
 // ════════════════════════════════════════════════

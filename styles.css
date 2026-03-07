@@ -5462,3 +5462,70 @@ body.ambient-mode .hero-scroll-hint {
   .graph-header, .graph-controls { padding-left: 20px; padding-right: 20px; }
 }
 
+
+/* ═══════════════════════════════════════════════════════════
+   🕐 SLIDING CLOCK
+═══════════════════════════════════════════════════════════ */
+.sliding-clock {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 2px !important;
+  font-family: 'IBM Plex Mono', monospace !important;
+  font-size: clamp(42px, 10vw, 96px) !important;
+  font-weight: 400 !important;
+  line-height: 1 !important;
+  color: var(--theme-text) !important;
+  user-select: none;
+}
+
+.sc-col {
+  height: 1em;
+  overflow: hidden;
+  position: relative;
+}
+
+.sc-drum {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+}
+
+.sc-digit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 1em;
+  width: 0.62em;
+  font-variant-numeric: tabular-nums;
+}
+
+.sc-sep {
+  font-size: 1em;
+  line-height: 1;
+  color: var(--theme-muted);
+  margin: 0 2px;
+  align-self: center;
+  opacity: 0.5;
+  animation: sepBlink 2s step-end infinite;
+}
+
+@keyframes sepBlink {
+  0%, 100% { opacity: 0.5; }
+  50%       { opacity: 0.15; }
+}
+
+/* Gün/gece renkleri */
+.sliding-clock.morning  .sc-digit { color: var(--theme-text); }
+.sliding-clock.afternoon .sc-digit { color: var(--theme-text); }
+.sliding-clock.evening  .sc-digit { color: var(--theme-text); }
+.sliding-clock.late-night .sc-digit { color: rgba(255,255,255,0.5); }
+
+@media (max-width: 600px) {
+  .sliding-clock {
+    font-size: clamp(36px, 14vw, 60px) !important;
+    gap: 1px !important;
+  }
+}
+
