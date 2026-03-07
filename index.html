@@ -206,173 +206,6 @@
       </div>
     </div>
   </div>
-
-  <!-- SIDEBAR -->
-  <div class="sidebar" id="sidebar">
-    <div class="sidebar-logo" onclick="switchApp('dashboard','','')">TT</div>
-    <nav class="sidebar-nav">
-      <button class="sidebar-btn active" id="sb-dashboard"
-        onclick="switchApp('dashboard','','');sidebarSetActive('dashboard')" title="Dashboard">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <rect x="3" y="3" width="7" height="7" />
-          <rect x="14" y="3" width="7" height="7" />
-          <rect x="3" y="14" width="7" height="7" />
-          <rect x="14" y="14" width="7" height="7" />
-        </svg>
-        <span>Dashboard</span>
-      </button>
-      <button class="sidebar-btn" id="sb-stats"
-        onclick="switchApp('stats','İstatistik','stats');sidebarSetActive('stats')" title="İstatistik">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="18" y1="20" x2="18" y2="10" />
-          <line x1="12" y1="20" x2="12" y2="4" />
-          <line x1="6" y1="20" x2="6" y2="14" />
-        </svg>
-        <span>İstatistik</span>
-      </button>
-      <button class="sidebar-btn" id="sb-notes" onclick="switchApp('notes','Notlar','notes');sidebarSetActive('notes')"
-        title="Notlar">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-          <polyline points="14 2 14 8 20 8" />
-          <line x1="16" y1="13" x2="8" y2="13" />
-          <line x1="16" y1="17" x2="8" y2="17" />
-        </svg>
-        <span>Notlar</span>
-      </button>
-      <button class="sidebar-btn" id="sb-graph"
-        onclick="switchApp('graph','Bilgi Grafiği','graph');sidebarSetActive('graph')" title="Bilgi Grafiği">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="5" r="2" />
-          <circle cx="5" cy="19" r="2" />
-          <circle cx="19" cy="19" r="2" />
-          <line x1="12" y1="7" x2="5" y2="17" />
-          <line x1="12" y1="7" x2="19" y2="17" />
-          <line x1="5" y1="19" x2="19" y2="19" />
-        </svg>
-        <span>Bilgi Grafiği</span>
-      </button>
-    </nav>
-    <div class="sidebar-bottom">
-      <button class="sidebar-btn" onclick="toggleTheme()" title="Tema">
-        <span id="sb-theme-icon">🌙</span>
-        <span id="sb-theme-text">Tema</span>
-      </button>
-    </div>
-  </div>
-
-  <div class="app-switcher">
-    <div class="app-logo-fixed" id="app-logo-fixed" onclick="switchApp('dashboard','','')">Tariktanta</div>
-    <div class="app-switcher-scroll">
-      <div class="dropdown" id="drop-davos">
-        <button data-drop-id="drop-davos" class="drop-label" id="droplabel-davos">ARDIL</button>
-        <div class="drop-menu" id="dropmenu-davos">
-          <div class="drop-week-label">📅 Haftalar</div>
-          <button data-app="davos" data-label="2. Hafta — Davos Summit" data-drop="davos"
-            class="drop-item active-item">🎙️ 2.
-            Hafta — Davos Summit</button>
-          <button data-app="davos-w3" data-label="3. Hafta" data-drop="davos" class="drop-item">🎙️ 3. Hafta</button>
-          <button data-app="davos-w4" data-label="4. Hafta" data-drop="davos" class="drop-item">🎙️ 4. Hafta</button>
-          <button data-app="davos-w5" data-label="5. Hafta" data-drop="davos" class="drop-item">🎙️ 5. Hafta</button>
-          <button data-app="davos-w6" data-label="6. Hafta" data-drop="davos" class="drop-item">🎙️ 6. Hafta</button>
-          <button data-app="davos-w7" data-label="7. Hafta" data-drop="davos" class="drop-item">🎙️ 7. Hafta</button>
-        </div>
-      </div>
-
-      <div class="dropdown" id="drop-hukuk">
-        <button data-drop-id="drop-hukuk" class="drop-label" id="droplabel-hukuk">HUKUK</button>
-        <div class="drop-menu" id="dropmenu-hukuk">
-          <div class="drop-week-label">📅 Haftalar</div>
-          <button data-app="hukuk" data-label="2. Hafta — Hukuki Çeviri" data-drop="hukuk"
-            class="drop-item active-item">⚖️ 2.
-            Hafta — Hukuki Çeviri</button>
-          <button data-app="hukuk-w3" data-label="3. Hafta" data-drop="hukuk" class="drop-item">⚖️ 3. Hafta</button>
-          <button data-app="hukuk-w4" data-label="4. Hafta" data-drop="hukuk" class="drop-item">⚖️ 4. Hafta</button>
-          <button data-app="hukuk-w5" data-label="5. Hafta" data-drop="hukuk" class="drop-item">⚖️ 5. Hafta</button>
-          <button data-app="hukuk-w6" data-label="6. Hafta" data-drop="hukuk" class="drop-item">⚖️ 6. Hafta</button>
-          <button data-app="hukuk-w7" data-label="7. Hafta" data-drop="hukuk" class="drop-item">⚖️ 7. Hafta</button>
-        </div>
-      </div>
-
-      <div class="dropdown" id="drop-gobilim">
-        <button data-drop-id="drop-gobilim" class="drop-label">GÖSTERGEBİLİM</button>
-        <div class="drop-menu">
-          <div class="drop-week-label">📅 Haftalar</div>
-          <button data-app="gobilim-w2" data-label="2. Hafta" data-drop="gobilim" class="drop-item">📐 2. Hafta</button>
-          <button data-app="gobilim-w3" data-label="3. Hafta" data-drop="gobilim" class="drop-item">📐 3. Hafta</button>
-          <button data-app="gobilim-w4" data-label="4. Hafta" data-drop="gobilim" class="drop-item">📐 4. Hafta</button>
-          <button data-app="gobilim-w5" data-label="5. Hafta" data-drop="gobilim" class="drop-item">📐 5. Hafta</button>
-          <button data-app="gobilim-w6" data-label="6. Hafta" data-drop="gobilim" class="drop-item">📐 6. Hafta</button>
-          <button data-app="gobilim-w7" data-label="7. Hafta" data-drop="gobilim" class="drop-item">📐 7. Hafta</button>
-        </div>
-      </div>
-
-      <div class="dropdown" id="drop-etik">
-        <button data-drop-id="drop-etik" class="drop-label">ETİK</button>
-        <div class="drop-menu">
-          <div class="drop-week-label">📅 Haftalar</div>
-          <button data-app="etik-w2" data-label="2. Hafta" data-drop="etik" class="drop-item">⚡ 2. Hafta</button>
-          <button data-app="etik-w3" data-label="3. Hafta" data-drop="etik" class="drop-item">⚡ 3. Hafta</button>
-          <button data-app="etik-w4" data-label="4. Hafta" data-drop="etik" class="drop-item">⚡ 4. Hafta</button>
-          <button data-app="etik-w5" data-label="5. Hafta" data-drop="etik" class="drop-item">⚡ 5. Hafta</button>
-          <button data-app="etik-w6" data-label="6. Hafta" data-drop="etik" class="drop-item">⚡ 6. Hafta</button>
-          <button data-app="etik-w7" data-label="7. Hafta" data-drop="etik" class="drop-item">⚡ 7. Hafta</button>
-        </div>
-      </div>
-
-      <div class="dropdown" id="drop-termin">
-        <button data-drop-id="drop-termin" class="drop-label">TERMİNOLOJİ</button>
-        <div class="drop-menu">
-          <div class="drop-week-label">📅 Haftalar</div>
-          <button data-app="termin-w2" data-label="2. Hafta" data-drop="termin" class="drop-item">📖 2. Hafta</button>
-          <button data-app="termin-w3" data-label="3. Hafta" data-drop="termin" class="drop-item">📖 3. Hafta</button>
-          <button data-app="termin-w4" data-label="4. Hafta" data-drop="termin" class="drop-item">📖 4. Hafta</button>
-          <button data-app="termin-w5" data-label="5. Hafta" data-drop="termin" class="drop-item">📖 5. Hafta</button>
-          <button data-app="termin-w6" data-label="6. Hafta" data-drop="termin" class="drop-item">📖 6. Hafta</button>
-          <button data-app="termin-w7" data-label="7. Hafta" data-drop="termin" class="drop-item">📖 7. Hafta</button>
-        </div>
-      </div>
-
-      <div class="dropdown" id="drop-tibbi">
-        <button data-drop-id="drop-tibbi" class="drop-label">ARAŞTIRMA</button>
-        <div class="drop-menu">
-          <div class="drop-week-label">📅 Haftalar</div>
-          <button data-app="tibbi-w2" data-label="2. Hafta" data-drop="tibbi" class="drop-item">🔬 2. Hafta</button>
-          <button data-app="tibbi-w3" data-label="3. Hafta" data-drop="tibbi" class="drop-item">🔬 3. Hafta</button>
-          <button data-app="tibbi-w4" data-label="4. Hafta" data-drop="tibbi" class="drop-item">🔬 4. Hafta</button>
-          <button data-app="tibbi-w5" data-label="5. Hafta" data-drop="tibbi" class="drop-item">🔬 5. Hafta</button>
-          <button data-app="tibbi-w6" data-label="6. Hafta" data-drop="tibbi" class="drop-item">🔬 6. Hafta</button>
-          <button data-app="tibbi-w7" data-label="7. Hafta" data-drop="tibbi" class="drop-item">🔬 7. Hafta</button>
-        </div>
-      </div>
-
-      <div class="dropdown" id="drop-rusca4">
-        <button data-drop-id="drop-rusca4" class="drop-label">RUSÇA IV</button>
-        <div class="drop-menu">
-          <div class="drop-week-label">📅 Haftalar</div>
-          <button data-app="rusca4-w2" data-label="2. Hafta" data-drop="rusca4" class="drop-item">🇷🇺 2. Hafta</button>
-          <button data-app="rusca4-w3" data-label="3. Hafta" data-drop="rusca4" class="drop-item">🇷🇺 3. Hafta</button>
-          <button data-app="rusca4-w4" data-label="4. Hafta" data-drop="rusca4" class="drop-item">🇷🇺 4. Hafta</button>
-          <button data-app="rusca4-w5" data-label="5. Hafta" data-drop="rusca4" class="drop-item">🇷🇺 5. Hafta</button>
-          <button data-app="rusca4-w6" data-label="6. Hafta" data-drop="rusca4" class="drop-item">🇷🇺 6. Hafta</button>
-          <button data-app="rusca4-w7" data-label="7. Hafta" data-drop="rusca4" class="drop-item">🇷🇺 7. Hafta</button>
-        </div>
-      </div>
-
-      <div class="dropdown" id="drop-rusca6">
-        <button data-drop-id="drop-rusca6" class="drop-label">RUSÇA VI</button>
-        <div class="drop-menu">
-          <div class="drop-week-label">📅 Haftalar</div>
-          <button data-app="rusca6-w2" data-label="2. Hafta" data-drop="rusca6" class="drop-item">🇷🇺 2. Hafta</button>
-          <button data-app="rusca6-w3" data-label="3. Hafta" data-drop="rusca6" class="drop-item">🇷🇺 3. Hafta</button>
-          <button data-app="rusca6-w4" data-label="4. Hafta" data-drop="rusca6" class="drop-item">🇷🇺 4. Hafta</button>
-          <button data-app="rusca6-w5" data-label="5. Hafta" data-drop="rusca6" class="drop-item">🇷🇺 5. Hafta</button>
-          <button data-app="rusca6-w6" data-label="6. Hafta" data-drop="rusca6" class="drop-item">🇷🇺 6. Hafta</button>
-          <button data-app="rusca6-w7" data-label="7. Hafta" data-drop="rusca6" class="drop-item">🇷🇺 7. Hafta</button>
-        </div>
-      </div>
-
-    </div>
     <div class="switcher-right">
       <div class="dropdown" id="drop-apps">
         <button data-drop-id="apps-menu" class="drop-label" style="color:#a78bfa">UYGULAMALAR</button>
@@ -384,14 +217,72 @@
         </svg>
         <span id="search-btn-text">Ara</span> <kbd>⌘K</kbd>
       </button>
-      <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn" title="Tema değiştir">🌙</button>
-      <div style="display:flex;gap:2px;align-items:center">
-        <button onclick="setLang('tr')" id="flag-tr" title="Türkçe"
-          style="background:none;border:none;cursor:pointer;font-size:18px;padding:2px;border-radius:4px;opacity:1;transition:opacity 0.2s">🇹🇷</button>
-        <button onclick="setLang('en')" id="flag-en" title="English"
-          style="background:none;border:none;cursor:pointer;font-size:18px;padding:2px;border-radius:4px;opacity:0.4;transition:opacity 0.2s">🇬🇧</button>
+      <!-- FLOATING PILL NAVBAR -->
+  <nav id="pill-nav">
+    <div class="pill-nav-inner">
+      <div class="pill-nav-indicator" id="pill-indicator"></div>
+
+      <!-- Sol grup: Dersler -->
+      <div class="pill-group" id="pill-group-courses">
+        <button class="pill-btn" id="pill-dashboard" onclick="pillNav('dashboard')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          <span>Ana</span>
+        </button>
+        <button class="pill-btn has-weeks" id="pill-davos" onclick="pillNavWeeks('davos', event)">
+          <span>🎙️</span><span>Ardıl</span>
+        </button>
+        <button class="pill-btn has-weeks" id="pill-hukuk" onclick="pillNavWeeks('hukuk', event)">
+          <span>⚖️</span><span>Hukuk</span>
+        </button>
+        <button class="pill-btn has-weeks" id="pill-gobilim" onclick="pillNavWeeks('gobilim', event)">
+          <span>📐</span><span>Gösterge</span>
+        </button>
+        <button class="pill-btn has-weeks" id="pill-etik" onclick="pillNavWeeks('etik', event)">
+          <span>⚡</span><span>Etik</span>
+        </button>
+        <button class="pill-btn has-weeks" id="pill-termin" onclick="pillNavWeeks('termin', event)">
+          <span>📖</span><span>Terminoloji</span>
+        </button>
+        <button class="pill-btn has-weeks" id="pill-tibbi" onclick="pillNavWeeks('tibbi', event)">
+          <span>🔬</span><span>Araştırma</span>
+        </button>
+        <button class="pill-btn has-weeks" id="pill-rusca4" onclick="pillNavWeeks('rusca4', event)">
+          <span>🇷🇺</span><span>Rusça IV</span>
+        </button>
+        <button class="pill-btn has-weeks" id="pill-rusca6" onclick="pillNavWeeks('rusca6', event)">
+          <span>🇷🇺</span><span>Rusça VI</span>
+        </button>
+      </div>
+
+      <!-- Sağ grup: Araçlar -->
+      <div class="pill-divider"></div>
+      <div class="pill-group" id="pill-group-tools">
+        <button class="pill-btn" id="pill-stats" onclick="pillNav('stats')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          <span>İstatistik</span>
+        </button>
+        <button class="pill-btn" id="pill-notes" onclick="pillNav('notes')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          <span>Notlar</span>
+        </button>
+        <button class="pill-btn" id="pill-graph" onclick="pillNav('graph')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><line x1="12" y1="7" x2="5" y2="17"/><line x1="12" y1="7" x2="19" y2="17"/></svg>
+          <span>Graf</span>
+        </button>
+        <button class="pill-btn" id="pill-search" onclick="openSearch()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <span>Ara</span>
+        </button>
+        <button class="pill-btn" id="pill-theme" onclick="toggleTheme()">
+          <span id="pill-theme-icon">🌙</span>
+        </button>
       </div>
     </div>
+  </nav>
+
+  <!-- Hafta popup -->
+  <div id="week-popup" style="display:none;position:fixed;z-index:99998;bottom:90px;">
+    <div class="week-popup-inner" id="week-popup-inner"></div>
   </div>
 
   <div class="app-panel visible" id="panel-dashboard">

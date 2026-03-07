@@ -2970,3 +2970,204 @@ window.initPremium = function () {
   initHighlightPopup();
 };
 
+
+// ════════════════════════════════════════════════
+// 💊 FLOATING PILL NAVBAR
+// ════════════════════════════════════════════════
+
+const PILL_WEEKS = {
+  davos:   { icon:'🎙️', label:'Ardıl', weeks:['davos','davos-w3','davos-w4','davos-w5','davos-w6','davos-w7'],   labels:['2. Hafta — Davos','3. Hafta','4. Hafta','5. Hafta','6. Hafta','7. Hafta'] },
+  hukuk:   { icon:'⚖️', label:'Hukuk', weeks:['hukuk','hukuk-w3','hukuk-w4','hukuk-w5','hukuk-w6','hukuk-w7'],   labels:['2. Hafta — Hukuk','3. Hafta','4. Hafta','5. Hafta','6. Hafta','7. Hafta'] },
+  gobilim: { icon:'📐', label:'Gösterge', weeks:['gobilim-w2','gobilim-w3','gobilim-w4','gobilim-w5','gobilim-w6','gobilim-w7'], labels:['2. Hafta','3. Hafta','4. Hafta','5. Hafta','6. Hafta','7. Hafta'] },
+  etik:    { icon:'⚡', label:'Etik', weeks:['etik-w2','etik-w3','etik-w4','etik-w5','etik-w6','etik-w7'],         labels:['2. Hafta','3. Hafta','4. Hafta','5. Hafta','6. Hafta','7. Hafta'] },
+  termin:  { icon:'📖', label:'Terminoloji', weeks:['termin-w2','termin-w3','termin-w4','termin-w5','termin-w6','termin-w7'], labels:['2. Hafta','3. Hafta','4. Hafta','5. Hafta','6. Hafta','7. Hafta'] },
+  tibbi:   { icon:'🔬', label:'Araştırma', weeks:['tibbi-w2','tibbi-w3','tibbi-w4','tibbi-w5','tibbi-w6','tibbi-w7'],  labels:['2. Hafta','3. Hafta','4. Hafta','5. Hafta','6. Hafta','7. Hafta'] },
+  rusca4:  { icon:'🇷🇺', label:'Rusça IV', weeks:['rusca4-w2','rusca4-w3','rusca4-w4','rusca4-w5','rusca4-w6','rusca4-w7'], labels:['2. Hafta','3. Hafta','4. Hafta','5. Hafta','6. Hafta','7. Hafta'] },
+  rusca6:  { icon:'🇷🇺', label:'Rusça VI', weeks:['rusca6-w2','rusca6-w3','rusca6-w4','rusca6-w5','rusca6-w6','rusca6-w7'], labels:['2. Hafta','3. Hafta','4. Hafta','5. Hafta','6. Hafta','7. Hafta'] },
+};
+
+let _pillCurrentGroup = null; // aktif ders grubu
+let _pillCurrentApp   = 'dashboard';
+let _weekPopupOpen    = false;
+let _weekPopupGroup   = null;
+
+function pillNav(app) {
+  _weekPopupClose();
+  _pillCurrentApp = app;
+  const dropMap = { stats:'stats', notes:'notes', graph:'graph', dashboard:'' };
+  const drop = dropMap[app] || '';
+  switchApp(app, app, drop);
+  _pillIndicatorMove(app);
+}
+
+function pillNavWeeks(group, e) {
+  if (e) e.stopPropagation();
+
+  // Eğer aynı gruba tıklandıysa ve popup açıksa kapat
+  if (_weekPopupOpen && _weekPopupGroup === group) {
+    _weekPopupClose();
+    return;
+  }
+
+  _weekPopupGroup = group;
+  _weekPopupOpen  = true;
+
+  const cfg   = PILL_WEEKS[group];
+  const popup  = document.getElementById('week-popup');
+  const inner  = document.getElementById('week-popup-inner');
+  if (!popup || !inner || !cfg) return;
+
+  // Aktif hafta hangisi?
+  const activeApp = _pillCurrentGroup === group ? _pillCurrentApp : cfg.weeks[0];
+
+  inner.innerHTML =
+    `<div class="week-popup-label">${cfg.icon} ${cfg.label}</div>` +
+    cfg.weeks.map((w, i) =>
+      `<button class="week-popup-item${w === activeApp ? ' active-week' : ''}"
+        onclick="_weekSelect('${group}','${w}',event)">
+        ${cfg.icon} ${cfg.labels[i]}
+      </button>`
+    ).join('');
+
+  // Pozisyonu pill butonun üstüne hizala
+  const btn    = document.getElementById('pill-' + group);
+  const nav    = document.getElementById('pill-nav');
+  if (btn && nav) {
+    const btnRect = btn.getBoundingClientRect();
+    const navRect = nav.getBoundingClientRect();
+    popup.style.display = 'block';
+    popup.style.bottom   = (window.innerHeight - navRect.top + 12) + 'px';
+    // Ekran dışına taşma kontrolü
+    requestAnimationFrame(() => {
+      const pw = inner.offsetWidth || 200;
+      let left = btnRect.left + btnRect.width / 2 - pw / 2;
+      left = Math.max(12, Math.min(left, window.innerWidth - pw - 12));
+      popup.style.left = left + 'px';
+    });
+  }
+}
+
+function _weekSelect(group, app, e) {
+  if (e) e.stopPropagation();
+  _pillCurrentGroup = group;
+  _pillCurrentApp   = app;
+  _weekPopupClose();
+  switchApp(app, '', group);
+  // Pill indicator → ders grubunun pill'ine taşı
+  _pillIndicatorMove('pill-' + group, true);
+  // Pill butonunu aktif yap
+  document.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
+  const btn = document.getElementById('pill-' + group);
+  if (btn) btn.classList.add('active');
+}
+
+function _weekPopupClose() {
+  _weekPopupOpen  = false;
+  _weekPopupGroup = null;
+  const popup = document.getElementById('week-popup');
+  if (popup) popup.style.display = 'none';
+}
+
+// Dışarı tıklayınca popup kapat
+document.addEventListener('click', function(e) {
+  if (!_weekPopupOpen) return;
+  const popup = document.getElementById('week-popup');
+  const nav   = document.getElementById('pill-nav');
+  if (popup && nav) {
+    if (!popup.contains(e.target) && !nav.contains(e.target)) {
+      _weekPopupClose();
+    }
+  }
+});
+
+// ── Sliding indicator ──────────────────────────
+function _pillIndicatorMove(appOrId, isId) {
+  const indicator = document.getElementById('pill-indicator');
+  const navInner  = document.querySelector('.pill-nav-inner');
+  if (!indicator || !navInner) return;
+
+  const btnId = isId ? appOrId : 'pill-' + appOrId;
+  const btn   = document.getElementById(btnId);
+  if (!btn) { indicator.style.width = '0'; return; }
+
+  const navRect = navInner.getBoundingClientRect();
+  const btnRect = btn.getBoundingClientRect();
+  const scrollLeft = navInner.scrollLeft || 0;
+
+  indicator.style.left  = (btnRect.left - navRect.left + scrollLeft) + 'px';
+  indicator.style.width = btnRect.width + 'px';
+}
+
+// ── Pill aktif durumunu güncelle ───────────────
+function _pillSetActive(btnId) {
+  document.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
+  const btn = document.getElementById(btnId);
+  if (btn) btn.classList.add('active');
+  _pillIndicatorMove(btnId, true);
+}
+
+// ── switchApp override — pill'i güncelle ──────
+const _pillOrigSwitch = window.switchApp;
+window.switchApp = function(app, label, dropId, fromPopState) {
+  _pillOrigSwitch(app, label, dropId, fromPopState);
+
+  // Hangi pill aktif?
+  // Araç panelleri
+  if (['dashboard','stats','notes','graph'].includes(app)) {
+    _pillSetActive('pill-' + app);
+    _pillCurrentApp = app;
+  } else {
+    // Ders paneli — hangi gruba ait?
+    let foundGroup = null;
+    for (const [grp, cfg] of Object.entries(PILL_WEEKS)) {
+      if (cfg.weeks.includes(app)) { foundGroup = grp; break; }
+    }
+    if (foundGroup) {
+      _pillCurrentGroup = foundGroup;
+      _pillCurrentApp   = app;
+      _pillSetActive('pill-' + foundGroup);
+    }
+  }
+};
+
+// ── Tema değişince icon güncelle ──────────────
+const _pillOrigToggle = window.toggleTheme;
+if (_pillOrigToggle) {
+  window.toggleTheme = function() {
+    _pillOrigToggle();
+    _syncPillThemeIcon();
+  };
+}
+function _syncPillThemeIcon() {
+  const icon = document.getElementById('pill-theme-icon');
+  if (!icon) return;
+  const dark = document.body.getAttribute('data-theme') !== 'light';
+  icon.textContent = dark ? '🌙' : '☀️';
+}
+
+// ── İlk yükleme ───────────────────────────────
+function initPillNav() {
+  // Mevcut aktif paneli bul
+  const visiblePanel = document.querySelector('.app-panel.visible');
+  let activeApp = 'dashboard';
+  if (visiblePanel) activeApp = visiblePanel.id.replace('panel-', '');
+
+  // İlk indicator yerleştir (DOM render sonrası)
+  setTimeout(() => {
+    let activeBtnId = 'pill-' + activeApp;
+    // Ders grubu olabilir
+    for (const [grp, cfg] of Object.entries(PILL_WEEKS)) {
+      if (cfg.weeks.includes(activeApp)) { activeBtnId = 'pill-' + grp; break; }
+    }
+    _pillSetActive(activeBtnId);
+    _syncPillThemeIcon();
+  }, 100);
+}
+
+// initPremium hook'una ekle
+const _pillOrigPremium = window.initPremium;
+window.initPremium = function() {
+  _pillOrigPremium();
+  initPillNav();
+};
+
