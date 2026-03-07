@@ -41,9 +41,7 @@
     [data-theme="light"] .card h4,
     [data-theme="light"] .diff-block h4,
     [data-theme="light"] .section-title,
-    [data-theme="light"] .pomo-time {
-      color: #1e1e2e;
-    }
+    [data-theme="light"]
 
     [data-theme="light"] .app-logo,
     [data-theme="light"] .drop-label {
@@ -408,14 +406,6 @@
       font-family: 'IBM Plex Mono', monospace;
     }
 
-    .dash-title {
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      font-weight: 800;
-      letter-spacing: -1px;
-      line-height: 1.1;
-      color: var(--theme-text);
-    }
-
     .dash-title span {
       color: var(--theme-accent);
     }
@@ -483,18 +473,6 @@
       opacity: 0.9;
     }
 
-    .pomodoro-widget {
-      background: var(--theme-surface);
-      border: 1px solid var(--theme-border);
-      border-radius: 16px;
-      padding: 20px 28px;
-      margin: 20px 40px 0;
-      display: flex;
-      align-items: center;
-      gap: 24px;
-      flex-wrap: wrap;
-    }
-
     .pomo-ring-wrap {
       position: relative;
       flex-shrink: 0;
@@ -518,20 +496,6 @@
       transition: stroke-dashoffset 1s linear;
       transform: rotate(-90deg);
       transform-origin: 50% 50%;
-    }
-
-    .pomo-info {
-      flex: 1;
-      min-width: 120px;
-    }
-
-    .pomo-label {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--theme-muted);
-      margin-bottom: 4px;
     }
 
     .pomo-display {
@@ -605,12 +569,6 @@
       background: var(--theme-accent);
     }
 
-    .app-link-btn {
-      display: flex !important;
-      align-items: center;
-      gap: 10px;
-    }
-
     .app-link-btn img {
       border-radius: 4px;
       flex-shrink: 0;
@@ -625,10 +583,7 @@
     }
 
     @media (max-width: 768px) {
-      .pomodoro-widget {
-        margin: 16px 20px 0;
-        padding: 16px 20px;
-      }
+
     }
 
     .dash-section-title {
@@ -733,10 +688,6 @@
       right: 20px;
       width: 44px;
       height: 44px;
-    }
-
-    .progress-ring-svg {
-      transform: rotate(-90deg);
     }
 
     .progress-ring-bg {
@@ -1479,23 +1430,11 @@
       border: 1px solid rgba(232, 197, 71, 0.25)
     }
 
-    #panel-hukuk .pill-p {
-      background: rgba(167, 139, 250, 0.12);
-      color: var(--accent2);
-      border: 1px solid rgba(167, 139, 250, 0.25)
-    }
+    #panel-hukuk
 
-    #panel-hukuk .pill-g {
-      background: rgba(52, 211, 153, 0.12);
-      color: var(--accent3);
-      border: 1px solid rgba(52, 211, 153, 0.25)
-    }
+    #panel-hukuk
 
-    #panel-hukuk .pill-r {
-      background: rgba(248, 113, 113, 0.12);
-      color: var(--accent4);
-      border: 1px solid rgba(248, 113, 113, 0.25)
-    }
+    #panel-hukuk
 
     #panel-hukuk .structure {
       background: var(--surface);
@@ -1505,14 +1444,7 @@
       margin-top: 16px
     }
 
-    #panel-hukuk .structure-item {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      padding: 14px 20px;
-      border-bottom: 1px solid var(--border);
-      transition: background .15s
-    }
+    #panel-hukuk
 
     #panel-hukuk .structure-item:last-child {
       border-bottom: none
@@ -1522,34 +1454,13 @@
       background: var(--surface2)
     }
 
-    #panel-hukuk .structure-num {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
-      color: var(--muted);
-      width: 20px;
-      flex-shrink: 0
-    }
+    #panel-hukuk
 
-    #panel-hukuk .structure-en {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--accent);
-      flex: 1;
-      font-family: 'IBM Plex Mono', monospace
-    }
+    #panel-hukuk
 
-    #panel-hukuk .structure-tr {
-      font-size: 13px;
-      color: var(--accent3);
-      flex: 1
-    }
+    #panel-hukuk
 
-    #panel-hukuk .structure-note {
-      font-size: 11.5px;
-      color: var(--muted);
-      flex: 1.5;
-      font-style: italic
-    }
+    #panel-hukuk
 
     #panel-hukuk .flashcard-section {
       background: var(--surface);
@@ -1643,11 +1554,7 @@
       touch-action: manipulation
     }
 
-    #panel-hukuk .btn-y {
-      background: transparent;
-      border-color: var(--accent);
-      color: var(--accent)
-    }
+    #panel-hukuk
 
     #panel-hukuk .btn-y:hover {
       background: var(--accent);
@@ -1850,9 +1757,7 @@
       margin-top: 24px
     }
 
-    #panel-hukuk .mb-8 {
-      margin-bottom: 8px
-    }
+    #panel-hukuk
 
     #panel-hukuk .text-muted {
       color: var(--muted);
@@ -3232,29 +3137,6 @@
     }
 
     /* ═══ HIZLI SÖZLÜK ═══ */
-    .quick-tools {
-      padding: 16px 40px 0;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 16px;
-    }
-
-    .tool-box {
-      background: var(--theme-surface);
-      border: 1px solid var(--theme-border);
-      border-radius: 16px;
-      padding: 20px 22px;
-    }
-
-    .tool-box-label {
-      font-family: 'Syne', sans-serif;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--theme-accent);
-      margin-bottom: 12px;
-    }
 
     .dict-input-row {
       display: flex;
@@ -3419,9 +3301,7 @@
     }
 
     @media (max-width: 768px) {
-      .quick-tools {
-        padding: 12px 20px 0;
-      }
+
     }
 
     /* ═══ PWA OFFLİNE TOAST ═══ */
@@ -3470,9 +3350,7 @@
       .dash-hero {
         padding: 24px 20px 18px !important;
       }
-      .dash-title {
-        font-size: clamp(1.6rem, 7vw, 2.4rem) !important;
-      }
+
       /* Bugün banner */
       .today-banner {
         margin: 12px 16px 0 !important;
@@ -3480,20 +3358,7 @@
         border-radius: 12px !important;
       }
       /* Dashboard grid — mobilde tam genişlik kartlar */
-      .dashboard-grid {
-        grid-template-columns: 1fr !important;
-        padding: 12px 16px 0 !important;
-        gap: 12px !important;
-      }
-      .pomodoro-widget {
-        margin: 0 !important;
-        border-radius: 14px !important;
-        padding: 16px !important;
-      }
-      .tool-box {
-        border-radius: 14px !important;
-        padding: 16px !important;
-      }
+
       /* Ses satırı */
       .pomo-sound-row {
         gap: 4px !important;
@@ -3571,17 +3436,9 @@
       padding: 36px 40px 28px !important;
     }
     /* Pomodoro ve sözlük yan yana grid */
-    .dashboard-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      padding: 16px 40px 0;
-    }
+
     @media (max-width: 900px) {
-      .dashboard-grid {
-        grid-template-columns: 1fr;
-        padding: 12px 20px 0;
-      }
+
     }
     /* Ses seçenekleri daha kompakt */
     .pomo-sound-row {
@@ -4175,10 +4032,6 @@ body::after {
 /* ═══════════════════════════════════════════════════════════
    📜 PARALLAX SCROLL HİNT
 ═══════════════════════════════════════════════════════════ */
-.parallax-layer {
-  will-change: transform;
-  transition: transform 0.1s linear;
-}
 
 /* ═══════════════════════════════════════════════════════════
    🎊 CONFETTİ CANVAS
@@ -4288,7 +4141,6 @@ body::after {
   }
   #aurora-canvas { display: none; }
 }
-
 
 /* ═══════════════════════════════════════════════════════════
    ⚡ PERFORMANS & HIZLANMA
@@ -4514,7 +4366,6 @@ img {
 .week-overlay-modal {
   transition: transform var(--duration-normal) var(--ease-spring) !important;
 }
-
 
 /* ═══════════════════════════════════════════════════════════
    🏠 YENİ DASHBOARD — HERO + BENTO
@@ -4854,7 +4705,6 @@ body.ambient-mode .hero-scroll-hint {
   transition: opacity 1s ease;
 }
 
-
 /* ═══════════════════════════════════════════════════════════
    🗂 SIDEBAR
 ═══════════════════════════════════════════════════════════ */
@@ -4950,10 +4800,6 @@ body.ambient-mode .hero-scroll-hint {
 }
 
 /* Content area sidebar için kaydır */
-.app-main-wrap {
-  margin-left: 64px;
-  transition: margin-left 0.22s var(--ease-out);
-}
 
 /* app-panel'leri sidebar'a göre kaydır */
 .app-panel {

@@ -2131,7 +2131,6 @@ function initScrollRestore() {
   // _scrollPositions objesi global tanımlı, switchApp içinde kullanılıyor
 }
 
-
 // ════════════════════════════════════════════════
 // 🗂 SIDEBAR
 // ════════════════════════════════════════════════

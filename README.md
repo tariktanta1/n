@@ -223,7 +223,7 @@ const QUIZ_Q = [
 ```js
 function lockCheck() {
   const val = document.getElementById('lock-input').value;
-  if (val === '3131') {  // ← burası
+  if (val === '1234') {  // ← burası
 ```
 
 ---
