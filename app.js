@@ -3,7 +3,7 @@
 // ════════════════════════════════════════════════
 function debounce(fn, ms) {
   let timer;
-  return function(...args) {
+  return function (...args) {
     clearTimeout(timer);
     timer = setTimeout(() => fn.apply(this, args), ms);
   };
@@ -11,7 +11,7 @@ function debounce(fn, ms) {
 
 function throttle(fn, ms) {
   let last = 0;
-  return function(...args) {
+  return function (...args) {
     const now = performance.now();
     if (now - last >= ms) {
       last = now;
@@ -24,16 +24,16 @@ let _davosRendered = false;
 const _scrollPositions = {};
 
 const WEEK_AVAILABILITY = {
-  'davos':   { 2: true,  3: false, 4: false, 5: false, 6: false, 7: false },
-  'hukuk':   { 2: true,  3: false, 4: false, 5: false, 6: false, 7: false },
+  'davos': { 2: true, 3: false, 4: false, 5: false, 6: false, 7: false },
+  'hukuk': { 2: true, 3: false, 4: false, 5: false, 6: false, 7: false },
   'gobilim': { 2: false, 3: false, 4: false, 5: false, 6: false, 7: false },
-  'etik':    { 2: false, 3: false, 4: false, 5: false, 6: false, 7: false },
-  'termin':  { 2: false, 3: false, 4: false, 5: false, 6: false, 7: false },
-  'tibbi':   { 2: false, 3: false, 4: false, 5: false, 6: false, 7: false },
-  'rusca4':  { 2: false, 3: false, 4: false, 5: false, 6: false, 7: false },
-  'rusca6':  { 2: false, 3: false, 4: false, 5: false, 6: false, 7: false },
+  'etik': { 2: false, 3: false, 4: false, 5: false, 6: false, 7: false },
+  'termin': { 2: false, 3: false, 4: false, 5: false, 6: false, 7: false },
+  'tibbi': { 2: false, 3: false, 4: false, 5: false, 6: false, 7: false },
+  'rusca4': { 2: false, 3: false, 4: false, 5: false, 6: false, 7: false },
+  'rusca6': { 2: false, 3: false, 4: false, 5: false, 6: false, 7: false },
 };
- 
+
 function lockCheck() {
   const val = document.getElementById('lock-input').value;
   if (val === '3131') {
@@ -67,20 +67,33 @@ window.addEventListener('load', function () {
 // DERS PROGRAMI VERİSİ
 // ════════════════════════════════════════════════
 const SCHEDULE = {
-  'Pazartesi': [{ name: 'Ardıl Çeviriye Giriş', time: '09:30–13:15', panel: 'davos', color: '#c8f135', icon: '🎙️' }, { name: 'Hukuk Çevirisi', time: '13:30–16:15', panel: 'hukuk', color: '#e8c547', icon: '⚖️' }],
-  'Salı': [{ name: 'Çeviri Göstergebilimi II', time: '11:30–14:30', panel: 'gobilim', color: '#a78bfa', icon: '📐' }],
-  'Çarşamba': [{ name: 'Çeviride Etik', time: '08:30–11:15', panel: 'etik', color: '#f97316', icon: '⚡' }, { name: 'Çevirmenler İçin Terminoloji', time: '09:30–12:15', panel: 'termin', color: '#4ade80', icon: '📖' }, { name: 'Araştırma Becerileri', time: '13:00–14:45', panel: 'tibbi', color: '#fb923c', icon: '🔬' }],
-  'Perşembe': [{ name: 'Rusça IV', time: '11:30–14:15', panel: 'rusca4', color: '#38bdf8', icon: '🇷🇺' }, { name: 'Rusça VI', time: '14:30–17:15', panel: 'rusca6', color: '#38bdf8', icon: '🇷🇺' }]
+  'Pazartesi': [
+    { id: 'davos', panel: 'davos', color: '#c8f135', icon: '🎙️', time: '09:30–13:15', name: { tr: 'Ardıl Çeviriye Giriş', en: 'Intro to Consecutive Interpretation' } },
+    { id: 'hukuk', panel: 'hukuk', color: '#e8c547', icon: '⚖️', time: '13:30–16:15', name: { tr: 'Hukuk Çevirisi', en: 'Legal Translation' } }
+  ],
+  'Salı': [
+    { id: 'gobilim', panel: 'gobilim', color: '#a78bfa', icon: '📐', time: '11:30–14:30', name: { tr: 'Çeviri Göstergebilimi II', en: 'Translation Semiotics II' } }
+  ],
+  'Çarşamba': [
+    { id: 'etik', panel: 'etik', color: '#f97316', icon: '⚡', time: '08:30–11:15', name: { tr: 'Çeviride Etik', en: 'Ethics in Translation' } },
+    { id: 'termin', panel: 'termin', color: '#4ade80', icon: '📖', time: '09:30–12:15', name: { tr: 'Çevirmenler İçin Terminoloji', en: 'Terminology for Translators' } },
+    { id: 'tibbi', panel: 'tibbi', color: '#fb923c', icon: '🔬', time: '13:00–14:45', name: { tr: 'Araştırma Becerileri', en: 'Research Skills' } }
+  ],
+  'Perşembe': [
+    { id: 'rusca4', panel: 'rusca4', color: '#38bdf8', icon: '🇷🇺', time: '11:30–14:15', name: { tr: 'Rusça IV', en: 'Russian IV' } },
+    { id: 'rusca6', panel: 'rusca6', color: '#38bdf8', icon: '🇷🇺', time: '14:30–17:15', name: { tr: 'Rusça VI', en: 'Russian VI' } }
+  ]
 };
+
 const COURSES = [
-  { id: 'davos',   name: 'Ardıl Çeviriye Giriş',           icon: '🎙️', color: '#c8f135', desc: 'Davos 2026 · WEF terminoloji ve pratik',     room: 'FEF 228',  day: 'Pazartesi', time: '09:30–13:15', available: true  },
-  { id: 'hukuk',   name: 'Hukuk Çevirisi (Seçmeli)',        icon: '⚖️',  color: '#e8c547', desc: 'Deborah Cao · AB Mevzuatı Çeviri Rehberi', room: 'FEF 140',  day: 'Pazartesi', time: '13:30–16:15', available: true  },
-  { id: 'gobilim', name: 'Çeviri Göstergebilimi II',         icon: '📐',  color: '#a78bfa', desc: 'Göstergebilim · Öztürk Kasar modeli',        room: 'FEF 228',  day: 'Salı',      time: '13:30–14:30', available: false },
-  { id: 'etik',    name: 'Çeviride Etik',                   icon: '⚡',  color: '#f97316', desc: 'Mesleki sorumluluklar · Etik ilkeler',       room: 'FEF 33',   day: 'Çarşamba',  time: '08:30–11:15', available: false },
-  { id: 'termin',  name: 'Çevirmenler İçin Terminoloji',    icon: '📖',  color: '#4ade80', desc: 'Terminoloji teorisi ve uygulama',           room: 'FEF 235',  day: 'Çarşamba',  time: '09:30–12:15', available: false },
-  { id: 'tibbi',   name: 'Araştırma Becerileri',              icon: '🔬',  color: '#fb923c', desc: 'Akademik araştırma · Kaynak kullanımı',      room: '',         day: 'Çarşamba',  time: '13:00–14:45', available: false },
-  { id: 'rusca4',  name: 'Rusça IV',                         icon: '🇷🇺', color: '#38bdf8', desc: 'Orta ileri Rusça terminoloji',              room: 'YDYO 226', day: 'Perşembe',  time: '11:30–14:15', available: false },
-  { id: 'rusca6',  name: 'Rusça VI',                         icon: '🇷🇺', color: '#38bdf8', desc: 'İleri düzey Rusça terminoloji',             room: 'YDYO 226', day: 'Perşembe',  time: '14:30–17:15', available: false },
+  { id: 'davos', name: { tr: 'Ardıl Çeviriye Giriş', en: 'Intro to Consecutive Interpretation' }, icon: '🎙️', color: '#c8f135', desc: { tr: 'Davos 2026 · WEF terminoloji ve pratik', en: 'Davos 2026 · WEF terminology & practice' }, room: 'FEF 228', day: 'Pazartesi', time: '09:30–13:15', available: true },
+  { id: 'hukuk', name: { tr: 'Hukuk Çevirisi', en: 'Legal Translation' }, icon: '⚖️', color: '#e8c547', desc: { tr: 'Deborah Cao · AB Mevzuatı Çeviri Rehberi', en: 'Deborah Cao · EU Legislation Translation Guide' }, room: 'FEF 140', day: 'Pazartesi', time: '13:30–16:15', available: true },
+  { id: 'gobilim', name: { tr: 'Çeviri Göstergebilimi II', en: 'Translation Semiotics II' }, icon: '📐', color: '#a78bfa', desc: { tr: 'Göstergebilim · Öztürk Kasar modeli', en: 'Semiotics · Öztürk Kasar model' }, room: 'FEF 228', day: 'Salı', time: '13:30–14:30', available: false },
+  { id: 'etik', name: { tr: 'Çeviride Etik', en: 'Ethics in Translation' }, icon: '⚡', color: '#f97316', desc: { tr: 'Mesleki sorumluluklar · Etik ilkeler', en: 'Professional responsibilities · Ethical principles' }, room: 'FEF 33', day: 'Çarşamba', time: '08:30–11:15', available: false },
+  { id: 'termin', name: { tr: 'Çevirmenler İçin Terminoloji', en: 'Terminology for Translators' }, icon: '📖', color: '#4ade80', desc: { tr: 'Terminoloji teorisi ve uygulama', en: 'Terminology theory and practice' }, room: 'FEF 235', day: 'Çarşamba', time: '09:30–12:15', available: false },
+  { id: 'tibbi', name: { tr: 'Araştırma Becerileri', en: 'Research Skills' }, icon: '🔬', color: '#fb923c', desc: { tr: 'Akademik araştırma · Kaynak kullanımı', en: 'Academic research · Resource usage' }, room: '', day: 'Çarşamba', time: '13:00–14:45', available: false },
+  { id: 'rusca4', name: { tr: 'Rusça IV', en: 'Russian IV' }, icon: '🇷🇺', color: '#38bdf8', desc: { tr: 'Orta ileri Rusça terminoloji', en: 'Intermediate-advanced Russian terminology' }, room: 'YDYO 226', day: 'Perşembe', time: '11:30–14:15', available: false },
+  { id: 'rusca6', name: { tr: 'Rusça VI', en: 'Russian VI' }, icon: '🇷🇺', color: '#38bdf8', desc: { tr: 'İleri düzey Rusça terminoloji', en: 'Advanced Russian terminology' }, room: 'YDYO 226', day: 'Perşembe', time: '14:30–17:15', available: false },
 ];
 
 // ════════════════════════════════════════════════
@@ -140,14 +153,14 @@ function initDropdowns() {
   }
 
   const COURSE_DROP_MAP = {
-    'drop-davos':   'davos',
-    'drop-hukuk':   'hukuk',
+    'drop-davos': 'davos',
+    'drop-hukuk': 'hukuk',
     'drop-gobilim': 'gobilim',
-    'drop-etik':    'etik',
-    'drop-termin':  'termin',
-    'drop-tibbi':   'tibbi',
-    'drop-rusca4':  'rusca4',
-    'drop-rusca6':  'rusca6'
+    'drop-etik': 'etik',
+    'drop-termin': 'termin',
+    'drop-tibbi': 'tibbi',
+    'drop-rusca4': 'rusca4',
+    'drop-rusca6': 'rusca6'
   };
 
   document.querySelectorAll('.drop-label').forEach(function (btn) {
@@ -233,7 +246,7 @@ function initDropdowns() {
 function switchApp(app, label, dropId, fromPopState) {
   // Scroll pozisyonunu kaydet
   document.querySelectorAll('.app-panel.visible').forEach(p => {
-    _scrollPositions[p.id.replace('panel-','')] = window.scrollY;
+    _scrollPositions[p.id.replace('panel-', '')] = window.scrollY;
   });
   // Cinematic sweep
   if (window._cinematicSweep) {
@@ -383,15 +396,24 @@ function pomoReset() {
 // DASHBOARD INIT
 // ════════════════════════════════════════════════
 function initDashboard() {
+  const isEN = _currentLang === 'en';
+  const t = (tr, en) => isEN ? en : tr;
+
   const hour = new Date().getHours();
-  const greet = hour < 12 ? 'Good morning, my lord' : hour < 18 ? 'Good afternoon, my lord' : 'Good evening, my lord';
-  document.getElementById('dash-greeting').textContent = greet;
-  const days = ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'];
+  const greets = {
+    tr: hour < 12 ? 'GÜNAYDIN TARIK' : hour < 18 ? 'TÜNAYDIN TARIK' : 'İYİ AKŞAMLAR TARIK',
+    en: hour < 12 ? 'GOOD MORNING MY LORD' : hour < 18 ? 'GOOD AFTERNOON MY LORD' : 'GOOD EVENING MY LORD'
+  };
+  const greetText = document.getElementById('greeting-text');
+  if (greetText) greetText.textContent = greets[_currentLang];
+
+  const daysTR = ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'];
+  const daysEN = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   const now = new Date();
   const todayIdx = now.getDay();
-  const today = days[todayIdx];
+  const todayTR = daysTR[todayIdx];
 
-  let showDay, showLabel, isTomorrow = false;
+  let showDayTR, showLabel, isTomorrow = false;
   const isPazar = todayIdx === 0;
   const isPersembe = todayIdx === 4;
   const switchTime = (isPazar) ? 12 : 18;
@@ -399,64 +421,86 @@ function initDashboard() {
   if (hour >= switchTime) {
     isTomorrow = true;
     const tomorrowIdx = (todayIdx + 1) % 7;
-    showDay = days[tomorrowIdx];
-    showLabel = 'Yarın · ' + showDay;
+    showDayTR = daysTR[tomorrowIdx];
+    showLabel = t('Yarın · ', 'Tomorrow · ') + (isEN ? daysEN[tomorrowIdx] : daysTR[tomorrowIdx]);
   } else {
-    showDay = today;
-    showLabel = today;
+    showDayTR = todayTR;
+    showLabel = isEN ? daysEN[todayIdx] : daysTR[todayIdx];
   }
 
-  const todayCourses = SCHEDULE[showDay] || [];
-  document.getElementById('today-day-name').textContent = showLabel;
+  const todayCourses = SCHEDULE[showDayTR] || [];
+  const dayNameEl = document.getElementById('today-day-name');
+  if (dayNameEl) dayNameEl.textContent = showLabel;
+
   const tc = document.getElementById('today-courses');
   const tcHero = document.getElementById('today-courses-hero');
+  if (tc) tc.innerHTML = '';
+  if (tcHero) tcHero.innerHTML = '';
+
   if (todayCourses.length === 0) {
-    const msg = (isPersembe && hour >= 18) ? '🎉 Hafta sonu — iyi dinlenmeler!' : 'Bugün ders yok 🎉';
-    tc.innerHTML = `<span style="font-size:13px;color:var(--theme-muted);font-family:DM Sans,sans-serif">${msg}</span>`;
-    if (tcHero) tcHero.innerHTML = tc.innerHTML;
+    const msg = (isPersembe && hour >= 18) ? t('🎉 Hafta sonu — iyi dinlenmeler!', '🎉 Weekend — enjoy your rest!') : t('Bugün ders yok 🎉', 'No classes today 🎉');
+    const emptySpan = `<span style="font-size:13px;color:var(--theme-muted);font-family:DM Sans,sans-serif">${msg}</span>`;
+    if (tc) tc.innerHTML = emptySpan;
+    if (tcHero) tcHero.innerHTML = emptySpan;
   } else {
     todayCourses.forEach(c => {
       const pill = document.createElement('button');
       pill.className = 'today-pill';
       pill.style.cssText = `color:${c.color};border-color:${c.color};background:${c.color}18`;
-      pill.textContent = `${c.icon} ${c.name} · ${c.time}`;
-      pill.onclick = () => { switchApp(c.panel, c.name, c.panel); };
-      tc.appendChild(pill);
+      const name = isEN ? c.name.en : c.name.tr;
+      pill.textContent = `${c.icon} ${name} · ${c.time}`;
+      pill.onclick = () => { switchApp(c.panel, name, c.panel); };
+      if (tc) tc.appendChild(pill);
       if (tcHero) {
         const pill2 = pill.cloneNode(true);
-        pill2.onclick = () => { switchApp(c.panel, c.name, c.panel); };
+        pill2.onclick = () => { switchApp(c.panel, name, c.panel); };
         tcHero.appendChild(pill2);
       }
     });
   }
+
   const grid = document.getElementById('course-grid');
-  COURSES.forEach((c) => {
-    const isToday = todayCourses.some(t => t.panel === c.id);
-    const card = document.createElement('div');
-    card.className = 'course-card' + (isToday ? ' today-highlight' : '');
-    card.style.setProperty('--card-accent', c.color);
-    const pct = c.available ? 25 : 0;
-    const r = 18, circ = 2 * Math.PI * r;
-    const offset = circ - (pct / 100) * circ;
-    card.innerHTML = `<svg class="course-progress-ring" width="44" height="44"><circle class="progress-ring-bg" cx="22" cy="22" r="${r}"/><circle class="progress-ring-fill" cx="22" cy="22" r="${r}" stroke="${c.color}" stroke-dasharray="${circ}" stroke-dashoffset="${offset}"/></svg><div class="course-icon">${c.icon}</div><div class="course-tag">${c.available ? '● Aktif' : '○ Yakında'}</div><div class="course-name">${c.name}</div><div class="course-desc">${c.desc}</div><div class="course-day">📅 ${c.day} · ${c.time}${c.room ? ` · <span style="opacity:0.7">🏛 ${c.room}</span>` : ''}</div>`;
-    card.onclick = () => { switchApp(c.id, c.name, c.id); };
-    grid.appendChild(card);
-  });
-  const sgrid = document.getElementById('schedule-grid');
-  const dayOrder = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe'];
-  dayOrder.forEach(day => {
-    const courses = SCHEDULE[day] || [];
-    const dc = document.createElement('div');
-    dc.className = 'schedule-day-card' + (day === today ? ' is-today' : '');
-    let inner = `<div class="schedule-day-header"><span class="day-name">${day}</span>${day === today ? '<span class="today-dot"></span>' : ''}</div>`;
-    courses.forEach(c => {
-      const cd = COURSES.find(x => x.id === c.panel);
-      const room = cd && cd.room ? `<div class="schedule-course-room">🏛 ${cd.room}</div>` : '';
-      inner += `<div class="schedule-course-item" onclick="switchApp('${c.panel}','${c.name}','${c.panel}')"><div class="schedule-course-name" style="color:${c.color}">${c.icon} ${c.name}</div><div class="schedule-course-time">${c.time}</div>${room}</div>`;
+  if (grid) {
+    grid.innerHTML = '';
+    COURSES.forEach((c) => {
+      const isToday = todayCourses.some(t => t.panel === c.id);
+      const card = document.createElement('div');
+      card.className = 'course-card' + (isToday ? ' today-highlight' : '');
+      card.style.setProperty('--card-accent', c.color);
+      const pct = c.available ? 25 : 0;
+      const r = 18, circ = 2 * Math.PI * r;
+      const offset = circ - (pct / 100) * circ;
+      const name = isEN ? c.name.en : c.name.tr;
+      const desc = isEN ? c.desc.en : c.desc.tr;
+      const day = isEN ? daysEN[daysTR.indexOf(c.day)] : c.day;
+      const tag = c.available ? t('● Aktif', '● Active') : t('○ Yakında', '○ Coming Soon');
+      card.innerHTML = `<svg class="course-progress-ring" width="44" height="44"><circle class="progress-ring-bg" cx="22" cy="22" r="${r}"/><circle class="progress-ring-fill" cx="22" cy="22" r="${r}" stroke="${c.color}" stroke-dasharray="${circ}" stroke-dashoffset="${offset}"/></svg><div class="course-icon">${c.icon}</div><div class="course-tag">${tag}</div><div class="course-name">${name}</div><div class="course-desc">${desc}</div><div class="course-day">📅 ${day} · ${c.time}${c.room ? ` · <span style="opacity:0.7">🏛 ${c.room}</span>` : ''}</div>`;
+      card.onclick = () => { switchApp(c.id, name, c.id); };
+      grid.appendChild(card);
     });
-    dc.innerHTML = inner;
-    sgrid.appendChild(dc);
-  });
+  }
+
+  const sgrid = document.getElementById('schedule-grid');
+  if (sgrid) {
+    sgrid.innerHTML = '';
+    const dayOrder = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe'];
+    const dayOrderEN = ['Monday', 'Tuesday', 'Wednesday', 'Thursday'];
+    dayOrder.forEach((dayTR, idx) => {
+      const courses = SCHEDULE[dayTR] || [];
+      const dc = document.createElement('div');
+      dc.className = 'schedule-day-card' + (dayTR === todayTR ? ' is-today' : '');
+      const dayDisplay = isEN ? dayOrderEN[idx] : dayTR;
+      let inner = `<div class="schedule-day-header"><span class="day-name">${dayDisplay}</span>${dayTR === todayTR ? '<span class="today-dot"></span>' : ''}</div>`;
+      courses.forEach(c => {
+        const cd = COURSES.find(x => x.id === c.panel);
+        const room = cd && cd.room ? `<div class="schedule-course-room">🏛 ${cd.room}</div>` : '';
+        const name = isEN ? c.name.en : c.name.tr;
+        inner += `<div class="schedule-course-item" onclick="switchApp('${c.panel}','${name}','${c.panel}')"><div class="schedule-course-name" style="color:${c.color}">${c.icon} ${name}</div><div class="schedule-course-time">${c.time}</div>${room}</div>`;
+      });
+      dc.innerHTML = inner;
+      sgrid.appendChild(dc);
+    });
+  }
 }
 
 // ── UYGULAMALAR MENÜ ──
@@ -483,67 +527,123 @@ function setLang(lang) {
   _currentLang = lang;
   localStorage.setItem('tariktanta-lang', lang);
   const isEN = lang === 'en';
+  const t = (tr, en) => isEN ? en : tr;
 
   const ftr = document.getElementById('flag-tr');
   const fen = document.getElementById('flag-en');
   if (ftr) ftr.style.opacity = isEN ? '0.4' : '1';
   if (fen) fen.style.opacity = isEN ? '1' : '0.4';
 
-  const hour = new Date().getHours();
-  const greet = hour < 12 ? 'Good morning, my lord' : hour < 18 ? 'Good afternoon, my lord' : 'Good evening, my lord';
-  const greetEl = document.getElementById('dash-greeting');
-  if (greetEl) greetEl.textContent = greet;
+  // Dashboard & Hero
+  const titleSub = document.getElementById('dash-subtitle');
+  if (titleSub) titleSub.textContent = t('Son sınıf — 8 ders, 1 hedef.', 'Final year — 8 courses, 1 goal.');
 
-  const sub = document.getElementById('dash-subtitle');
-  if (sub) sub.textContent = isEN ? 'Final year — 8 courses, 1 goal.' : 'Son sinif — 8 ders, 1 hedef.';
+  const hSession = document.getElementById('hero-session-info');
+  if (hSession) hSession.textContent = t('Son sınıf · 8 ders', 'Senior year · 8 courses');
+
+  const scrollHint = document.getElementById('scroll-hint-text');
+  if (scrollHint) scrollHint.textContent = t('kaydır', 'scroll');
 
   const todayLabel = document.querySelector('.today-label');
-  if (todayLabel) todayLabel.textContent = isEN ? '📅 Today\'s Classes' : '📅 Bugunun Dersleri';
+  if (todayLabel) todayLabel.textContent = t('📅 Bugünün Dersleri', '📅 Today\'s Classes');
+
+  // Sidebar
+  const sbMap = {
+    'sb-dashboard': ['Dashboard', 'Dashboard'],
+    'sb-stats': ['İstatistik', 'Statistics'],
+    'sb-notes': ['Notlar', 'Notes'],
+    'sb-graph': ['Bilgi Grafiği', 'Knowledge Graph']
+  };
+  Object.entries(sbMap).forEach(([id, [tr, en]]) => {
+    const el = document.getElementById(id);
+    if (el) el.querySelector('span').textContent = isEN ? en : tr;
+  });
+  const sbTheme = document.getElementById('sb-theme-text');
+  if (sbTheme) sbTheme.textContent = t('Tema', 'Theme');
+
+  // Apps Popup
+  const appsPopTitle = document.getElementById('apps-popup-title');
+  if (appsPopTitle) appsPopTitle.textContent = t('📱 Hızlı Aç', '📱 Quick Open');
 
   const appsLabel = document.querySelector('#drop-apps .drop-label');
-  if (appsLabel) appsLabel.textContent = isEN ? 'APPS' : 'UYGULAMALAR';
+  if (appsLabel) appsLabel.textContent = t('UYGULAMALAR', 'APPS');
 
+  // Navigation
   const navLabels = {
-    'droplabel-hukuk': isEN ? 'LAW' : 'HUKUK',
-    'droplabel-davos': isEN ? 'CONSEC.' : 'ARDIL',
+    'droplabel-hukuk': t('HUKUK', 'LAW'),
+    'droplabel-davos': t('ARDIL', 'CONSEC.'),
   };
-  Object.entries(navLabels).forEach(function (entry) {
-    const el = document.getElementById(entry[0]);
-    if (el) el.textContent = entry[1];
+  Object.entries(navLabels).forEach(([id, text]) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text;
   });
 
-  // Sıra: drop-gobilim, drop-etik, drop-termin, drop-tibbi, drop-rusca4, drop-rusca6
   const noIdLabels = isEN
     ? ['SEMIOTICS', 'ETHICS', 'TERMINOLOGY', 'RESEARCH', 'RUSSIAN IV', 'RUSSIAN VI']
     : ['GÖSTERGEBİLİM', 'ETİK', 'TERMİNOLOJİ', 'ARAŞTIRMA', 'RUSÇA IV', 'RUSÇA VI'];
   const allDropLabels = document.querySelectorAll('.app-switcher .dropdown:not(#drop-hukuk):not(#drop-davos):not(#drop-apps) .drop-label');
-  allDropLabels.forEach(function (el, i) { if (noIdLabels[i]) el.textContent = noIdLabels[i]; });
+  allDropLabels.forEach((el, i) => { if (noIdLabels[i]) el.textContent = noIdLabels[i]; });
+
+  // Pomodoro
+  const pMode = document.getElementById('pModeText'); // Assuming I might add this or handled in pomoRender
+  const pStart = document.getElementById('pomoStartBtn');
+  if (pStart && !pomoRunning) pStart.textContent = t('▶ Başlat', '▶ Start');
 
   const soundMap = [
-    { key: 'none', tr: '🔇 Kapali', en: '🔇 Off' },
-    { key: 'rain', tr: '🌧️ Yagmur', en: '🌧️ Rain' },
+    { key: 'none', tr: '🔇 Kapalı', en: '🔇 Off' },
+    { key: 'rain', tr: '🌧️ Yağmur', en: '🌧️ Rain' },
     { key: 'forest', tr: '🐦 Orman', en: '🐦 Forest' },
-    { key: 'wind', tr: '💨 Ruzgar', en: '💨 Wind' },
-    { key: 'fire', tr: '🔥 Somine', en: '🔥 Fire' },
+    { key: 'wind', tr: '💨 Rüzgar', en: '💨 Wind' },
+    { key: 'fire', tr: '🔥 Şömine', en: '🔥 Fire' },
     { key: 'piano', tr: '🎹 Piyano', en: '🎹 Piano' },
     { key: 'ocean', tr: '🌊 Okyanus', en: '🌊 Ocean' },
   ];
-  document.querySelectorAll('.sound-opt').forEach(function (btn) {
-    const s = soundMap.find(function (x) { return x.key === btn.dataset.sound; });
+  document.querySelectorAll('.sound-opt').forEach(btn => {
+    const s = soundMap.find(x => x.key === btn.dataset.sound);
     if (s) btn.textContent = isEN ? s.en : s.tr;
   });
 
-  const pomoStart = document.getElementById('pomoStartBtn');
-  if (pomoStart && !pomoStart.classList.contains('running')) {
-    pomoStart.textContent = isEN ? '▶ Start' : '▶ Baslat';
-  }
+  // Bento labels
+  const bentoLabels = {
+    'label-daily-goal': ['GÜNLÜK HEDEF', 'DAILY GOAL'],
+    'label-flashcard': ['flashcard', 'flashcards'],
+    'label-wod': ['GÜNÜN TERİMİ', 'TERM OF THE DAY'],
+    'label-dict': ['SÖZLÜK', 'DICTIONARY'],
+    'dict-search-btn': ['ARA', 'SEARCH'],
+    'title-all-courses': ['— TÜM DERSLER', '— ALL COURSES'],
+    'title-schedule': ['— HAFTALIK PROGRAM', '— WEEKLY SCHEDULE']
+  };
+  Object.entries(bentoLabels).forEach(([id, [tr, en]]) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = isEN ? en : tr;
+  });
+  if (document.getElementById('q-dict')) document.getElementById('q-dict').placeholder = t('Kelime ara…', 'Search word…');
 
+  // Word of Day
   const wodLabel = document.querySelector('#word-of-day-widget .wod-label');
   if (wodLabel) {
-    const isPhrasal = wodLabel.textContent.includes('Phrasal') || wodLabel.textContent.includes('phrasal');
+    const isPhrasal = wodLabel.textContent.includes('Phrasal') || wodLabel.textContent.includes('phrasal') || wodLabel.textContent.includes('Verb');
     if (isEN) wodLabel.textContent = isPhrasal ? '🔤 Phrasal Verb of the Day' : '📚 Term of the Day';
-    else wodLabel.textContent = isPhrasal ? '🔤 Gunun Phrasal Verbi' : '📚 Gunun Terimi';
+    else wodLabel.textContent = isPhrasal ? '🔤 Günün Phrasal Verbi' : '📚 Günün Terimi';
   }
+
+  // PWA & Search
+  const pwaContent = document.getElementById('pwa-text-content');
+  if (pwaContent) pwaContent.textContent = t('Ana ekrana ekle, uygulama gibi kullan', 'Add to home screen, use like an app');
+  const pwaBtn = document.getElementById('pwa-install-btn');
+  if (pwaBtn) pwaBtn.textContent = t('Ekle', 'Add');
+
+  const lockPrompt = document.getElementById('lock-prompt');
+  if (lockPrompt) lockPrompt.textContent = t('Şifreyi gir', 'Enter password');
+
+  const sSearchBtn = document.getElementById('search-btn-text');
+  if (sSearchBtn) sSearchBtn.textContent = t('Ara', 'Search');
+  const sSearchInp = document.getElementById('global-search-input');
+  if (sSearchInp) sSearchInp.placeholder = t('Terim ara… (Türkçe veya İngilizce)', 'Search term… (TR or EN)');
+  const sSearchEmpty = document.getElementById('search-empty-msg');
+  if (sSearchEmpty) sSearchEmpty.innerHTML = t('Aramak istediğiniz terimi yazın.<br><span style="font-size:12px;color:#555">Tüm derslerin terminolojisinde arama yapılır.</span>', 'Type the term you want to search.<br><span style="font-size:12px;color:#555">Searches across all courses.</span>');
+
+  initDashboard();
 }
 
 // ── UYGULAMA AÇICI ──
@@ -893,7 +993,7 @@ function registerSW() {
   `;
   const blob = new Blob([swCode], { type: 'application/javascript' });
   const url = URL.createObjectURL(blob);
-  navigator.serviceWorker.register(url).catch(() => {});
+  navigator.serviceWorker.register(url).catch(() => { });
 }
 
 // ════════════════════════════════════════════════
@@ -927,17 +1027,17 @@ function openWeekOverlay(courseId) {
       <div class="wc-status">${isAvail ? '<span class="wc-dot"></span>Hazır' : '🔒 Yakında'}</div>
     `;
     if (isAvail) {
-      card.addEventListener('click', function() {
+      card.addEventListener('click', function () {
         closeWeekOverlay();
         switchApp(panelId, course.name, courseId);
       });
-      card.addEventListener('mousemove', function(e) {
+      card.addEventListener('mousemove', function (e) {
         const r = card.getBoundingClientRect();
         const x = (e.clientX - r.left) / r.width - 0.5;
         const y = (e.clientY - r.top) / r.height - 0.5;
-        card.style.transform = `perspective(500px) rotateY(${x*16}deg) rotateX(${-y*16}deg) translateY(-4px) scale(1.03)`;
+        card.style.transform = `perspective(500px) rotateY(${x * 16}deg) rotateX(${-y * 16}deg) translateY(-4px) scale(1.03)`;
       });
-      card.addEventListener('mouseleave', function() { card.style.transform = ''; });
+      card.addEventListener('mouseleave', function () { card.style.transform = ''; });
     }
     cardsContainer.appendChild(card);
   }
@@ -946,12 +1046,12 @@ function openWeekOverlay(courseId) {
   document.body.style.overflow = 'hidden';
 
   const modal = overlay.querySelector('.week-overlay-modal');
-  modal.ontouchstart = function(e) { _woSwipeStartY = e.touches[0].clientY; };
-  modal.ontouchmove = function(e) {
+  modal.ontouchstart = function (e) { _woSwipeStartY = e.touches[0].clientY; };
+  modal.ontouchmove = function (e) {
     const dy = e.touches[0].clientY - _woSwipeStartY;
     if (dy > 0) modal.style.transform = 'translateY(' + dy + 'px)';
   };
-  modal.ontouchend = function(e) {
+  modal.ontouchend = function (e) {
     const dy = e.changedTouches[0].clientY - _woSwipeStartY;
     if (dy > 90) { closeWeekOverlay(); }
     else { modal.style.transform = ''; }
@@ -1376,10 +1476,10 @@ function initAurora() {
   window.addEventListener('resize', debounce(resize, 150), { passive: true });
 
   const orbs = [
-    { x: 0.2, y: 0.3, r: 0.45, color: [200, 241, 53],  speed: 0.00018, phase: 0 },
-    { x: 0.7, y: 0.2, r: 0.40, color: [56, 189, 248],   speed: 0.00023, phase: 2 },
-    { x: 0.5, y: 0.7, r: 0.38, color: [167, 139, 250],  speed: 0.00015, phase: 4 },
-    { x: 0.85,y: 0.6, r: 0.30, color: [249, 115, 22],   speed: 0.00020, phase: 1 },
+    { x: 0.2, y: 0.3, r: 0.45, color: [200, 241, 53], speed: 0.00018, phase: 0 },
+    { x: 0.7, y: 0.2, r: 0.40, color: [56, 189, 248], speed: 0.00023, phase: 2 },
+    { x: 0.5, y: 0.7, r: 0.38, color: [167, 139, 250], speed: 0.00015, phase: 4 },
+    { x: 0.85, y: 0.6, r: 0.30, color: [249, 115, 22], speed: 0.00020, phase: 1 },
   ];
 
   let t = 0;
@@ -1487,8 +1587,8 @@ function initLiveClock() {
 
     // Gün/gece sınıfı
     el.className = 'sliding-clock';
-    if (h >= 0  && h < 6)  el.classList.add('late-night');
-    else if (h >= 6  && h < 12) el.classList.add('morning');
+    if (h >= 0 && h < 6) el.classList.add('late-night');
+    else if (h >= 6 && h < 12) el.classList.add('morning');
     else if (h >= 12 && h < 18) el.classList.add('afternoon');
     else el.classList.add('evening');
 
@@ -1536,8 +1636,8 @@ function initStreak() {
 
   countEl.textContent = streak;
 
-  if (streak >= 7)       badge.style.borderColor = '#f97316';
-  else if (streak >= 3)  badge.style.borderColor = '#fbbf24';
+  if (streak >= 7) badge.style.borderColor = '#f97316';
+  else if (streak >= 3) badge.style.borderColor = '#fbbf24';
 
   badge.title = streak + ' gün üst üste açtın!';
 }
@@ -1605,7 +1705,7 @@ function initTypingCursor() {
 // 💧 RİPPLE EFEKTİ
 // ════════════════════════════════════════════════
 function initRipple() {
-  document.addEventListener('click', function(e) {
+  document.addEventListener('click', function (e) {
     const btn = e.target.closest('.ripple-container');
     if (!btn) return;
 
@@ -1614,7 +1714,7 @@ function initRipple() {
 
     const rect = btn.getBoundingClientRect();
     ripple.style.left = (e.clientX - rect.left) + 'px';
-    ripple.style.top  = (e.clientY - rect.top)  + 'px';
+    ripple.style.top = (e.clientY - rect.top) + 'px';
 
     btn.appendChild(ripple);
     setTimeout(() => ripple.remove(), 650);
@@ -1626,15 +1726,15 @@ function initRipple() {
 // ════════════════════════════════════════════════
 function initMagneticBtns() {
   document.querySelectorAll('.magnetic-btn').forEach(btn => {
-    btn.addEventListener('mousemove', function(e) {
+    btn.addEventListener('mousemove', function (e) {
       const rect = btn.getBoundingClientRect();
       const cx = rect.left + rect.width / 2;
-      const cy = rect.top  + rect.height / 2;
+      const cy = rect.top + rect.height / 2;
       const dx = (e.clientX - cx) * 0.3;
       const dy = (e.clientY - cy) * 0.3;
       btn.style.transform = `translate(${dx}px, ${dy}px)`;
     });
-    btn.addEventListener('mouseleave', function() {
+    btn.addEventListener('mouseleave', function () {
       btn.style.transform = '';
     });
   });
@@ -1654,7 +1754,7 @@ function initParallax() {
   const hero = document.querySelector('.dash-hero');
   if (!hero) return;
 
-  window.addEventListener('scroll', throttle(function() {
+  window.addEventListener('scroll', throttle(function () {
     const panel = document.getElementById('panel-dashboard');
     if (!panel || !panel.classList.contains('visible')) return;
     const y = window.scrollY;
@@ -1702,7 +1802,7 @@ function launchConfetti() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 
-  const COLORS = ['#c8f135','#38bdf8','#a78bfa','#f97316','#f87171','#fbbf24','#4ade80'];
+  const COLORS = ['#c8f135', '#38bdf8', '#a78bfa', '#f97316', '#f87171', '#fbbf24', '#4ade80'];
   const pieces = Array.from({ length: 120 }, () => ({
     x: Math.random() * canvas.width,
     y: Math.random() * -canvas.height * 0.5,
@@ -1753,19 +1853,19 @@ function launchConfetti() {
 // ════════════════════════════════════════════════
 function initHoloCards() {
   function attachHolo(el) {
-    el.addEventListener('mousemove', function(e) {
+    el.addEventListener('mousemove', function (e) {
       const rect = el.getBoundingClientRect();
       const x = ((e.clientX - rect.left) / rect.width * 100).toFixed(1);
       const y = ((e.clientY - rect.top) / rect.height * 100).toFixed(1);
       el.style.setProperty('--mouse-x', x + '%');
       el.style.setProperty('--mouse-y', y + '%');
     }, { passive: true });
-    el.addEventListener('mouseleave', function() {
+    el.addEventListener('mouseleave', function () {
       el.style.removeProperty('--mouse-x');
       el.style.removeProperty('--mouse-y');
     });
     // iOS touch
-    el.addEventListener('touchmove', function(e) {
+    el.addEventListener('touchmove', function (e) {
       const touch = e.touches[0];
       const rect = el.getBoundingClientRect();
       const x = ((touch.clientX - rect.left) / rect.width * 100).toFixed(1);
@@ -1804,15 +1904,15 @@ function initCinematicSweep() {
 // 🔍 COMMAND PALETTE
 // ════════════════════════════════════════════════
 const CMD_COMMANDS = [
-  { icon: '🏠', label: 'Dashboard', sub: 'D', action: () => switchApp('dashboard','','') },
-  { icon: '⚖️', label: 'Hukuki Çeviri', sub: '1', action: () => switchApp('hukuk','','hukuk') },
-  { icon: '🎙️', label: 'Ardıl Çeviri', sub: '2', action: () => switchApp('davos','','davos') },
-  { icon: '📐', label: 'Göstergebilim', sub: '3', action: () => switchApp('gobilim-w2','','gobilim') },
-  { icon: '🇷🇺', label: 'Rusça IV', sub: '4', action: () => switchApp('rusca4-w2','','rusca4') },
-  { icon: '🇷🇺', label: 'Rusça VI', sub: '5', action: () => switchApp('rusca6-w2','','rusca6') },
-  { icon: '⚡', label: 'Çeviride Etik', sub: '6', action: () => switchApp('etik-w2','','etik') },
-  { icon: '📖', label: 'Terminoloji', sub: '7', action: () => switchApp('termin-w2','','termin') },
-  { icon: '🔬', label: 'Araştırma Becerileri', sub: '8', action: () => switchApp('tibbi-w2','','tibbi') },
+  { icon: '🏠', label: 'Dashboard', sub: 'D', action: () => switchApp('dashboard', '', '') },
+  { icon: '⚖️', label: 'Hukuki Çeviri', sub: '1', action: () => switchApp('hukuk', '', 'hukuk') },
+  { icon: '🎙️', label: 'Ardıl Çeviri', sub: '2', action: () => switchApp('davos', '', 'davos') },
+  { icon: '📐', label: 'Göstergebilim', sub: '3', action: () => switchApp('gobilim-w2', '', 'gobilim') },
+  { icon: '🇷🇺', label: 'Rusça IV', sub: '4', action: () => switchApp('rusca4-w2', '', 'rusca4') },
+  { icon: '🇷🇺', label: 'Rusça VI', sub: '5', action: () => switchApp('rusca6-w2', '', 'rusca6') },
+  { icon: '⚡', label: 'Çeviride Etik', sub: '6', action: () => switchApp('etik-w2', '', 'etik') },
+  { icon: '📖', label: 'Terminoloji', sub: '7', action: () => switchApp('termin-w2', '', 'termin') },
+  { icon: '🔬', label: 'Araştırma Becerileri', sub: '8', action: () => switchApp('tibbi-w2', '', 'tibbi') },
   { icon: '🌙', label: 'Temayı Değiştir', sub: 'T', action: () => toggleTheme() },
   { icon: '🔍', label: 'Arama', sub: '/', action: () => openSearch() },
   { icon: '⌨️', label: 'Klavye Kısayolları', sub: '?', action: () => { document.getElementById('shortcuts-overlay').style.display = 'flex'; } },
@@ -1901,7 +2001,7 @@ function initKeyboardShortcutsOverlay() {
 // 🔔 TOAST BİLDİRİM SİSTEMİ
 // ════════════════════════════════════════════════
 function initToastSystem() {
-  window.showToast = function(msg, type = 'info', duration = 2800) {
+  window.showToast = function (msg, type = 'info', duration = 2800) {
     const container = document.getElementById('toast-container');
     if (!container) return;
     const toast = document.createElement('div');
@@ -1940,7 +2040,7 @@ function initSessionTimer() {
     const s = Math.floor((Date.now() - start) / 1000);
     const m = Math.floor(s / 60);
     const ss = s % 60;
-    el.textContent = String(m).padStart(2,'0') + ':' + String(ss).padStart(2,'0');
+    el.textContent = String(m).padStart(2, '0') + ':' + String(ss).padStart(2, '0');
   }, 1000);
 }
 
@@ -1986,7 +2086,7 @@ function renderDailyGoal() {
 function initReadingProgress() {
   const bar = document.getElementById('reading-progress-bar');
   if (!bar) return;
-  window.addEventListener('scroll', throttle(function() {
+  window.addEventListener('scroll', throttle(function () {
     const panel = document.getElementById('panel-hukuk');
     if (!panel || !panel.classList.contains('visible')) { bar.style.width = '0%'; return; }
     const total = document.documentElement.scrollHeight - window.innerHeight;
@@ -2030,7 +2130,7 @@ function initStaggeredLists() {
 // 📋 INLINE COPY BUTTONS
 // ════════════════════════════════════════════════
 function initInlineCopyBtns() {
-  document.addEventListener('click', function(e) {
+  document.addEventListener('click', function (e) {
     const btn = e.target.closest('.copy-term-btn');
     if (!btn) return;
     const text = btn.dataset.copy;
@@ -2071,7 +2171,7 @@ function initLongPress() {
 
     const items = [
       { icon: '🚀', label: 'Panele Git', action: () => { switchApp(app, label, card.dataset.drop || ''); } },
-      { icon: '📋', label: 'Ders Adını Kopyala', action: () => { navigator.clipboard.writeText(label || app).catch(() => {}); showToast && showToast('📋 Kopyalandı!', 'success', 1800); } },
+      { icon: '📋', label: 'Ders Adını Kopyala', action: () => { navigator.clipboard.writeText(label || app).catch(() => { }); showToast && showToast('📋 Kopyalandı!', 'success', 1800); } },
     ];
     items.forEach(item => {
       const el = document.createElement('div');
@@ -2094,7 +2194,7 @@ function initLongPress() {
     if (menu) { menu.remove(); menu = null; }
   }
 
-  document.addEventListener('touchstart', function(e) {
+  document.addEventListener('touchstart', function (e) {
     const card = e.target.closest('.drop-item, .course-card, .today-pill');
     if (!card) return;
     pressTimer = setTimeout(() => {
@@ -2123,7 +2223,7 @@ function initInactivityDetector() {
     document.body.appendChild(overlay);
   }
 
-  window.dismissInactivity = function() {
+  window.dismissInactivity = function () {
     overlay.classList.remove('show');
     resetTimer();
     // Pomodoro duraklatıldıysa devam ettir
@@ -2143,7 +2243,7 @@ function initInactivityDetector() {
     timer = setTimeout(showInactivity, TIMEOUT);
   }
 
-  ['mousemove','keydown','touchstart','click','scroll'].forEach(ev => {
+  ['mousemove', 'keydown', 'touchstart', 'click', 'scroll'].forEach(ev => {
     window.addEventListener(ev, resetTimer, { passive: true });
   });
   resetTimer();
@@ -2153,13 +2253,13 @@ function initInactivityDetector() {
 // 🌙 AMBIENT MODE
 // ════════════════════════════════════════════════
 function initAmbientMode() {
-  window.toggleAmbientMode = function() {
+  window.toggleAmbientMode = function () {
     document.body.classList.toggle('ambient-mode');
     const isAmbient = document.body.classList.contains('ambient-mode');
     showToast && showToast(isAmbient ? '🌙 Ambient mode açık — tıkla kapat' : '☀️ Ambient mode kapatıldı', 'info');
   };
   // Tıklayınca ambient mode'dan çık
-  document.addEventListener('click', function(e) {
+  document.addEventListener('click', function (e) {
     if (!document.body.classList.contains('ambient-mode')) return;
     if (e.target.closest('#live-clock') || e.target.closest('#aurora-canvas')) {
       document.body.classList.remove('ambient-mode');
@@ -2171,17 +2271,17 @@ function initAmbientMode() {
 // 🔗 SHARE API
 // ════════════════════════════════════════════════
 function initShareBtns() {
-  document.addEventListener('click', function(e) {
+  document.addEventListener('click', function (e) {
     const btn = e.target.closest('.share-btn');
     if (!btn) return;
     const text = btn.dataset.share || document.title;
     const url = window.location.href;
     if (navigator.share) {
-      navigator.share({ title: 'Tariktanta', text, url }).catch(() => {});
+      navigator.share({ title: 'Tariktanta', text, url }).catch(() => { });
     } else {
       navigator.clipboard.writeText(url).then(() => {
         showToast && showToast('🔗 Link kopyalandı!', 'success', 2000);
-      }).catch(() => {});
+      }).catch(() => { });
     }
   });
 }
@@ -2218,7 +2318,7 @@ function statsGetPomodoroData() {
   try {
     const raw = localStorage.getItem('tariktanta-pomo-log');
     return raw ? JSON.parse(raw) : {};
-  } catch(e) { return {}; }
+  } catch (e) { return {}; }
 }
 
 function statsLogPomodoro() {
@@ -2227,14 +2327,14 @@ function statsLogPomodoro() {
     const today = new Date().toISOString().split('T')[0];
     data[today] = (data[today] || 0) + 25;
     localStorage.setItem('tariktanta-pomo-log', JSON.stringify(data));
-  } catch(e) {}
+  } catch (e) { }
 }
 
 function statsGetQuizLog() {
   try {
     const raw = localStorage.getItem('tariktanta-quiz-log');
     return raw ? JSON.parse(raw) : [];
-  } catch(e) { return []; }
+  } catch (e) { return []; }
 }
 
 function statsLogQuizAnswer(topic, correct) {
@@ -2243,7 +2343,7 @@ function statsLogQuizAnswer(topic, correct) {
     log.push({ topic, correct, date: new Date().toISOString() });
     if (log.length > 500) log.splice(0, log.length - 500);
     localStorage.setItem('tariktanta-quiz-log', JSON.stringify(log));
-  } catch(e) {}
+  } catch (e) { }
 }
 
 function statsRenderSummary() {
@@ -2313,8 +2413,8 @@ function statsRenderHeatmap() {
       // Ay etiketi
       if (monthsEl && d.getMonth() !== lastMonth) {
         const span = document.createElement('span');
-        span.textContent = ['Oca','Şub','Mar','Nis','May','Haz','Tem','Ağu','Eyl','Eki','Kas','Ara'][d.getMonth()];
-        span.style.cssText = `width:${Math.ceil(days/weeks)*16}px;display:inline-block;`;
+        span.textContent = ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz', 'Tem', 'Ağu', 'Eyl', 'Eki', 'Kas', 'Ara'][d.getMonth()];
+        span.style.cssText = `width:${Math.ceil(days / weeks) * 16}px;display:inline-block;`;
         monthsEl.appendChild(span);
         lastMonth = d.getMonth();
       }
@@ -2354,7 +2454,7 @@ function statsRenderWeekly() {
     const wrap2 = document.createElement('div');
     wrap2.className = 'weekly-bar-wrap';
     wrap2.innerHTML = `
-      <div class="weekly-bar-val">${vals[i] ? vals[i]+'dk' : ''}</div>
+      <div class="weekly-bar-val">${vals[i] ? vals[i] + 'dk' : ''}</div>
       <div class="weekly-bar" style="height:${pct + 4}px" title="${day}: ${vals[i]} dk"></div>
       <div class="weekly-bar-label">${day}</div>`;
     wrap.appendChild(wrap2);
@@ -2399,11 +2499,11 @@ function sm2GetData() {
   try {
     const raw = localStorage.getItem('tariktanta-sm2');
     return raw ? JSON.parse(raw) : {};
-  } catch(e) { return {}; }
+  } catch (e) { return {}; }
 }
 
 function sm2Save(data) {
-  try { localStorage.setItem('tariktanta-sm2', JSON.stringify(data)); } catch(e) {}
+  try { localStorage.setItem('tariktanta-sm2', JSON.stringify(data)); } catch (e) { }
 }
 
 // quality: 0-5 (0=tamamen yanlış, 5=mükemmel)
@@ -2462,12 +2562,12 @@ function statsRenderRevisionPlan() {
     return;
   }
 
-  const days = ['Paz','Pzt','Sal','Çar','Per','Cum','Cmt'];
+  const days = ['Paz', 'Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt'];
   el.innerHTML = show.map(item => {
     const d = new Date(item.nextReview);
     const label = item.diff < 0 ? 'Gecikmiş' : item.diff === 0 ? 'Bugün' : item.diff === 1 ? 'Yarın' : days[d.getDay()] + ' ' + d.getDate();
     const badge = item.diff <= 0 ? 'due' : item.diff <= 2 ? 'soon' : 'ok';
-    const shortId = item.id.replace('card-','').substring(0, 30);
+    const shortId = item.id.replace('card-', '').substring(0, 30);
     return `<div class="revision-item">
       <span class="revision-day">${label}</span>
       <span class="revision-topic">${shortId}</span>
@@ -2485,11 +2585,11 @@ function notesGetAll() {
   try {
     const raw = localStorage.getItem('tariktanta-notes');
     return raw ? JSON.parse(raw) : [];
-  } catch(e) { return []; }
+  } catch (e) { return []; }
 }
 
 function notesSaveAll(notes) {
-  try { localStorage.setItem('tariktanta-notes', JSON.stringify(notes)); } catch(e) {}
+  try { localStorage.setItem('tariktanta-notes', JSON.stringify(notes)); } catch (e) { }
 }
 
 function notesInit() {
@@ -2516,7 +2616,7 @@ function notesRenderList(filter = '') {
   list.innerHTML = notes.map(n => `
     <div class="notes-list-item ${_notesActive === n.id ? 'active' : ''}" onclick="notesOpen('${n.id}')">
       <div class="notes-list-title">${n.title || 'Başlıksız'}</div>
-      <div class="notes-list-preview">${(n.content || '').replace(/<[^>]+>/g,'').substring(0,50)}</div>
+      <div class="notes-list-preview">${(n.content || '').replace(/<[^>]+>/g, '').substring(0, 50)}</div>
     </div>`).join('') || '<div style="padding:16px;font-size:12px;color:var(--theme-muted);text-align:center">Not yok</div>';
 }
 
@@ -2643,7 +2743,7 @@ function highlightToFlashcard() {
 
 function highlightCopy() {
   const text = window._highlightText || '';
-  navigator.clipboard.writeText(text).catch(() => {});
+  navigator.clipboard.writeText(text).catch(() => { });
   document.getElementById('highlight-popup').style.display = 'none';
   showToast && showToast('📋 Kopyalandı', 'success', 1500);
 }
@@ -2663,7 +2763,7 @@ function hfcSave() {
     localStorage.setItem('tariktanta-custom-fc', JSON.stringify(cards));
     // SM-2'ye ekle
     sm2Update(id, 3);
-  } catch(e) {}
+  } catch (e) { }
 
   document.getElementById('hfc-modal').style.display = 'none';
   showToast && showToast('✅ Flashcard eklendi! · ' + cat, 'success', 2000);
@@ -2693,14 +2793,14 @@ const GRAPH_DATA = {
       { id: 'feminist-trans', label: 'Feminist Çeviri', group: 'genel', desc: 'Toplumsal cinsiyeti göz önünde bulunduran çeviri' },
     ],
     edges: [
-      ['ceviribilim','skopos'],['ceviribilim','eqivalence'],['ceviribilim','functionalism'],
-      ['skopos','functionalism'],['eqivalence','dynamic-eq'],['eqivalence','formal-eq'],
-      ['domestication','functionalism'],['foreignization','functionalism'],
-      ['domestication','eqivalence'],['geopolitik','multilateralism'],
-      ['geopolitik','sovereignty'],['multilateralism','soft-power'],
-      ['hukuk-cevirisi','terminoloji'],['hukuk-cevirisi','legalization'],
-      ['terminoloji','ceviribilim'],['feminist-trans','ceviribilim'],
-      ['skopos','hukuk-cevirisi'],
+      ['ceviribilim', 'skopos'], ['ceviribilim', 'eqivalence'], ['ceviribilim', 'functionalism'],
+      ['skopos', 'functionalism'], ['eqivalence', 'dynamic-eq'], ['eqivalence', 'formal-eq'],
+      ['domestication', 'functionalism'], ['foreignization', 'functionalism'],
+      ['domestication', 'eqivalence'], ['geopolitik', 'multilateralism'],
+      ['geopolitik', 'sovereignty'], ['multilateralism', 'soft-power'],
+      ['hukuk-cevirisi', 'terminoloji'], ['hukuk-cevirisi', 'legalization'],
+      ['terminoloji', 'ceviribilim'], ['feminist-trans', 'ceviribilim'],
+      ['skopos', 'hukuk-cevirisi'],
     ]
   }
 };
@@ -2748,7 +2848,7 @@ function graphRender() {
       for (let j = i + 1; j < _graphNodes.length; j++) {
         const a = _graphNodes[i], b = _graphNodes[j];
         const dx = b.x - a.x, dy = b.y - a.y;
-        const dist = Math.max(Math.sqrt(dx*dx + dy*dy), 1);
+        const dist = Math.max(Math.sqrt(dx * dx + dy * dy), 1);
         const force = 3000 / (dist * dist);
         const fx = (dx / dist) * force, fy = (dy / dist) * force;
         a.vx -= fx; a.vy -= fy;
@@ -2758,7 +2858,7 @@ function graphRender() {
     // Attraction (edges)
     _graphEdges.forEach(e => {
       const dx = e.tgt.x - e.src.x, dy = e.tgt.y - e.src.y;
-      const dist = Math.max(Math.sqrt(dx*dx + dy*dy), 1);
+      const dist = Math.max(Math.sqrt(dx * dx + dy * dy), 1);
       const force = (dist - 120) * 0.03;
       const fx = (dx / dist) * force, fy = (dy / dist) * force;
       e.src.vx += fx; e.src.vy += fy;
@@ -2766,8 +2866,8 @@ function graphRender() {
     });
     // Center gravity
     _graphNodes.forEach(n => {
-      n.vx += (W/2 - n.x) * 0.005;
-      n.vy += (H/2 - n.y) * 0.005;
+      n.vx += (W / 2 - n.x) * 0.005;
+      n.vy += (H / 2 - n.y) * 0.005;
       // Damping
       n.vx *= 0.85; n.vy *= 0.85;
       if (n !== _graphDrag) {
@@ -2855,7 +2955,7 @@ function graphRender() {
 // switchApp'e yeni paneller için hook
 // ════════════════════════════════════════════════
 const _origSwitchApp = switchApp;
-window.switchApp = function(app, label, dropId, fromPopState) {
+window.switchApp = function (app, label, dropId, fromPopState) {
   _origSwitchApp(app, label, dropId, fromPopState);
   sidebarSetActive(app);
   if (app === 'stats') setTimeout(initStats, 50);
@@ -2865,7 +2965,7 @@ window.switchApp = function(app, label, dropId, fromPopState) {
 
 // initPremium'a highlight popup ekle
 const _origInitPremium = initPremium;
-window.initPremium = function() {
+window.initPremium = function () {
   _origInitPremium();
   initHighlightPopup();
 };
