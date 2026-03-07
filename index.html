@@ -138,7 +138,7 @@
   <canvas id="confetti-canvas"></canvas>
   <div id="cursor-glow"></div>
   <div id="apps-popup"
-    style="display:none;position:fixed;top:52px;right:12px;background:var(--theme-surface);border:1px solid var(--theme-border);border-radius:16px;padding:12px;min-width:280px;z-index:99999;box-shadow:0 12px 40px rgba(0,0,0,0.6);">
+    style="display:none;position:fixed;top:auto;bottom:90px;right:12px;background:var(--theme-surface);border:1px solid var(--theme-border);border-radius:16px;padding:12px;min-width:280px;z-index:99999;box-shadow:0 12px 40px rgba(0,0,0,0.6);">
     <div id="apps-popup-title"
       style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--theme-muted);padding:4px 6px 10px;border-bottom:1px solid var(--theme-border);margin-bottom:10px;">
       📱 Hızlı Aç</div>
@@ -206,77 +206,37 @@
       </div>
     </div>
   </div>
-    <div class="switcher-right">
-      <div class="dropdown" id="drop-apps">
-        <button data-drop-id="apps-menu" class="drop-label" style="color:#a78bfa">UYGULAMALAR</button>
-      </div>
-      <button class="search-btn" id="search-btn-main">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="11" cy="11" r="8" />
-          <path d="m21 21-4.35-4.35" />
-        </svg>
-        <span id="search-btn-text">Ara</span> <kbd>⌘K</kbd>
-      </button>
-      <!-- FLOATING PILL NAVBAR -->
+    <!-- FLOATING PILL NAVBAR -->
   <nav id="pill-nav">
     <div class="pill-nav-inner">
       <div class="pill-nav-indicator" id="pill-indicator"></div>
-
-      <!-- Sol grup: Dersler -->
-      <div class="pill-group" id="pill-group-courses">
-        <button class="pill-btn" id="pill-dashboard" onclick="pillNav('dashboard')">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
-          <span>Ana</span>
-        </button>
-        <button class="pill-btn has-weeks" id="pill-davos" onclick="pillNavWeeks('davos', event)">
-          <span>🎙️</span><span>Ardıl</span>
-        </button>
-        <button class="pill-btn has-weeks" id="pill-hukuk" onclick="pillNavWeeks('hukuk', event)">
-          <span>⚖️</span><span>Hukuk</span>
-        </button>
-        <button class="pill-btn has-weeks" id="pill-gobilim" onclick="pillNavWeeks('gobilim', event)">
-          <span>📐</span><span>Gösterge</span>
-        </button>
-        <button class="pill-btn has-weeks" id="pill-etik" onclick="pillNavWeeks('etik', event)">
-          <span>⚡</span><span>Etik</span>
-        </button>
-        <button class="pill-btn has-weeks" id="pill-termin" onclick="pillNavWeeks('termin', event)">
-          <span>📖</span><span>Terminoloji</span>
-        </button>
-        <button class="pill-btn has-weeks" id="pill-tibbi" onclick="pillNavWeeks('tibbi', event)">
-          <span>🔬</span><span>Araştırma</span>
-        </button>
-        <button class="pill-btn has-weeks" id="pill-rusca4" onclick="pillNavWeeks('rusca4', event)">
-          <span>🇷🇺</span><span>Rusça IV</span>
-        </button>
-        <button class="pill-btn has-weeks" id="pill-rusca6" onclick="pillNavWeeks('rusca6', event)">
-          <span>🇷🇺</span><span>Rusça VI</span>
-        </button>
-      </div>
-
-      <!-- Sağ grup: Araçlar -->
-      <div class="pill-divider"></div>
-      <div class="pill-group" id="pill-group-tools">
-        <button class="pill-btn" id="pill-stats" onclick="pillNav('stats')">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-          <span>İstatistik</span>
-        </button>
-        <button class="pill-btn" id="pill-notes" onclick="pillNav('notes')">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          <span>Notlar</span>
-        </button>
-        <button class="pill-btn" id="pill-graph" onclick="pillNav('graph')">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><line x1="12" y1="7" x2="5" y2="17"/><line x1="12" y1="7" x2="19" y2="17"/></svg>
-          <span>Graf</span>
-        </button>
-        <button class="pill-btn" id="pill-search" onclick="openSearch()">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-          <span>Ara</span>
-        </button>
-        <button class="pill-btn" id="pill-theme" onclick="toggleTheme()">
-          <span id="pill-theme-icon">🌙</span>
-        </button>
-      </div>
+      <button class="pill-btn" id="pill-dashboard" onclick="pillNav('dashboard')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      </button>
+      <button class="pill-btn has-weeks" id="pill-davos" onclick="pillNavWeeks('davos', event)">
+        <span>🎙️</span><span class="pill-label">Ardıl</span>
+      </button>
+      <button class="pill-btn has-weeks" id="pill-hukuk" onclick="pillNavWeeks('hukuk', event)">
+        <span>⚖️</span><span class="pill-label">Hukuk</span>
+      </button>
+      <button class="pill-btn has-weeks" id="pill-gobilim" onclick="pillNavWeeks('gobilim', event)">
+        <span>📐</span><span class="pill-label">Gösterge</span>
+      </button>
+      <button class="pill-btn has-weeks" id="pill-etik" onclick="pillNavWeeks('etik', event)">
+        <span>⚡</span><span class="pill-label">Etik</span>
+      </button>
+      <button class="pill-btn has-weeks" id="pill-termin" onclick="pillNavWeeks('termin', event)">
+        <span>📖</span><span class="pill-label">Terminoloji</span>
+      </button>
+      <button class="pill-btn has-weeks" id="pill-tibbi" onclick="pillNavWeeks('tibbi', event)">
+        <span>🔬</span><span class="pill-label">Araştırma</span>
+      </button>
+      <button class="pill-btn has-weeks" id="pill-rusca4" onclick="pillNavWeeks('rusca4', event)">
+        <span>🇷🇺</span><span class="pill-label">Rusça IV</span>
+      </button>
+      <button class="pill-btn has-weeks" id="pill-rusca6" onclick="pillNavWeeks('rusca6', event)">
+        <span>🇷🇺</span><span class="pill-label">Rusça VI</span>
+      </button>
     </div>
   </nav>
 

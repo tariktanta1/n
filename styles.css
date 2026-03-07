@@ -352,7 +352,7 @@
 
     .app-panel {
       display: none;
-      padding-top: 52px;
+      padding-top: 0;
     }
 
     .app-panel.visible {
@@ -5209,9 +5209,9 @@
 
     /* Content area sidebar için kaydır */
 
-    /* app-panel'leri sidebar'a göre kaydır */
+    /* sidebar kaldırıldı */
     .app-panel {
-      margin-left: 64px !important;
+      margin-left: 0 !important;
     }
 
     @media (max-width: 768px) {
@@ -6033,190 +6033,162 @@
         gap: 1px !important;
       }
     }
+
 /* ═══════════════════════════════════════════════════════════
-   💊 FLOATING PILL NAVBAR
+   💊 FLOATING PILL NAVBAR — v2 (sadece dersler, iOS uyumlu)
 ═══════════════════════════════════════════════════════════ */
 
-/* Eski navbar/sidebar artık yok — body padding sıfırla */
-.app-panel {
-  margin-left: 0 !important;
-  padding-top: 0 !important;
+/* Body padding */
+body { padding-bottom: 100px !important; }
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  body { padding-bottom: calc(100px + env(safe-area-inset-bottom)) !important; }
 }
 
-body {
-  padding-bottom: 96px !important;
-}
+/* app-panel sıfırla */
+.app-panel { margin-left: 0 !important; padding-top: 0 !important; }
 
-/* Ana pill container */
+/* Ana konteyner */
 #pill-nav {
   position: fixed;
-  bottom: 24px;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 9990;
   pointer-events: auto;
 }
 
+@supports (bottom: env(safe-area-inset-bottom)) {
+  #pill-nav {
+    bottom: calc(16px + env(safe-area-inset-bottom));
+  }
+}
+
 .pill-nav-inner {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
   background: var(--theme-surface);
   border: 1px solid var(--theme-border);
   border-radius: 100px;
-  padding: 6px 8px;
+  padding: 5px 6px;
   box-shadow:
-    0 8px 32px rgba(0,0,0,0.4),
+    0 8px 32px rgba(0,0,0,0.45),
     0 2px 8px rgba(0,0,0,0.3),
     inset 0 1px 0 rgba(255,255,255,0.05);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   position: relative;
-  overflow: visible;
-  white-space: nowrap;
-  max-width: calc(100vw - 32px);
+  max-width: calc(100vw - 24px);
   overflow-x: auto;
+  overflow-y: visible;
   scrollbar-width: none;
+  -ms-overflow-style: none;
 }
-
 .pill-nav-inner::-webkit-scrollbar { display: none; }
 
-/* Pill gruplar */
-.pill-group {
-  display: flex;
-  align-items: center;
-  gap: 2px;
+/* Sliding indicator */
+.pill-nav-indicator {
+  position: absolute;
+  top: 5px;
+  height: calc(100% - 10px);
+  background: var(--theme-text);
+  border-radius: 100px;
+  transition:
+    left 0.32s cubic-bezier(0.34, 1.56, 0.64, 1),
+    width 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+  z-index: 0;
+  will-change: transform;
 }
 
-.pill-divider {
-  width: 1px;
-  height: 20px;
-  background: var(--theme-border);
-  margin: 0 6px;
-  flex-shrink: 0;
-}
-
-/* Tek pill buton */
+/* Pill buton — büyük dokunma hedefi */
 .pill-btn {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
-  padding: 7px 14px;
+  padding: 10px 16px;
+  min-height: 44px; /* iOS HIG minimum */
+  min-width: 44px;
   border: none;
   background: transparent;
   color: var(--theme-muted);
   border-radius: 100px;
   cursor: pointer;
   font-family: 'DM Sans', sans-serif;
-  font-size: 13px;
+  font-size: 13.5px;
   font-weight: 500;
   white-space: nowrap;
-  transition:
-    color 0.2s ease,
-    background 0.2s ease;
-  position: relative;
-  -webkit-tap-highlight-color: transparent;
-  user-select: none;
-}
-
-.pill-btn svg {
-  flex-shrink: 0;
-  transition: color 0.2s;
-}
-
-.pill-btn:hover {
-  color: var(--theme-text);
-  background: rgba(255,255,255,0.06);
-}
-
-/* Aktif pill — sliding indicator */
-.pill-btn.active {
-  color: var(--theme-bg);
-  font-weight: 600;
-}
-
-/* Dark mode aktif */
-[data-theme="dark"] .pill-btn.active,
-body:not([data-theme]) .pill-btn.active {
-  color: #0a0b0f;
-}
-
-[data-theme="light"] .pill-btn.active {
-  color: #fff;
-}
-
-/* Sliding background indicator */
-.pill-nav-indicator {
-  position: absolute;
-  top: 6px;
-  height: calc(100% - 12px);
-  background: var(--theme-text);
-  border-radius: 100px;
-  transition:
-    left 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
-    width 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-  pointer-events: none;
-  z-index: 0;
-}
-
-.pill-btn span,
-.pill-btn svg {
   position: relative;
   z-index: 1;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  touch-action: manipulation;
+  transition: color 0.18s ease;
+}
+
+.pill-btn:active {
+  transform: scale(0.95);
+  transition: transform 0.1s ease;
+}
+
+.pill-btn svg { flex-shrink: 0; position: relative; z-index: 1; }
+.pill-btn span { position: relative; z-index: 1; }
+
+.pill-btn:hover { color: var(--theme-text); }
+
+/* Aktif pill */
+.pill-btn.active { color: var(--theme-bg); font-weight: 600; }
+[data-theme="dark"] .pill-btn.active,
+body:not([data-theme]) .pill-btn.active { color: #0a0b0f; }
+[data-theme="light"] .pill-btn.active { color: #fff; }
+
+/* has-weeks nokta */
+.pill-btn.has-weeks::after {
+  content: '';
+  position: absolute;
+  top: 5px;
+  right: 8px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--theme-accent);
+  opacity: 0.7;
+  z-index: 2;
+}
+.pill-btn.active.has-weeks::after {
+  background: currentColor;
+  opacity: 0.4;
+}
+
+/* Mobil: etiket gizle, sadece emoji/ikon */
+@media (max-width: 680px) {
+  .pill-btn { padding: 10px 12px; }
+  .pill-label { display: none; }
+  .pill-btn#pill-dashboard svg { display: block; }
 }
 
 /* Hafta popup */
-#week-popup {
-  pointer-events: auto;
-}
+#week-popup { pointer-events: auto; }
 
 .week-popup-inner {
   background: var(--theme-surface);
   border: 1px solid var(--theme-border);
-  border-radius: 16px;
+  border-radius: 18px;
   padding: 8px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.55);
   display: flex;
   flex-direction: column;
   gap: 2px;
-  min-width: 200px;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  animation: weekPopupIn 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  min-width: 210px;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  animation: weekPopupIn 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 @keyframes weekPopupIn {
-  from { opacity: 0; transform: translateY(8px) scale(0.95); }
+  from { opacity: 0; transform: translateY(10px) scale(0.93); }
   to   { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-.week-popup-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 9px 14px;
-  border: none;
-  background: transparent;
-  color: var(--theme-muted);
-  border-radius: 10px;
-  cursor: pointer;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 13px;
-  font-weight: 500;
-  text-align: left;
-  width: 100%;
-  transition: background 0.15s, color 0.15s;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.week-popup-item:hover {
-  background: var(--theme-border);
-  color: var(--theme-text);
-}
-
-.week-popup-item.active-week {
-  background: rgba(200,241,53,0.12);
-  color: var(--theme-accent);
 }
 
 .week-popup-label {
@@ -6231,64 +6203,29 @@ body:not([data-theme]) .pill-btn.active {
   opacity: 0.6;
 }
 
-/* has-weeks badge */
-.pill-btn.has-weeks::after {
-  content: '';
-  position: absolute;
-  top: 4px;
-  right: 6px;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--theme-accent);
-  opacity: 0.6;
+.week-popup-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 14px;
+  min-height: 44px;
+  border: none;
+  background: transparent;
+  color: var(--theme-muted);
+  border-radius: 12px;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13.5px;
+  font-weight: 500;
+  text-align: left;
+  width: 100%;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition: background 0.15s, color 0.15s;
 }
-
-.pill-btn.active.has-weeks::after {
-  background: var(--theme-bg);
-  opacity: 0.5;
+.week-popup-item:hover,
+.week-popup-item:active { background: var(--theme-border); color: var(--theme-text); }
+.week-popup-item.active-week {
+  background: rgba(200,241,53,0.12);
+  color: var(--theme-accent);
 }
-
-/* iOS safe area */
-@supports (padding-bottom: env(safe-area-inset-bottom)) {
-  #pill-nav {
-    bottom: calc(16px + env(safe-area-inset-bottom));
-  }
-  body {
-    padding-bottom: calc(96px + env(safe-area-inset-bottom)) !important;
-  }
-}
-
-/* Mobil */
-@media (max-width: 768px) {
-  #pill-nav {
-    bottom: 12px;
-    width: calc(100vw - 24px);
-    left: 12px;
-    transform: none;
-  }
-  .pill-btn {
-    padding: 7px 10px;
-    font-size: 12px;
-  }
-  .pill-btn span:last-child {
-    display: none;
-  }
-  .pill-btn svg { display: block; }
-  /* İkonlu küçük mod — sadece icon göster */
-  #pill-dashboard span:last-child,
-  #pill-stats span:last-child,
-  #pill-notes span:last-child,
-  #pill-graph span:last-child,
-  #pill-search span:last-child {
-    display: none;
-  }
-}
-
-@media (max-width: 480px) {
-  .pill-btn {
-    padding: 6px 9px;
-    gap: 4px;
-  }
-}
-

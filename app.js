@@ -131,6 +131,7 @@ function toggleDrop(id) {
 }
 
 function initDropdowns() {
+  // app-switcher kaldırıldı, drop-menu yoktur
   document.querySelectorAll('.app-switcher .dropdown').forEach(function (dd) {
     if (!dd.id) return;
     var menu = dd.querySelector('.drop-menu');
@@ -565,8 +566,7 @@ function setLang(lang) {
   const appsPopTitle = document.getElementById('apps-popup-title');
   if (appsPopTitle) appsPopTitle.textContent = t('📱 Hızlı Aç', '📱 Quick Open');
 
-  const appsLabel = document.querySelector('#drop-apps .drop-label');
-  if (appsLabel) appsLabel.textContent = t('UYGULAMALAR', 'APPS');
+  // drop-apps kaldırıldı
 
   // Navigation
   const navLabels = {
@@ -946,7 +946,7 @@ function dToggleTracked(key, elId) { if (dIsTracked(key)) sessionStorage.removeI
 function registerSW() {
   if (!('serviceWorker' in navigator)) return;
   const swCode = `
-    const CACHE = 'tariktanta-v4';
+    const CACHE = 'tariktanta-v5';
     const ASSETS = ['/', '/index.html', '/app.js', '/styles.css'];
 
     // Install: tüm kritik dosyaları cache'e al
