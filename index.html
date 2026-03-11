@@ -21,115 +21,23 @@
     href="data:application/json,{&quot;name&quot;:&quot;Tariktanta&quot;,&quot;short_name&quot;:&quot;Tariktanta&quot;,&quot;start_url&quot;:&quot;/&quot;,&quot;display&quot;:&quot;standalone&quot;,&quot;background_color&quot;:&quot;#08090d&quot;,&quot;theme_color&quot;:&quot;#08090d&quot;,&quot;icons&quot;:[{&quot;src&quot;:&quot;data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>&quot;,&quot;sizes&quot;:&quot;any&quot;,&quot;type&quot;:&quot;image/svg+xml&quot;}]}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap"
-    rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap"
-      rel="stylesheet">
-  </noscript>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"></noscript>
   <link rel="stylesheet" href="styles.css">
   <style>
     /* Critical CSS — FOUC önleme */
-    html {
-      background: #08090d;
-      color: #e8eaf0
-    }
-
-    [data-theme="light"] {
-      background: #f8f7f4;
-      color: #1e1e2e
-    }
-
-    body {
-      margin: 0;
-      padding: 0;
-      min-height: 100vh
-    }
-
-    .app-panel {
-      display: none;
-      content-visibility: auto;
-      contain-intrinsic-size: 100vh;
-      will-change: transform, opacity
-    }
-
-    .app-panel.visible {
-      display: block
-    }
-
-    .app-switcher {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 52px;
-      background: #08090d;
-      border-bottom: 1px solid #1e2028;
-      z-index: 9999
-    }
-
-    #lockscreen {
-      position: fixed;
-      inset: 0;
-      background: #08090d;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 99999;
-      gap: 12px
-    }
-
-    #lockscreen h2 {
-      font-size: 28px;
-      font-weight: 800;
-      color: #e8eaf0;
-      letter-spacing: 2px
-    }
-
-    .lock-sub {
-      font-size: 13px;
-      color: #555;
-      letter-spacing: 1px
-    }
-
-    #lock-input {
-      background: #111318;
-      border: 1px solid #1e2028;
-      border-radius: 12px;
-      color: #e8eaf0;
-      font-size: 28px;
-      letter-spacing: 8px;
-      padding: 14px 20px;
-      text-align: center;
-      width: 160px;
-      outline: none
-    }
-
-    #aurora-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      pointer-events: none;
-      opacity: .18;
-      mix-blend-mode: screen
-    }
-
-    #confetti-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 99999;
-      display: none
-    }
+    html{background:#08090d;color:#e8eaf0}
+    [data-theme="light"]{background:#f8f7f4;color:#1e1e2e}
+    body{margin:0;padding:0;min-height:100vh}
+    .app-panel{display:none}
+    .app-panel.visible{display:block}
+    .app-switcher{position:fixed;top:0;left:0;right:0;height:52px;background:#08090d;border-bottom:1px solid #1e2028;z-index:9999}
+    #lockscreen{position:fixed;inset:0;background:#08090d;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:99999;gap:12px}
+    #lockscreen h2{font-size:28px;font-weight:800;color:#e8eaf0;letter-spacing:2px}
+    .lock-sub{font-size:13px;color:#555;letter-spacing:1px}
+    #lock-input{background:#111318;border:1px solid #1e2028;border-radius:12px;color:#e8eaf0;font-size:28px;letter-spacing:8px;padding:14px 20px;text-align:center;width:160px;outline:none}
+    #aurora-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.18;mix-blend-mode:screen}
+    #confetti-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:99999;display:none}
   </style>
 </head>
 
@@ -138,9 +46,8 @@
   <canvas id="confetti-canvas"></canvas>
   <div id="cursor-glow"></div>
   <div id="apps-popup"
-    style="display:none;position:fixed;top:auto;bottom:90px;right:12px;background:var(--theme-surface);border:1px solid var(--theme-border);border-radius:16px;padding:12px;min-width:280px;z-index:99999;box-shadow:0 12px 40px rgba(0,0,0,0.6);">
-    <div id="apps-popup-title"
-      style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--theme-muted);padding:4px 6px 10px;border-bottom:1px solid var(--theme-border);margin-bottom:10px;">
+    style="display:none;position:fixed;top:52px;right:12px;background:var(--theme-surface);border:1px solid var(--theme-border);border-radius:16px;padding:12px;min-width:280px;z-index:99999;box-shadow:0 12px 40px rgba(0,0,0,0.6);">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--theme-muted);padding:4px 6px 10px;border-bottom:1px solid var(--theme-border);margin-bottom:10px;">
       📱 Hızlı Aç</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
       <button class="app-grid-btn" onclick="openApp('instagram')">
@@ -175,15 +82,15 @@
   </div>
 
   <div class="pwa-banner" id="pwa-banner">
-    <div class="pwa-text"><strong>Tariktanta</strong><br><span id="pwa-text-content">Ana ekrana ekle, uygulama gibi
-        kullan</span></div><button class="pwa-btn" id="pwa-install-btn">Ekle</button><button class="pwa-close"
+    <div class="pwa-text"><strong>Tariktanta</strong><br>Ana ekrana ekle, uygulama gibi kullan</div><button
+      class="pwa-btn" id="pwa-install-btn">Ekle</button><button class="pwa-close"
       onclick="document.getElementById('pwa-banner').classList.remove('show');localStorage.setItem('pwa-dismissed','1')">×</button>
   </div>
   <div class="ptr-indicator" id="ptr-indicator">↓ Yenile</div>
   <div id="lockscreen">
     <div id="lock-logo">🔒</div>
     <h2>Tariktanta</h2>
-    <p class="lock-sub" id="lock-prompt">Şifreyi gir</p>
+    <p class="lock-sub">Şifreyi gir</p>
     <input type="password" id="lock-input" maxlength="4" placeholder="••••" inputmode="numeric" pattern="[0-9]*"
       autocomplete="off" onkeydown="if(event.key==='Enter') lockCheck()" />
   </div>
@@ -200,49 +107,170 @@
         <button class="search-close-btn" onclick="closeSearch()">ESC</button>
       </div>
       <div class="search-results" id="search-results">
-        <div class="search-empty" id="search-empty-msg">Aramak istediğiniz terimi yazın.<br><span
-            style="font-size:12px;color:#555">Tüm
+        <div class="search-empty">Aramak istediğiniz terimi yazın.<br><span style="font-size:12px;color:#555">Tüm
             derslerin terminolojisinde arama yapılır.</span></div>
       </div>
     </div>
   </div>
-    <!-- FLOATING PILL NAVBAR -->
-  <nav id="pill-nav">
-    <div class="pill-nav-inner">
-      <div class="pill-nav-indicator" id="pill-indicator"></div>
-      <button class="pill-btn" id="pill-dashboard" onclick="pillNav('dashboard')">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-logo" onclick="switchApp('dashboard','','')">TT</div>
+    <nav class="sidebar-nav">
+      <button class="sidebar-btn active" id="sb-dashboard" onclick="switchApp('dashboard','','');sidebarSetActive('dashboard')" title="Dashboard">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        <span>Dashboard</span>
       </button>
-      <button class="pill-btn has-weeks" id="pill-davos" onclick="pillNavWeeks('davos', event)">
-        <span>🎙️</span><span class="pill-label">Ardıl</span>
+      <button class="sidebar-btn" id="sb-stats" onclick="switchApp('stats','İstatistik','stats');sidebarSetActive('stats')" title="İstatistik">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        <span>İstatistik</span>
       </button>
-      <button class="pill-btn has-weeks" id="pill-hukuk" onclick="pillNavWeeks('hukuk', event)">
-        <span>⚖️</span><span class="pill-label">Hukuk</span>
+      <button class="sidebar-btn" id="sb-notes" onclick="switchApp('notes','Notlar','notes');sidebarSetActive('notes')" title="Notlar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        <span>Notlar</span>
       </button>
-      <button class="pill-btn has-weeks" id="pill-gobilim" onclick="pillNavWeeks('gobilim', event)">
-        <span>📐</span><span class="pill-label">Gösterge</span>
+      <button class="sidebar-btn" id="sb-graph" onclick="switchApp('graph','Bilgi Grafiği','graph');sidebarSetActive('graph')" title="Bilgi Grafiği">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><line x1="12" y1="7" x2="5" y2="17"/><line x1="12" y1="7" x2="19" y2="17"/><line x1="5" y1="19" x2="19" y2="19"/></svg>
+        <span>Graf</span>
       </button>
-      <button class="pill-btn has-weeks" id="pill-etik" onclick="pillNavWeeks('etik', event)">
-        <span>⚡</span><span class="pill-label">Etik</span>
-      </button>
-      <button class="pill-btn has-weeks" id="pill-termin" onclick="pillNavWeeks('termin', event)">
-        <span>📖</span><span class="pill-label">Terminoloji</span>
-      </button>
-      <button class="pill-btn has-weeks" id="pill-tibbi" onclick="pillNavWeeks('tibbi', event)">
-        <span>🔬</span><span class="pill-label">Araştırma</span>
-      </button>
-      <button class="pill-btn has-weeks" id="pill-rusca4" onclick="pillNavWeeks('rusca4', event)">
-        <span>🇷🇺</span><span class="pill-label">Rusça IV</span>
-      </button>
-      <button class="pill-btn has-weeks" id="pill-rusca6" onclick="pillNavWeeks('rusca6', event)">
-        <span>🇷🇺</span><span class="pill-label">Rusça VI</span>
+    </nav>
+    <div class="sidebar-bottom">
+      <button class="sidebar-btn" onclick="toggleTheme()" title="Tema">
+        <span id="sb-theme-icon">🌙</span>
+        <span>Tema</span>
       </button>
     </div>
-  </nav>
+  </div>
 
-  <!-- Hafta popup -->
-  <div id="week-popup" style="display:none;position:fixed;z-index:99998;bottom:90px;">
-    <div class="week-popup-inner" id="week-popup-inner"></div>
+  <div class="app-switcher">
+    <div class="app-logo-fixed" id="app-logo-fixed" onclick="switchApp('dashboard','','')">Tariktanta</div>
+    <div class="app-switcher-scroll">
+    <div class="dropdown" id="drop-davos">
+      <button data-drop-id="drop-davos" class="drop-label" id="droplabel-davos">ARDIL</button>
+      <div class="drop-menu" id="dropmenu-davos">
+        <div class="drop-week-label">📅 Haftalar</div>
+        <button data-app="davos" data-label="2. Hafta — Davos Summit" data-drop="davos" class="drop-item active-item">🎙️ 2.
+          Hafta — Davos Summit</button>
+        <button data-app="davos-w3" data-label="3. Hafta" data-drop="davos" class="drop-item">🎙️ 3. Hafta</button>
+        <button data-app="davos-w4" data-label="4. Hafta" data-drop="davos" class="drop-item">🎙️ 4. Hafta</button>
+        <button data-app="davos-w5" data-label="5. Hafta" data-drop="davos" class="drop-item">🎙️ 5. Hafta</button>
+        <button data-app="davos-w6" data-label="6. Hafta" data-drop="davos" class="drop-item">🎙️ 6. Hafta</button>
+        <button data-app="davos-w7" data-label="7. Hafta" data-drop="davos" class="drop-item">🎙️ 7. Hafta</button>
+      </div>
+    </div>
+
+    <div class="dropdown" id="drop-hukuk">
+      <button data-drop-id="drop-hukuk" class="drop-label" id="droplabel-hukuk">HUKUK</button>
+      <div class="drop-menu" id="dropmenu-hukuk">
+        <div class="drop-week-label">📅 Haftalar</div>
+        <button data-app="hukuk" data-label="2. Hafta — Hukuki Çeviri" data-drop="hukuk" class="drop-item active-item">⚖️ 2.
+          Hafta — Hukuki Çeviri</button>
+        <button data-app="hukuk-w3" data-label="3. Hafta" data-drop="hukuk" class="drop-item">⚖️ 3. Hafta</button>
+        <button data-app="hukuk-w4" data-label="4. Hafta" data-drop="hukuk" class="drop-item">⚖️ 4. Hafta</button>
+        <button data-app="hukuk-w5" data-label="5. Hafta" data-drop="hukuk" class="drop-item">⚖️ 5. Hafta</button>
+        <button data-app="hukuk-w6" data-label="6. Hafta" data-drop="hukuk" class="drop-item">⚖️ 6. Hafta</button>
+        <button data-app="hukuk-w7" data-label="7. Hafta" data-drop="hukuk" class="drop-item">⚖️ 7. Hafta</button>
+      </div>
+    </div>
+
+    <div class="dropdown" id="drop-gobilim">
+      <button data-drop-id="drop-gobilim" class="drop-label">GÖSTERGEBİLİM</button>
+      <div class="drop-menu">
+        <div class="drop-week-label">📅 Haftalar</div>
+        <button data-app="gobilim-w2" data-label="2. Hafta" data-drop="gobilim" class="drop-item">📐 2. Hafta</button>
+        <button data-app="gobilim-w3" data-label="3. Hafta" data-drop="gobilim" class="drop-item">📐 3. Hafta</button>
+        <button data-app="gobilim-w4" data-label="4. Hafta" data-drop="gobilim" class="drop-item">📐 4. Hafta</button>
+        <button data-app="gobilim-w5" data-label="5. Hafta" data-drop="gobilim" class="drop-item">📐 5. Hafta</button>
+        <button data-app="gobilim-w6" data-label="6. Hafta" data-drop="gobilim" class="drop-item">📐 6. Hafta</button>
+        <button data-app="gobilim-w7" data-label="7. Hafta" data-drop="gobilim" class="drop-item">📐 7. Hafta</button>
+      </div>
+    </div>
+
+    <div class="dropdown" id="drop-etik">
+      <button data-drop-id="drop-etik" class="drop-label">ETİK</button>
+      <div class="drop-menu">
+        <div class="drop-week-label">📅 Haftalar</div>
+        <button data-app="etik-w2" data-label="2. Hafta" data-drop="etik" class="drop-item">⚡ 2. Hafta</button>
+        <button data-app="etik-w3" data-label="3. Hafta" data-drop="etik" class="drop-item">⚡ 3. Hafta</button>
+        <button data-app="etik-w4" data-label="4. Hafta" data-drop="etik" class="drop-item">⚡ 4. Hafta</button>
+        <button data-app="etik-w5" data-label="5. Hafta" data-drop="etik" class="drop-item">⚡ 5. Hafta</button>
+        <button data-app="etik-w6" data-label="6. Hafta" data-drop="etik" class="drop-item">⚡ 6. Hafta</button>
+        <button data-app="etik-w7" data-label="7. Hafta" data-drop="etik" class="drop-item">⚡ 7. Hafta</button>
+      </div>
+    </div>
+
+    <div class="dropdown" id="drop-termin">
+      <button data-drop-id="drop-termin" class="drop-label">TERMİNOLOJİ</button>
+      <div class="drop-menu">
+        <div class="drop-week-label">📅 Haftalar</div>
+        <button data-app="termin-w2" data-label="2. Hafta" data-drop="termin" class="drop-item">📖 2. Hafta</button>
+        <button data-app="termin-w3" data-label="3. Hafta" data-drop="termin" class="drop-item">📖 3. Hafta</button>
+        <button data-app="termin-w4" data-label="4. Hafta" data-drop="termin" class="drop-item">📖 4. Hafta</button>
+        <button data-app="termin-w5" data-label="5. Hafta" data-drop="termin" class="drop-item">📖 5. Hafta</button>
+        <button data-app="termin-w6" data-label="6. Hafta" data-drop="termin" class="drop-item">📖 6. Hafta</button>
+        <button data-app="termin-w7" data-label="7. Hafta" data-drop="termin" class="drop-item">📖 7. Hafta</button>
+      </div>
+    </div>
+
+    <div class="dropdown" id="drop-tibbi">
+      <button data-drop-id="drop-tibbi" class="drop-label">ARAŞTIRMA</button>
+      <div class="drop-menu">
+        <div class="drop-week-label">📅 Haftalar</div>
+        <button data-app="tibbi-w2" data-label="2. Hafta" data-drop="tibbi" class="drop-item">🔬 2. Hafta</button>
+        <button data-app="tibbi-w3" data-label="3. Hafta" data-drop="tibbi" class="drop-item">🔬 3. Hafta</button>
+        <button data-app="tibbi-w4" data-label="4. Hafta" data-drop="tibbi" class="drop-item">🔬 4. Hafta</button>
+        <button data-app="tibbi-w5" data-label="5. Hafta" data-drop="tibbi" class="drop-item">🔬 5. Hafta</button>
+        <button data-app="tibbi-w6" data-label="6. Hafta" data-drop="tibbi" class="drop-item">🔬 6. Hafta</button>
+        <button data-app="tibbi-w7" data-label="7. Hafta" data-drop="tibbi" class="drop-item">🔬 7. Hafta</button>
+      </div>
+    </div>
+
+    <div class="dropdown" id="drop-rusca4">
+      <button data-drop-id="drop-rusca4" class="drop-label">RUSÇA IV</button>
+      <div class="drop-menu">
+        <div class="drop-week-label">📅 Haftalar</div>
+        <button data-app="rusca4-w2" data-label="2. Hafta" data-drop="rusca4" class="drop-item">🇷🇺 2. Hafta</button>
+        <button data-app="rusca4-w3" data-label="3. Hafta" data-drop="rusca4" class="drop-item">🇷🇺 3. Hafta</button>
+        <button data-app="rusca4-w4" data-label="4. Hafta" data-drop="rusca4" class="drop-item">🇷🇺 4. Hafta</button>
+        <button data-app="rusca4-w5" data-label="5. Hafta" data-drop="rusca4" class="drop-item">🇷🇺 5. Hafta</button>
+        <button data-app="rusca4-w6" data-label="6. Hafta" data-drop="rusca4" class="drop-item">🇷🇺 6. Hafta</button>
+        <button data-app="rusca4-w7" data-label="7. Hafta" data-drop="rusca4" class="drop-item">🇷🇺 7. Hafta</button>
+      </div>
+    </div>
+
+    <div class="dropdown" id="drop-rusca6">
+      <button data-drop-id="drop-rusca6" class="drop-label">RUSÇA VI</button>
+      <div class="drop-menu">
+        <div class="drop-week-label">📅 Haftalar</div>
+        <button data-app="rusca6-w2" data-label="2. Hafta" data-drop="rusca6" class="drop-item">🇷🇺 2. Hafta</button>
+        <button data-app="rusca6-w3" data-label="3. Hafta" data-drop="rusca6" class="drop-item">🇷🇺 3. Hafta</button>
+        <button data-app="rusca6-w4" data-label="4. Hafta" data-drop="rusca6" class="drop-item">🇷🇺 4. Hafta</button>
+        <button data-app="rusca6-w5" data-label="5. Hafta" data-drop="rusca6" class="drop-item">🇷🇺 5. Hafta</button>
+        <button data-app="rusca6-w6" data-label="6. Hafta" data-drop="rusca6" class="drop-item">🇷🇺 6. Hafta</button>
+        <button data-app="rusca6-w7" data-label="7. Hafta" data-drop="rusca6" class="drop-item">🇷🇺 7. Hafta</button>
+      </div>
+    </div>
+
+    </div>
+    <div class="switcher-right">
+      <div class="dropdown" id="drop-apps">
+        <button data-drop-id="apps-menu" class="drop-label" style="color:#a78bfa">UYGULAMALAR</button>
+      </div>
+      <button class="search-btn" id="search-btn-main">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8" />
+          <path d="m21 21-4.35-4.35" />
+        </svg>
+        Ara <kbd>⌘K</kbd>
+      </button>
+      <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn" title="Tema değiştir">🌙</button>
+      <div style="display:flex;gap:2px;align-items:center">
+        <button onclick="setLang('tr')" id="flag-tr" title="Türkçe"
+          style="background:none;border:none;cursor:pointer;font-size:18px;padding:2px;border-radius:4px;opacity:1;transition:opacity 0.2s">🇹🇷</button>
+        <button onclick="setLang('en')" id="flag-en" title="English"
+          style="background:none;border:none;cursor:pointer;font-size:18px;padding:2px;border-radius:4px;opacity:0.4;transition:opacity 0.2s">🇬🇧</button>
+      </div>
+    </div>
   </div>
 
   <div class="app-panel visible" id="panel-dashboard">
@@ -261,13 +289,13 @@
         <div class="hero-meta">
           <div id="streak-badge"><span class="streak-fire">🔥</span><span id="streak-count">0</span> gün</div>
           <div class="hero-meta-sep">·</div>
-          <div class="hero-session-info" id="hero-session-info">Son sınıf · 8 ders</div>
+          <div class="hero-session-info">Son sınıf · 8 ders</div>
         </div>
         <div class="hero-today" id="today-courses-hero"></div>
       </div>
       <div class="hero-scroll-hint">
         <div class="scroll-hint-line"></div>
-        <span id="scroll-hint-text">kaydır</span>
+        <span>kaydır</span>
         <div class="scroll-hint-line"></div>
       </div>
     </div>
@@ -280,9 +308,8 @@
         <div class="bento-pomo-inner">
           <div class="pomo-ring-wrap">
             <svg class="pomo-ring" viewBox="0 0 64 64">
-              <circle class="pomo-ring-bg" cx="32" cy="32" r="27" />
-              <circle class="pomo-ring-fill" id="pomoRingFill" cx="32" cy="32" r="27" stroke="#c8f135"
-                stroke-dasharray="169.6" stroke-dashoffset="0" />
+              <circle class="pomo-ring-bg" cx="32" cy="32" r="27"/>
+              <circle class="pomo-ring-fill" id="pomoRingFill" cx="32" cy="32" r="27" stroke="#c8f135" stroke-dasharray="169.6" stroke-dashoffset="0"/>
             </svg>
             <div class="pomo-display" id="pomoDisplay">25:00</div>
           </div>
@@ -295,8 +322,7 @@
               <div class="pomo-dot" id="pd3"></div>
             </div>
             <div class="pomo-controls">
-              <button class="pomo-btn ripple-container magnetic-btn" id="pomoStartBtn" onclick="pomoToggle()">▶
-                Başlat</button>
+              <button class="pomo-btn ripple-container magnetic-btn" id="pomoStartBtn" onclick="pomoToggle()">▶ Başlat</button>
               <button class="pomo-btn ripple-container magnetic-btn" onclick="pomoReset()">↺</button>
             </div>
           </div>
@@ -313,47 +339,41 @@
         </div>
         <div id="sound-controls" style="display:none;align-items:center;gap:8px;margin-top:6px">
           <span style="font-size:16px" id="sound-icon">🌧️</span>
-          <input type="range" id="sound-volume" min="0" max="100" value="40" oninput="setSoundVolume(this.value)"
-            style="flex:1;accent-color:var(--theme-accent);cursor:pointer">
+          <input type="range" id="sound-volume" min="0" max="100" value="40" oninput="setSoundVolume(this.value)" style="flex:1;accent-color:var(--theme-accent);cursor:pointer">
           <span style="font-size:11px;color:var(--theme-muted);min-width:28px" id="sound-vol-label">40%</span>
-          <button onclick="toggleSoundMute()" id="sound-mute-btn"
-            style="background:none;border:1px solid var(--theme-border);border-radius:6px;color:var(--theme-muted);font-size:11px;padding:3px 8px;cursor:pointer;">⏸</button>
+          <button onclick="toggleSoundMute()" id="sound-mute-btn" style="background:none;border:1px solid var(--theme-border);border-radius:6px;color:var(--theme-muted);font-size:11px;padding:3px 8px;cursor:pointer;">⏸</button>
         </div>
         <canvas class="wave-canvas" id="wave-canvas" height="28"></canvas>
       </div>
 
       <!-- Hedef ring + streak — küçük kart -->
       <div class="bento-card bento-goal">
-        <div class="bento-label" id="label-daily-goal">GÜNLÜK HEDEF</div>
+        <div class="bento-label">GÜNLÜK HEDEF</div>
         <div id="daily-goal-widget">
           <svg id="goal-ring-svg" viewBox="0 0 60 60" width="60" height="60">
-            <circle class="goal-ring-bg" cx="30" cy="30" r="24" />
-            <circle class="goal-ring-fill" id="goal-ring-fill" cx="30" cy="30" r="24" stroke-dasharray="150.8"
-              stroke-dashoffset="150.8" />
+            <circle class="goal-ring-bg" cx="30" cy="30" r="24"/>
+            <circle class="goal-ring-fill" id="goal-ring-fill" cx="30" cy="30" r="24" stroke-dasharray="150.8" stroke-dashoffset="150.8"/>
           </svg>
           <div class="goal-ring-info">
             <div class="goal-ring-count"><span id="goal-done">0</span>/<span id="goal-total">20</span></div>
-            <div class="goal-ring-label" id="label-flashcard">flashcard</div>
+            <div class="goal-ring-label">flashcard</div>
           </div>
         </div>
       </div>
 
       <!-- Günün terimi — orta kart -->
       <div class="bento-card bento-wod" id="word-of-day-widget">
-        <div class="bento-label" id="label-wod">GÜNÜN TERİMİ</div>
-        <div class="wod-term" id="wod-term"><span class="skeleton"
-            style="display:inline-block;width:140px;height:20px"></span></div>
-        <div class="wod-def" id="wod-def"><span class="skeleton"
-            style="display:inline-block;width:200px;height:13px;margin-top:6px"></span></div>
+        <div class="bento-label">GÜNÜN TERİMİ</div>
+        <div class="wod-term" id="wod-term"><span class="skeleton" style="display:inline-block;width:140px;height:20px"></span></div>
+        <div class="wod-def" id="wod-def"><span class="skeleton" style="display:inline-block;width:200px;height:13px;margin-top:6px"></span></div>
       </div>
 
       <!-- Sözlük — geniş kart -->
       <div class="bento-card bento-dict">
-        <div class="bento-label" id="label-dict">SÖZLÜK</div>
+        <div class="bento-label">SÖZLÜK</div>
         <div class="dict-input-row">
-          <input type="text" id="q-dict" class="dict-input" placeholder="Kelime ara…"
-            onkeydown="if(event.key==='Enter') runDict()" autocomplete="off" spellcheck="false">
-          <button class="pomo-btn ripple-container" onclick="runDict()" id="dict-search-btn">ARA</button>
+          <input type="text" id="q-dict" class="dict-input" placeholder="Kelime ara…" onkeydown="if(event.key==='Enter') runDict()" autocomplete="off" spellcheck="false">
+          <button class="pomo-btn ripple-container" onclick="runDict()">ARA</button>
         </div>
         <div id="dict-result"></div>
       </div>
@@ -367,10 +387,10 @@
       <div class="today-courses" id="today-courses"></div>
     </div>
 
-    <div class="dash-section-title" id="title-all-courses">— TÜM DERSLER</div>
+    <div class="dash-section-title">— TÜM DERSLER</div>
     <div class="course-grid" id="course-grid"></div>
 
-    <div class="dash-section-title" id="title-schedule">— HAFTALIK PROGRAM</div>
+    <div class="dash-section-title">— HAFTALIK PROGRAM</div>
     <div class="schedule-section">
       <div class="schedule-grid" id="schedule-grid"></div>
     </div>
@@ -384,8 +404,7 @@
     </div>
   </div>
 
-  <div class="app-panel" id="panel-hukuk">
-    <div id="reading-progress-bar"></div>
+  <div class="app-panel" id="panel-hukuk"><div id="reading-progress-bar"></div>
     <div class="hero">
       <div class="container">
         <div class="hero-tag">Çalışma Dosyası · Week 2</div>
@@ -620,51 +639,15 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td class="col-en">Regulation</td>
-              <td class="col-tr">Tüzük</td>
-              <td class="col-note">Tüm üye devletlerde doğrudan bağlayıcı</td>
-            </tr>
-            <tr>
-              <td class="col-en">Directive</td>
-              <td class="col-tr">Direktif</td>
-              <td class="col-note">Ulusal hukuka aktarılmak zorunda</td>
-            </tr>
-            <tr>
-              <td class="col-en">Decision</td>
-              <td class="col-tr">Karar</td>
-              <td class="col-note">Atıfta bulunduğu merciler için bağlayıcı</td>
-            </tr>
-            <tr>
-              <td class="col-en">Recommendation</td>
-              <td class="col-tr">Tavsiye</td>
-              <td class="col-note">Bağlayıcı değil</td>
-            </tr>
-            <tr>
-              <td class="col-en">Opinion</td>
-              <td class="col-tr">Görüş</td>
-              <td class="col-note">Bağlayıcı değil</td>
-            </tr>
-            <tr>
-              <td class="col-en">Resolution</td>
-              <td class="col-tr">İlke Kararı</td>
-              <td class="col-note">Siyasi nitelik taşır</td>
-            </tr>
-            <tr>
-              <td class="col-en">Framework Decision</td>
-              <td class="col-tr">Çerçeve Karar</td>
-              <td class="col-note">Doğrudan etkisizdir</td>
-            </tr>
-            <tr>
-              <td class="col-en">Delegated act</td>
-              <td class="col-tr">Yetki Devrine Dayanan Tasarruf</td>
-              <td class="col-note">Yasama tasarrufunu değiştirmek için</td>
-            </tr>
-            <tr>
-              <td class="col-en">Implementing act</td>
-              <td class="col-tr">Uygulama Tasarrufu</td>
-              <td class="col-note">Yeknesak uygulama sağlar</td>
-            </tr>
+            <tr><td class="col-en">Regulation</td><td class="col-tr">Tüzük</td><td class="col-note">Tüm üye devletlerde doğrudan bağlayıcı</td></tr>
+            <tr><td class="col-en">Directive</td><td class="col-tr">Direktif</td><td class="col-note">Ulusal hukuka aktarılmak zorunda</td></tr>
+            <tr><td class="col-en">Decision</td><td class="col-tr">Karar</td><td class="col-note">Atıfta bulunduğu merciler için bağlayıcı</td></tr>
+            <tr><td class="col-en">Recommendation</td><td class="col-tr">Tavsiye</td><td class="col-note">Bağlayıcı değil</td></tr>
+            <tr><td class="col-en">Opinion</td><td class="col-tr">Görüş</td><td class="col-note">Bağlayıcı değil</td></tr>
+            <tr><td class="col-en">Resolution</td><td class="col-tr">İlke Kararı</td><td class="col-note">Siyasi nitelik taşır</td></tr>
+            <tr><td class="col-en">Framework Decision</td><td class="col-tr">Çerçeve Karar</td><td class="col-note">Doğrudan etkisizdir</td></tr>
+            <tr><td class="col-en">Delegated act</td><td class="col-tr">Yetki Devrine Dayanan Tasarruf</td><td class="col-note">Yasama tasarrufunu değiştirmek için</td></tr>
+            <tr><td class="col-en">Implementing act</td><td class="col-tr">Uygulama Tasarrufu</td><td class="col-note">Yeknesak uygulama sağlar</td></tr>
           </tbody>
         </table>
         <div class="highlight-box mt-24">
@@ -682,8 +665,7 @@
             <div class="section-title">AB Mevzuatının <span class="accent2">Bölümleri & Kalıplar</span></div>
           </div>
         </div>
-        <p class="lead">Her AB mevzuatı standart bölümlerden oluşur. Her bölümün kendine özgü çeviri kalıpları vardır.
-        </p>
+        <p class="lead">Her AB mevzuatı standart bölümlerden oluşur. Her bölümün kendine özgü çeviri kalıpları vardır.</p>
         <div class="diff-block sys" style="margin-bottom:16px">
           <div class="diff-label">Bölüm 1 · Başlık</div>
           <h4>Mevzuat Başlıkları</h4>
@@ -704,10 +686,8 @@
           <div class="diff-label">Bölüm 3 · Referanslar (Citations)</div>
           <h4>Hukuki Dayanak</h4>
           <div class="term-pair">
-            <div class="term-en">Having regard to the Treaty on the Functioning of the European Union, and in particular
-              Article(s) … thereof,</div>
-            <div class="term-tr">Avrupa Birliği'nin İşleyişi Hakkında Antlaşma'yı ve bu Antlaşma'nın özellikle …
-              maddesini göz önünde tutarak,</div>
+            <div class="term-en">Having regard to the Treaty on the Functioning of the European Union, and in particular Article(s) … thereof,</div>
+            <div class="term-tr">Avrupa Birliği'nin İşleyişi Hakkında Antlaşma'yı ve bu Antlaşma'nın özellikle … maddesini göz önünde tutarak,</div>
           </div>
           <div class="term-pair">
             <div class="term-en">Having regard to the proposal from the European Commission,</div>
@@ -731,16 +711,12 @@
           <div class="diff-label">Bölüm 5 · Maddeler (Articles)</div>
           <h4>Temel Çeviri Kalıpları</h4>
           <div class="term-pair mt-8">
-            <div class="term-en">This Regulation shall enter into force on the (…) day of its publication in the
-              Official Journal of the European Union.</div>
-            <div class="term-tr">Bu Tüzük, Avrupa Birliği Resmi Gazetesi'nde yayımlanmasını takip eden (…) gün yürürlüğe
-              girer.</div>
+            <div class="term-en">This Regulation shall enter into force on the (…) day of its publication in the Official Journal of the European Union.</div>
+            <div class="term-tr">Bu Tüzük, Avrupa Birliği Resmi Gazetesi'nde yayımlanmasını takip eden (…) gün yürürlüğe girer.</div>
           </div>
           <div class="term-pair">
-            <div class="term-en">This Regulation shall be binding in its entirety and directly applicable in all Member
-              States.</div>
-            <div class="term-tr">Bu Tüzük, bütün unsurlarıyla bağlayıcıdır ve tüm üye devletlerde doğrudan uygulanır.
-            </div>
+            <div class="term-en">This Regulation shall be binding in its entirety and directly applicable in all Member States.</div>
+            <div class="term-tr">Bu Tüzük, bütün unsurlarıyla bağlayıcıdır ve tüm üye devletlerde doğrudan uygulanır.</div>
           </div>
         </div>
         <div class="diff-block cult">
@@ -764,46 +740,19 @@
         </div>
         <p class="lead">AB mevzuatında atıf yapılırken sıralama ve yazım biçimi katı şekilde uygulanır.</p>
         <table class="compare-table">
-          <thead>
-            <tr>
-              <th>İngilizce Atıf</th>
-              <th>Türkçe Karşılık</th>
-            </tr>
-          </thead>
+          <thead><tr><th>İngilizce Atıf</th><th>Türkçe Karşılık</th></tr></thead>
           <tbody>
-            <tr>
-              <td class="col-en">Article 5(2)</td>
-              <td class="col-tr">5(2) maddesi</td>
-            </tr>
-            <tr>
-              <td class="col-en">Article 7(3)(a)</td>
-              <td class="col-tr">7(3)(a) maddesi</td>
-            </tr>
-            <tr>
-              <td class="col-en">Articles 1 and 2</td>
-              <td class="col-tr">1 ve 2. maddeler</td>
-            </tr>
-            <tr>
-              <td class="col-en">Article 1 to 9</td>
-              <td class="col-tr">1 ilâ 9. maddeler</td>
-            </tr>
-            <tr>
-              <td class="col-en">first paragraph of Article 2</td>
-              <td class="col-tr">2. maddenin birinci paragrafı</td>
-            </tr>
-            <tr>
-              <td class="col-en">OJ L 10, 15.1.2009, p.10</td>
-              <td class="col-tr">ABRG L 10, 15.1.2009, s.10</td>
-            </tr>
-            <tr>
-              <td class="col-en">OJ L 293, 16.11.1996, p.1 (öncesi)</td>
-              <td class="col-tr">ATRG L 293, 16.11.1996, s.1</td>
-            </tr>
+            <tr><td class="col-en">Article 5(2)</td><td class="col-tr">5(2) maddesi</td></tr>
+            <tr><td class="col-en">Article 7(3)(a)</td><td class="col-tr">7(3)(a) maddesi</td></tr>
+            <tr><td class="col-en">Articles 1 and 2</td><td class="col-tr">1 ve 2. maddeler</td></tr>
+            <tr><td class="col-en">Article 1 to 9</td><td class="col-tr">1 ilâ 9. maddeler</td></tr>
+            <tr><td class="col-en">first paragraph of Article 2</td><td class="col-tr">2. maddenin birinci paragrafı</td></tr>
+            <tr><td class="col-en">OJ L 10, 15.1.2009, p.10</td><td class="col-tr">ABRG L 10, 15.1.2009, s.10</td></tr>
+            <tr><td class="col-en">OJ L 293, 16.11.1996, p.1 (öncesi)</td><td class="col-tr">ATRG L 293, 16.11.1996, s.1</td></tr>
           </tbody>
         </table>
         <div class="highlight-box mt-24">
-          <p><strong>📅 Resmi Gazete:</strong> 1 Şubat 2003 öncesi → <strong>ATRG</strong> | Sonrası →
-            <strong>ABRG</strong></p>
+          <p><strong>📅 Resmi Gazete:</strong> 1 Şubat 2003 öncesi → <strong>ATRG</strong> | Sonrası → <strong>ABRG</strong></p>
         </div>
       </div>
     </div>
@@ -816,38 +765,14 @@
             <div class="section-title">Başlıca <span class="accent2">Yazım Kuralları</span></div>
           </div>
         </div>
-        <p class="lead">TDK Yazım Kılavuzu esas olmakla birlikte, AB mevzuatına özgü tutarlılık kuralları da uygulanır.
-        </p>
+        <p class="lead">TDK Yazım Kılavuzu esas olmakla birlikte, AB mevzuatına özgü tutarlılık kuralları da uygulanır.</p>
         <div class="card-grid card-grid-2">
-          <div class="card card-p">
-            <h4>Büyük Harf</h4>
-            <p>"Birlik" tek başına AB'ye atıf yapıyorsa büyük. Kurum adlarının her kelimesi büyük: <span
-                style="color:var(--accent3)">Komisyonun, Konseyin</span>.</p>
-          </div>
-          <div class="card card-p">
-            <h4>Kesme İşareti</h4>
-            <p>Kanun/tüzük/direktif başlıklarına gelen ekler kesme: <span style="color:var(--accent3)">Tüzük'ün,
-                Direktif'e</span>. Bölüm atıflarında kullanılmaz: <span style="color:var(--accent3)">I. Ekte, 3.
-                maddede</span>.</p>
-          </div>
-          <div class="card card-p">
-            <h4>Tarih</h4>
-            <p>Gün-ay-yıl sırasıyla. Tam tarihte "tarihinde": <span style="color:var(--accent3)">12.01.2010
-                tarihinde</span>.</p>
-          </div>
-          <div class="card card-p">
-            <h4>Sayılar</h4>
-            <p>4+ basamak sağdan üçlü gruplar: <span style="color:var(--accent3)">326.197</span>. Kesirler virgülle:
-              <span style="color:var(--accent3)">7,7 milyar</span>.</p>
-          </div>
-          <div class="card card-p">
-            <h4>Tekil-Çoğul</h4>
-            <p>"Üye devletler" ifadesinin yüklemi her zaman çoğul.</p>
-          </div>
-          <div class="card card-p">
-            <h4>Tırnak</h4>
-            <p>Kaynak metinde tek tırnak olsa bile Türkçede çift tırnak.</p>
-          </div>
+          <div class="card card-p"><h4>Büyük Harf</h4><p>"Birlik" tek başına AB'ye atıf yapıyorsa büyük. Kurum adlarının her kelimesi büyük: <span style="color:var(--accent3)">Komisyonun, Konseyin</span>.</p></div>
+          <div class="card card-p"><h4>Kesme İşareti</h4><p>Kanun/tüzük/direktif başlıklarına gelen ekler kesme: <span style="color:var(--accent3)">Tüzük'ün, Direktif'e</span>. Bölüm atıflarında kullanılmaz: <span style="color:var(--accent3)">I. Ekte, 3. maddede</span>.</p></div>
+          <div class="card card-p"><h4>Tarih</h4><p>Gün-ay-yıl sırasıyla. Tam tarihte "tarihinde": <span style="color:var(--accent3)">12.01.2010 tarihinde</span>.</p></div>
+          <div class="card card-p"><h4>Sayılar</h4><p>4+ basamak sağdan üçlü gruplar: <span style="color:var(--accent3)">326.197</span>. Kesirler virgülle: <span style="color:var(--accent3)">7,7 milyar</span>.</p></div>
+          <div class="card card-p"><h4>Tekil-Çoğul</h4><p>"Üye devletler" ifadesinin yüklemi her zaman çoğul.</p></div>
+          <div class="card card-p"><h4>Tırnak</h4><p>Kaynak metinde tek tırnak olsa bile Türkçede çift tırnak.</p></div>
         </div>
       </div>
     </div>
@@ -862,100 +787,33 @@
         </div>
         <p class="lead">Özel ifadeler, zaman kipleri ve karıştırılan terimler.</p>
         <table class="compare-table" style="margin-bottom:28px">
-          <thead>
-            <tr>
-              <th>İngilizce</th>
-              <th>Türkçe</th>
-            </tr>
-          </thead>
+          <thead><tr><th>İngilizce</th><th>Türkçe</th></tr></thead>
           <tbody>
-            <tr>
-              <td class="col-en">Without prejudice to the obligations set out in …</td>
-              <td class="col-tr">… belirtilen yükümlülüklere halel gelmeksizin,</td>
-            </tr>
-            <tr>
-              <td class="col-en">By way of derogation from Article …</td>
-              <td class="col-tr">… maddesine istisna olarak,</td>
-            </tr>
-            <tr>
-              <td class="col-en">Notwithstanding the general rule on …</td>
-              <td class="col-tr">… ilişkin genel kurala bakılmaksızın,</td>
-            </tr>
-            <tr>
-              <td class="col-en">Save as otherwise set out …</td>
-              <td class="col-tr">Aksi öngörülmedikçe/belirtilmedikçe,</td>
-            </tr>
-            <tr>
-              <td class="col-en">Inter alia</td>
-              <td class="col-tr">Diğerlerinin yanı sıra</td>
-            </tr>
-            <tr>
-              <td class="col-en">Where applicable</td>
-              <td class="col-tr">Uygulanabildiği hallerde</td>
-            </tr>
+            <tr><td class="col-en">Without prejudice to the obligations set out in …</td><td class="col-tr">… belirtilen yükümlülüklere halel gelmeksizin,</td></tr>
+            <tr><td class="col-en">By way of derogation from Article …</td><td class="col-tr">… maddesine istisna olarak,</td></tr>
+            <tr><td class="col-en">Notwithstanding the general rule on …</td><td class="col-tr">… ilişkin genel kurala bakılmaksızın,</td></tr>
+            <tr><td class="col-en">Save as otherwise set out …</td><td class="col-tr">Aksi öngörülmedikçe/belirtilmedikçe,</td></tr>
+            <tr><td class="col-en">Inter alia</td><td class="col-tr">Diğerlerinin yanı sıra</td></tr>
+            <tr><td class="col-en">Where applicable</td><td class="col-tr">Uygulanabildiği hallerde</td></tr>
           </tbody>
         </table>
         <p style="font-size:13px;font-weight:500;color:var(--accent2);margin-bottom:12px">⏱️ Zaman Kipleri:</p>
         <table class="compare-table" style="margin-bottom:28px">
-          <thead>
-            <tr>
-              <th>İngilizce Örnek</th>
-              <th>Türkçe Karşılık</th>
-              <th>Kip</th>
-            </tr>
-          </thead>
+          <thead><tr><th>İngilizce Örnek</th><th>Türkçe Karşılık</th><th>Kip</th></tr></thead>
           <tbody>
-            <tr>
-              <td class="col-en">FIUs shall undertake all necessary measures.</td>
-              <td class="col-tr">MİB'ler, gerekli tüm tedbirleri alır.</td>
-              <td class="col-note">Geniş zaman (zorunluluk)</td>
-            </tr>
-            <tr>
-              <td class="col-en">There should be an improvement.</td>
-              <td class="col-tr">… geliştirilmelidir.</td>
-              <td class="col-note">Gereklilik kipi</td>
-            </tr>
-            <tr>
-              <td class="col-en">Members may establish a central unit.</td>
-              <td class="col-tr">Bir üye devlet, merkezi bir birim kurabilir.</td>
-              <td class="col-note">İzin/yetki</td>
-            </tr>
-            <tr>
-              <td class="col-en">This Regulation establishes performance requirements.</td>
-              <td class="col-tr">Bu Tüzük ile … tesis edilir.</td>
-              <td class="col-note">"-mektedir" EKİ KULLANILMAZ!</td>
-            </tr>
+            <tr><td class="col-en">FIUs shall undertake all necessary measures.</td><td class="col-tr">MİB'ler, gerekli tüm tedbirleri alır.</td><td class="col-note">Geniş zaman (zorunluluk)</td></tr>
+            <tr><td class="col-en">There should be an improvement.</td><td class="col-tr">… geliştirilmelidir.</td><td class="col-note">Gereklilik kipi</td></tr>
+            <tr><td class="col-en">Members may establish a central unit.</td><td class="col-tr">Bir üye devlet, merkezi bir birim kurabilir.</td><td class="col-note">İzin/yetki</td></tr>
+            <tr><td class="col-en">This Regulation establishes performance requirements.</td><td class="col-tr">Bu Tüzük ile … tesis edilir.</td><td class="col-note">"-mektedir" EKİ KULLANILMAZ!</td></tr>
           </tbody>
         </table>
         <p style="font-size:13px;font-weight:500;color:var(--accent2);margin-bottom:12px">⚠️ Karıştırılan İfadeler:</p>
         <table class="compare-table">
-          <thead>
-            <tr>
-              <th>İngilizce 1</th>
-              <th>Türkçe 1</th>
-              <th>İngilizce 2</th>
-              <th>Türkçe 2</th>
-            </tr>
-          </thead>
+          <thead><tr><th>İngilizce 1</th><th>Türkçe 1</th><th>İngilizce 2</th><th>Türkçe 2</th></tr></thead>
           <tbody>
-            <tr>
-              <td class="col-en">approximation of laws</td>
-              <td class="col-tr">mevzuatın yaklaştırılması</td>
-              <td class="col-en">harmonization of laws</td>
-              <td class="col-tr">mevzuatın uyumlaştırılması</td>
-            </tr>
-            <tr>
-              <td class="col-en">annex</td>
-              <td class="col-tr">ek</td>
-              <td class="col-en">appendix</td>
-              <td class="col-tr">açıklayıcı ek</td>
-            </tr>
-            <tr>
-              <td class="col-en">assent / consent</td>
-              <td class="col-tr">muvafakat</td>
-              <td class="col-en">approval</td>
-              <td class="col-tr">onay</td>
-            </tr>
+            <tr><td class="col-en">approximation of laws</td><td class="col-tr">mevzuatın yaklaştırılması</td><td class="col-en">harmonization of laws</td><td class="col-tr">mevzuatın uyumlaştırılması</td></tr>
+            <tr><td class="col-en">annex</td><td class="col-tr">ek</td><td class="col-en">appendix</td><td class="col-tr">açıklayıcı ek</td></tr>
+            <tr><td class="col-en">assent / consent</td><td class="col-tr">muvafakat</td><td class="col-en">approval</td><td class="col-tr">onay</td></tr>
           </tbody>
         </table>
       </div>
@@ -995,41 +853,16 @@
           <div class="fc-counter" id="hfc-counter">1 / 20</div>
         </div>
         <div style="margin-top:48px">
-          <p
-            style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:16px">
-            ✅ Ders Öncesi Kontrol Listesi</p>
+          <p style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:16px">✅ Ders Öncesi Kontrol Listesi</p>
           <ul class="checklist">
-            <li>
-              <div class="check" onclick="hToggleCheck(this)"></div><span>Hukuki çeviri tanımını ve 4 sınıflandırma
-                kriterini anlattım</span>
-            </li>
-            <li>
-              <div class="check" onclick="hToggleCheck(this)"></div><span>Üç zorluk kaynağını örneklerle
-                açıklayabildim</span>
-            </li>
-            <li>
-              <div class="check" onclick="hToggleCheck(this)"></div><span>İllokütif güç — shall / may / shall not
-                farkını biliyorum</span>
-            </li>
-            <li>
-              <div class="check" onclick="hToggleCheck(this)"></div><span>Eşit özgünlük ilkesini açıklayabildim</span>
-            </li>
-            <li>
-              <div class="check" onclick="hToggleCheck(this)"></div><span>Tüzük / Direktif / Karar arasındaki
-                bağlayıcılık farkını biliyorum</span>
-            </li>
-            <li>
-              <div class="check" onclick="hToggleCheck(this)"></div><span>European Council ≠ Council of Europe ≠ Council
-                of EU ayrımını biliyorum</span>
-            </li>
-            <li>
-              <div class="check" onclick="hToggleCheck(this)"></div><span>AB mevzuatının bölümlerini
-                sıralayabildim</span>
-            </li>
-            <li>
-              <div class="check" onclick="hToggleCheck(this)"></div><span>ATRG / ABRG ayrımını ve tarih sınırını
-                biliyorum (1 Şubat 2003)</span>
-            </li>
+            <li><div class="check" onclick="hToggleCheck(this)"></div><span>Hukuki çeviri tanımını ve 4 sınıflandırma kriterini anlattım</span></li>
+            <li><div class="check" onclick="hToggleCheck(this)"></div><span>Üç zorluk kaynağını örneklerle açıklayabildim</span></li>
+            <li><div class="check" onclick="hToggleCheck(this)"></div><span>İllokütif güç — shall / may / shall not farkını biliyorum</span></li>
+            <li><div class="check" onclick="hToggleCheck(this)"></div><span>Eşit özgünlük ilkesini açıklayabildim</span></li>
+            <li><div class="check" onclick="hToggleCheck(this)"></div><span>Tüzük / Direktif / Karar arasındaki bağlayıcılık farkını biliyorum</span></li>
+            <li><div class="check" onclick="hToggleCheck(this)"></div><span>European Council ≠ Council of Europe ≠ Council of EU ayrımını biliyorum</span></li>
+            <li><div class="check" onclick="hToggleCheck(this)"></div><span>AB mevzuatının bölümlerini sıralayabildim</span></li>
+            <li><div class="check" onclick="hToggleCheck(this)"></div><span>ATRG / ABRG ayrımını ve tarih sınırını biliyorum (1 Şubat 2003)</span></li>
           </ul>
         </div>
       </div>
@@ -1043,14 +876,11 @@
     <header>
       <div class="dtag">🎙️ Ardıl Çeviri · Hazırlık Dosyası</div>
       <h1>DAVOS <span>2026</span><br>Çalışma Rehberi</h1>
-      <p class="dsubtitle">WEF 56. Yıllık Toplantısı · 19–23 Ocak 2026 · İsviçre, Davos<br>Tema: <em>"A Spirit of
-          Dialogue"</em></p>
+      <p class="dsubtitle">WEF 56. Yıllık Toplantısı · 19–23 Ocak 2026 · İsviçre, Davos<br>Tema: <em>"A Spirit of Dialogue"</em></p>
     </header>
     <div class="progress-strip">
       <span class="progress-label">GENEL İLERLEME</span>
-      <div class="progress-bar">
-        <div class="progress-fill" id="dProgressFill"></div>
-      </div>
+      <div class="progress-bar"><div class="progress-fill" id="dProgressFill"></div></div>
       <span class="progress-pct" id="dProgressPct">0%</span>
     </div>
     <nav>
@@ -1066,10 +896,7 @@
       <div class="dsection active" id="dsec-oturumlar">
         <p class="dsection-title">Tüm Oturumlar</p>
         <p class="dsection-desc">Her karta tıkla → ayrıntıları, anahtar soruları ve dikkat noktalarını gör.</p>
-        <div class="dtracker">
-          <div class="dtracker-title">✅ Okuduklarım</div>
-          <div class="dtracker-items" id="dSessionTracker"></div>
-        </div>
+        <div class="dtracker"><div class="dtracker-title">✅ Okuduklarım</div><div class="dtracker-items" id="dSessionTracker"></div></div>
         <div class="session-grid" id="dSessionGrid"></div>
       </div>
       <div class="dsection" id="dsec-terminoloji">
@@ -1088,15 +915,8 @@
         <div class="flashcard-area">
           <div class="dflashcard" id="dMainFlashcard" onclick="dFlipCard()">
             <div class="dflashcard-inner">
-              <div class="dflashcard-front">
-                <div class="dflashcard-hint">İNGİLİZCE — tıkla</div>
-                <div class="dflashcard-word" id="dFlashEN">–</div>
-              </div>
-              <div class="dflashcard-back">
-                <div class="dflashcard-hint">TÜRKÇE KARŞILIĞI</div>
-                <div class="dflashcard-word" id="dFlashTR">–</div>
-                <div class="dflashcard-note" id="dFlashNote">–</div>
-              </div>
+              <div class="dflashcard-front"><div class="dflashcard-hint">İNGİLİZCE — tıkla</div><div class="dflashcard-word" id="dFlashEN">–</div></div>
+              <div class="dflashcard-back"><div class="dflashcard-hint">TÜRKÇE KARŞILIĞI</div><div class="dflashcard-word" id="dFlashTR">–</div><div class="dflashcard-note" id="dFlashNote">–</div></div>
             </div>
           </div>
           <div class="flash-controls">
@@ -1151,388 +971,66 @@
   </div>
 
   <!-- HUKUK HAFTALIK PANELLER -->
-  <div class="app-panel" id="panel-hukuk-w3">
-    <div class="panel-placeholder" style="background:#0d0a00;min-height:100vh">
-      <div class="placeholder-icon">⚖️</div>
-      <div class="placeholder-title" style="color:#e8c547">Hukuk Çevirisi — 3. Hafta</div>
-      <div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span
-        class="placeholder-badge" style="border-color:#e8c547;color:#e8c547">Yakında · Hafta notlarını at</span>
-    </div>
-  </div>
-  <div class="app-panel" id="panel-hukuk-w4">
-    <div class="panel-placeholder" style="background:#0d0a00;min-height:100vh">
-      <div class="placeholder-icon">⚖️</div>
-      <div class="placeholder-title" style="color:#e8c547">Hukuk Çevirisi — 4. Hafta</div>
-      <div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span
-        class="placeholder-badge" style="border-color:#e8c547;color:#e8c547">Yakında · Hafta notlarını at</span>
-    </div>
-  </div>
-  <div class="app-panel" id="panel-hukuk-w5">
-    <div class="panel-placeholder" style="background:#0d0a00;min-height:100vh">
-      <div class="placeholder-icon">⚖️</div>
-      <div class="placeholder-title" style="color:#e8c547">Hukuk Çevirisi — 5. Hafta</div>
-      <div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span
-        class="placeholder-badge" style="border-color:#e8c547;color:#e8c547">Yakında · Hafta notlarını at</span>
-    </div>
-  </div>
-  <div class="app-panel" id="panel-hukuk-w6">
-    <div class="panel-placeholder" style="background:#0d0a00;min-height:100vh">
-      <div class="placeholder-icon">⚖️</div>
-      <div class="placeholder-title" style="color:#e8c547">Hukuk Çevirisi — 6. Hafta</div>
-      <div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span
-        class="placeholder-badge" style="border-color:#e8c547;color:#e8c547">Yakında · Hafta notlarını at</span>
-    </div>
-  </div>
-  <div class="app-panel" id="panel-hukuk-w7">
-    <div class="panel-placeholder" style="background:#0d0a00;min-height:100vh">
-      <div class="placeholder-icon">⚖️</div>
-      <div class="placeholder-title" style="color:#e8c547">Hukuk Çevirisi — 7. Hafta</div>
-      <div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span
-        class="placeholder-badge" style="border-color:#e8c547;color:#e8c547">Yakında · Hafta notlarını at</span>
-    </div>
-  </div>
+  <div class="app-panel" id="panel-hukuk-w3"><div class="panel-placeholder" style="background:#0d0a00;min-height:100vh"><div class="placeholder-icon">⚖️</div><div class="placeholder-title" style="color:#e8c547">Hukuk Çevirisi — 3. Hafta</div><div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span class="placeholder-badge" style="border-color:#e8c547;color:#e8c547">Yakında · Hafta notlarını at</span></div></div>
+  <div class="app-panel" id="panel-hukuk-w4"><div class="panel-placeholder" style="background:#0d0a00;min-height:100vh"><div class="placeholder-icon">⚖️</div><div class="placeholder-title" style="color:#e8c547">Hukuk Çevirisi — 4. Hafta</div><div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span class="placeholder-badge" style="border-color:#e8c547;color:#e8c547">Yakında · Hafta notlarını at</span></div></div>
+  <div class="app-panel" id="panel-hukuk-w5"><div class="panel-placeholder" style="background:#0d0a00;min-height:100vh"><div class="placeholder-icon">⚖️</div><div class="placeholder-title" style="color:#e8c547">Hukuk Çevirisi — 5. Hafta</div><div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span class="placeholder-badge" style="border-color:#e8c547;color:#e8c547">Yakında · Hafta notlarını at</span></div></div>
+  <div class="app-panel" id="panel-hukuk-w6"><div class="panel-placeholder" style="background:#0d0a00;min-height:100vh"><div class="placeholder-icon">⚖️</div><div class="placeholder-title" style="color:#e8c547">Hukuk Çevirisi — 6. Hafta</div><div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span class="placeholder-badge" style="border-color:#e8c547;color:#e8c547">Yakında · Hafta notlarını at</span></div></div>
+  <div class="app-panel" id="panel-hukuk-w7"><div class="panel-placeholder" style="background:#0d0a00;min-height:100vh"><div class="placeholder-icon">⚖️</div><div class="placeholder-title" style="color:#e8c547">Hukuk Çevirisi — 7. Hafta</div><div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span class="placeholder-badge" style="border-color:#e8c547;color:#e8c547">Yakında · Hafta notlarını at</span></div></div>
 
   <!-- DAVOS HAFTALIK PANELLER -->
-  <div class="app-panel" id="panel-davos-w3">
-    <div class="panel-placeholder" style="background:#0a0c00;min-height:100vh">
-      <div class="placeholder-icon">🎙️</div>
-      <div class="placeholder-title" style="color:#c8f135">Ardıl Çeviri — 3. Hafta</div>
-      <div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span
-        class="placeholder-badge" style="border-color:#c8f135;color:#c8f135">Yakında · Hafta notlarını at</span>
-    </div>
-  </div>
-  <div class="app-panel" id="panel-davos-w4">
-    <div class="panel-placeholder" style="background:#0a0c00;min-height:100vh">
-      <div class="placeholder-icon">🎙️</div>
-      <div class="placeholder-title" style="color:#c8f135">Ardıl Çeviri — 4. Hafta</div>
-      <div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span
-        class="placeholder-badge" style="border-color:#c8f135;color:#c8f135">Yakında · Hafta notlarını at</span>
-    </div>
-  </div>
-  <div class="app-panel" id="panel-davos-w5">
-    <div class="panel-placeholder" style="background:#0a0c00;min-height:100vh">
-      <div class="placeholder-icon">🎙️</div>
-      <div class="placeholder-title" style="color:#c8f135">Ardıl Çeviri — 5. Hafta</div>
-      <div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span
-        class="placeholder-badge" style="border-color:#c8f135;color:#c8f135">Yakında · Hafta notlarını at</span>
-    </div>
-  </div>
-  <div class="app-panel" id="panel-davos-w6">
-    <div class="panel-placeholder" style="background:#0a0c00;min-height:100vh">
-      <div class="placeholder-icon">🎙️</div>
-      <div class="placeholder-title" style="color:#c8f135">Ardıl Çeviri — 6. Hafta</div>
-      <div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span
-        class="placeholder-badge" style="border-color:#c8f135;color:#c8f135">Yakında · Hafta notlarını at</span>
-    </div>
-  </div>
-  <div class="app-panel" id="panel-davos-w7">
-    <div class="panel-placeholder" style="background:#0a0c00;min-height:100vh">
-      <div class="placeholder-icon">🎙️</div>
-      <div class="placeholder-title" style="color:#c8f135">Ardıl Çeviri — 7. Hafta</div>
-      <div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span
-        class="placeholder-badge" style="border-color:#c8f135;color:#c8f135">Yakında · Hafta notlarını at</span>
-    </div>
-  </div>
+  <div class="app-panel" id="panel-davos-w3"><div class="panel-placeholder" style="background:#0a0c00;min-height:100vh"><div class="placeholder-icon">🎙️</div><div class="placeholder-title" style="color:#c8f135">Ardıl Çeviri — 3. Hafta</div><div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span class="placeholder-badge" style="border-color:#c8f135;color:#c8f135">Yakında · Hafta notlarını at</span></div></div>
+  <div class="app-panel" id="panel-davos-w4"><div class="panel-placeholder" style="background:#0a0c00;min-height:100vh"><div class="placeholder-icon">🎙️</div><div class="placeholder-title" style="color:#c8f135">Ardıl Çeviri — 4. Hafta</div><div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span class="placeholder-badge" style="border-color:#c8f135;color:#c8f135">Yakında · Hafta notlarını at</span></div></div>
+  <div class="app-panel" id="panel-davos-w5"><div class="panel-placeholder" style="background:#0a0c00;min-height:100vh"><div class="placeholder-icon">🎙️</div><div class="placeholder-title" style="color:#c8f135">Ardıl Çeviri — 5. Hafta</div><div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span class="placeholder-badge" style="border-color:#c8f135;color:#c8f135">Yakında · Hafta notlarını at</span></div></div>
+  <div class="app-panel" id="panel-davos-w6"><div class="panel-placeholder" style="background:#0a0c00;min-height:100vh"><div class="placeholder-icon">🎙️</div><div class="placeholder-title" style="color:#c8f135">Ardıl Çeviri — 6. Hafta</div><div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span class="placeholder-badge" style="border-color:#c8f135;color:#c8f135">Yakında · Hafta notlarını at</span></div></div>
+  <div class="app-panel" id="panel-davos-w7"><div class="panel-placeholder" style="background:#0a0c00;min-height:100vh"><div class="placeholder-icon">🎙️</div><div class="placeholder-title" style="color:#c8f135">Ardıl Çeviri — 7. Hafta</div><div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span class="placeholder-badge" style="border-color:#c8f135;color:#c8f135">Yakında · Hafta notlarını at</span></div></div>
 
   <!-- GÖSTERGEBİLİM PANELLER -->
-  <div class="app-panel" id="panel-gobilim">
-    <div class="panel-placeholder" style="background:#0d0a1a;min-height:100vh">
-      <div class="placeholder-icon">📐</div>
-      <div class="placeholder-title" style="color:#a78bfa">Çeviri Göstergebilimi II</div>
-      <div class="placeholder-sub" style="color:#7a8090">2. Hafta · Bu dersin notları eklenmeye hazır.</div><span
-        class="placeholder-badge" style="border-color:#a78bfa;color:#a78bfa">Yakında · Hafta notlarını at</span>
-    </div>
-  </div>
-  <div class="app-panel" id="panel-gobilim-w3">
-    <div class="panel-placeholder" style="background:#0d0a1a;min-height:100vh">
-      <div class="placeholder-icon">📐</div>
-      <div class="placeholder-title" style="color:#a78bfa">Çeviri Göstergebilimi II — 3. Hafta</div>
-      <div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span
-        class="placeholder-badge" style="border-color:#a78bfa;color:#a78bfa">Yakında · Hafta notlarını at</span>
-    </div>
-  </div>
-  <div class="app-panel" id="panel-gobilim-w4">
-    <div class="panel-placeholder" style="background:#0d0a1a;min-height:100vh">
-      <div class="placeholder-icon">📐</div>
-      <div class="placeholder-title" style="color:#a78bfa">Çeviri Göstergebilimi II — 4. Hafta</div>
-      <div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span
-        class="placeholder-badge" style="border-color:#a78bfa;color:#a78bfa">Yakında · Hafta notlarını at</span>
-    </div>
-  </div>
-  <div class="app-panel" id="panel-gobilim-w5">
-    <div class="panel-placeholder" style="background:#0d0a1a;min-height:100vh">
-      <div class="placeholder-icon">📐</div>
-      <div class="placeholder-title" style="color:#a78bfa">Çeviri Göstergebilimi II — 5. Hafta</div>
-      <div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span
-        class="placeholder-badge" style="border-color:#a78bfa;color:#a78bfa">Yakında · Hafta notlarını at</span>
-    </div>
-  </div>
-  <div class="app-panel" id="panel-gobilim-w6">
-    <div class="panel-placeholder" style="background:#0d0a1a;min-height:100vh">
-      <div class="placeholder-icon">📐</div>
-      <div class="placeholder-title" style="color:#a78bfa">Çeviri Göstergebilimi II — 6. Hafta</div>
-      <div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span
-        class="placeholder-badge" style="border-color:#a78bfa;color:#a78bfa">Yakında · Hafta notlarını at</span>
-    </div>
-  </div>
-  <div class="app-panel" id="panel-gobilim-w7">
-    <div class="panel-placeholder" style="background:#0d0a1a;min-height:100vh">
-      <div class="placeholder-icon">📐</div>
-      <div class="placeholder-title" style="color:#a78bfa">Çeviri Göstergebilimi II — 7. Hafta</div>
-      <div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span
-        class="placeholder-badge" style="border-color:#a78bfa;color:#a78bfa">Yakında · Hafta notlarını at</span>
-    </div>
-  </div>
+  <div class="app-panel" id="panel-gobilim"><div class="panel-placeholder" style="background:#0d0a1a;min-height:100vh"><div class="placeholder-icon">📐</div><div class="placeholder-title" style="color:#a78bfa">Çeviri Göstergebilimi II</div><div class="placeholder-sub" style="color:#7a8090">2. Hafta · Bu dersin notları eklenmeye hazır.</div><span class="placeholder-badge" style="border-color:#a78bfa;color:#a78bfa">Yakında · Hafta notlarını at</span></div></div>
+  <div class="app-panel" id="panel-gobilim-w3"><div class="panel-placeholder" style="background:#0d0a1a;min-height:100vh"><div class="placeholder-icon">📐</div><div class="placeholder-title" style="color:#a78bfa">Çeviri Göstergebilimi II — 3. Hafta</div><div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span class="placeholder-badge" style="border-color:#a78bfa;color:#a78bfa">Yakında · Hafta notlarını at</span></div></div>
+  <div class="app-panel" id="panel-gobilim-w4"><div class="panel-placeholder" style="background:#0d0a1a;min-height:100vh"><div class="placeholder-icon">📐</div><div class="placeholder-title" style="color:#a78bfa">Çeviri Göstergebilimi II — 4. Hafta</div><div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span class="placeholder-badge" style="border-color:#a78bfa;color:#a78bfa">Yakında · Hafta notlarını at</span></div></div>
+  <div class="app-panel" id="panel-gobilim-w5"><div class="panel-placeholder" style="background:#0d0a1a;min-height:100vh"><div class="placeholder-icon">📐</div><div class="placeholder-title" style="color:#a78bfa">Çeviri Göstergebilimi II — 5. Hafta</div><div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span class="placeholder-badge" style="border-color:#a78bfa;color:#a78bfa">Yakında · Hafta notlarını at</span></div></div>
+  <div class="app-panel" id="panel-gobilim-w6"><div class="panel-placeholder" style="background:#0d0a1a;min-height:100vh"><div class="placeholder-icon">📐</div><div class="placeholder-title" style="color:#a78bfa">Çeviri Göstergebilimi II — 6. Hafta</div><div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span class="placeholder-badge" style="border-color:#a78bfa;color:#a78bfa">Yakında · Hafta notlarını at</span></div></div>
+  <div class="app-panel" id="panel-gobilim-w7"><div class="panel-placeholder" style="background:#0d0a1a;min-height:100vh"><div class="placeholder-icon">📐</div><div class="placeholder-title" style="color:#a78bfa">Çeviri Göstergebilimi II — 7. Hafta</div><div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span class="placeholder-badge" style="border-color:#a78bfa;color:#a78bfa">Yakında · Hafta notlarını at</span></div></div>
 
   <!-- ETİK PANELLER -->
-  <div class="app-panel" id="panel-etik">
-    <div class="panel-placeholder" style="background:#110a00;min-height:100vh">
-      <div class="placeholder-icon">⚡</div>
-      <div class="placeholder-title" style="color:#f97316">Çeviride Etik</div>
-      <div class="placeholder-sub" style="color:#7a8090">2. Hafta · Bu dersin notları eklenmeye hazır.</div><span
-        class="placeholder-badge" style="border-color:#f97316;color:#f97316">Yakında · Hafta notlarını at</span>
-    </div>
-  </div>
-  <div class="app-panel" id="panel-etik-w3">
-    <div class="panel-placeholder" style="background:#110a00;min-height:100vh">
-      <div class="placeholder-icon">⚡</div>
-      <div class="placeholder-title" style="color:#f97316">Çeviride Etik — 3. Hafta</div>
-      <div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span
-        class="placeholder-badge" style="border-color:#f97316;color:#f97316">Yakında · Hafta notlarını at</span>
-    </div>
-  </div>
-  <div class="app-panel" id="panel-etik-w4">
-    <div class="panel-placeholder" style="background:#110a00;min-height:100vh">
-      <div class="placeholder-icon">⚡</div>
-      <div class="placeholder-title" style="color:#f97316">Çeviride Etik — 4. Hafta</div>
-      <div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span
-        class="placeholder-badge" style="border-color:#f97316;color:#f97316">Yakında · Hafta notlarını at</span>
-    </div>
-  </div>
-  <div class="app-panel" id="panel-etik-w5">
-    <div class="panel-placeholder" style="background:#110a00;min-height:100vh">
-      <div class="placeholder-icon">⚡</div>
-      <div class="placeholder-title" style="color:#f97316">Çeviride Etik — 5. Hafta</div>
-      <div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span
-        class="placeholder-badge" style="border-color:#f97316;color:#f97316">Yakında · Hafta notlarını at</span>
-    </div>
-  </div>
-  <div class="app-panel" id="panel-etik-w6">
-    <div class="panel-placeholder" style="background:#110a00;min-height:100vh">
-      <div class="placeholder-icon">⚡</div>
-      <div class="placeholder-title" style="color:#f97316">Çeviride Etik — 6. Hafta</div>
-      <div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span
-        class="placeholder-badge" style="border-color:#f97316;color:#f97316">Yakında · Hafta notlarını at</span>
-    </div>
-  </div>
-  <div class="app-panel" id="panel-etik-w7">
-    <div class="panel-placeholder" style="background:#110a00;min-height:100vh">
-      <div class="placeholder-icon">⚡</div>
-      <div class="placeholder-title" style="color:#f97316">Çeviride Etik — 7. Hafta</div>
-      <div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span
-        class="placeholder-badge" style="border-color:#f97316;color:#f97316">Yakında · Hafta notlarını at</span>
-    </div>
-  </div>
+  <div class="app-panel" id="panel-etik"><div class="panel-placeholder" style="background:#110a00;min-height:100vh"><div class="placeholder-icon">⚡</div><div class="placeholder-title" style="color:#f97316">Çeviride Etik</div><div class="placeholder-sub" style="color:#7a8090">2. Hafta · Bu dersin notları eklenmeye hazır.</div><span class="placeholder-badge" style="border-color:#f97316;color:#f97316">Yakında · Hafta notlarını at</span></div></div>
+  <div class="app-panel" id="panel-etik-w3"><div class="panel-placeholder" style="background:#110a00;min-height:100vh"><div class="placeholder-icon">⚡</div><div class="placeholder-title" style="color:#f97316">Çeviride Etik — 3. Hafta</div><div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span class="placeholder-badge" style="border-color:#f97316;color:#f97316">Yakında · Hafta notlarını at</span></div></div>
+  <div class="app-panel" id="panel-etik-w4"><div class="panel-placeholder" style="background:#110a00;min-height:100vh"><div class="placeholder-icon">⚡</div><div class="placeholder-title" style="color:#f97316">Çeviride Etik — 4. Hafta</div><div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span class="placeholder-badge" style="border-color:#f97316;color:#f97316">Yakında · Hafta notlarını at</span></div></div>
+  <div class="app-panel" id="panel-etik-w5"><div class="panel-placeholder" style="background:#110a00;min-height:100vh"><div class="placeholder-icon">⚡</div><div class="placeholder-title" style="color:#f97316">Çeviride Etik — 5. Hafta</div><div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span class="placeholder-badge" style="border-color:#f97316;color:#f97316">Yakında · Hafta notlarını at</span></div></div>
+  <div class="app-panel" id="panel-etik-w6"><div class="panel-placeholder" style="background:#110a00;min-height:100vh"><div class="placeholder-icon">⚡</div><div class="placeholder-title" style="color:#f97316">Çeviride Etik — 6. Hafta</div><div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span class="placeholder-badge" style="border-color:#f97316;color:#f97316">Yakında · Hafta notlarını at</span></div></div>
+  <div class="app-panel" id="panel-etik-w7"><div class="panel-placeholder" style="background:#110a00;min-height:100vh"><div class="placeholder-icon">⚡</div><div class="placeholder-title" style="color:#f97316">Çeviride Etik — 7. Hafta</div><div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span class="placeholder-badge" style="border-color:#f97316;color:#f97316">Yakında · Hafta notlarını at</span></div></div>
 
   <!-- RUSÇA IV PANELLER -->
-  <div class="app-panel" id="panel-rusca4">
-    <div class="panel-placeholder" style="background:#000d1a;min-height:100vh">
-      <div class="placeholder-icon">🇷🇺</div>
-      <div class="placeholder-title" style="color:#38bdf8">Rusça IV</div>
-      <div class="placeholder-sub" style="color:#7a8090">2. Hafta · Bu dersin notları eklenmeye hazır.</div><span
-        class="placeholder-badge" style="border-color:#38bdf8;color:#38bdf8">Yakında · Hafta notlarını at</span>
-    </div>
-  </div>
-  <div class="app-panel" id="panel-rusca4-w3">
-    <div class="panel-placeholder" style="background:#000d1a;min-height:100vh">
-      <div class="placeholder-icon">🇷🇺</div>
-      <div class="placeholder-title" style="color:#38bdf8">Rusça IV — 3. Hafta</div>
-      <div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span
-        class="placeholder-badge" style="border-color:#38bdf8;color:#38bdf8">Yakında · Hafta notlarını at</span>
-    </div>
-  </div>
-  <div class="app-panel" id="panel-rusca4-w4">
-    <div class="panel-placeholder" style="background:#000d1a;min-height:100vh">
-      <div class="placeholder-icon">🇷🇺</div>
-      <div class="placeholder-title" style="color:#38bdf8">Rusça IV — 4. Hafta</div>
-      <div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span
-        class="placeholder-badge" style="border-color:#38bdf8;color:#38bdf8">Yakında · Hafta notlarını at</span>
-    </div>
-  </div>
-  <div class="app-panel" id="panel-rusca4-w5">
-    <div class="panel-placeholder" style="background:#000d1a;min-height:100vh">
-      <div class="placeholder-icon">🇷🇺</div>
-      <div class="placeholder-title" style="color:#38bdf8">Rusça IV — 5. Hafta</div>
-      <div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span
-        class="placeholder-badge" style="border-color:#38bdf8;color:#38bdf8">Yakında · Hafta notlarını at</span>
-    </div>
-  </div>
-  <div class="app-panel" id="panel-rusca4-w6">
-    <div class="panel-placeholder" style="background:#000d1a;min-height:100vh">
-      <div class="placeholder-icon">🇷🇺</div>
-      <div class="placeholder-title" style="color:#38bdf8">Rusça IV — 6. Hafta</div>
-      <div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span
-        class="placeholder-badge" style="border-color:#38bdf8;color:#38bdf8">Yakında · Hafta notlarını at</span>
-    </div>
-  </div>
-  <div class="app-panel" id="panel-rusca4-w7">
-    <div class="panel-placeholder" style="background:#000d1a;min-height:100vh">
-      <div class="placeholder-icon">🇷🇺</div>
-      <div class="placeholder-title" style="color:#38bdf8">Rusça IV — 7. Hafta</div>
-      <div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span
-        class="placeholder-badge" style="border-color:#38bdf8;color:#38bdf8">Yakında · Hafta notlarını at</span>
-    </div>
-  </div>
+  <div class="app-panel" id="panel-rusca4"><div class="panel-placeholder" style="background:#000d1a;min-height:100vh"><div class="placeholder-icon">🇷🇺</div><div class="placeholder-title" style="color:#38bdf8">Rusça IV</div><div class="placeholder-sub" style="color:#7a8090">2. Hafta · Bu dersin notları eklenmeye hazır.</div><span class="placeholder-badge" style="border-color:#38bdf8;color:#38bdf8">Yakında · Hafta notlarını at</span></div></div>
+  <div class="app-panel" id="panel-rusca4-w3"><div class="panel-placeholder" style="background:#000d1a;min-height:100vh"><div class="placeholder-icon">🇷🇺</div><div class="placeholder-title" style="color:#38bdf8">Rusça IV — 3. Hafta</div><div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span class="placeholder-badge" style="border-color:#38bdf8;color:#38bdf8">Yakında · Hafta notlarını at</span></div></div>
+  <div class="app-panel" id="panel-rusca4-w4"><div class="panel-placeholder" style="background:#000d1a;min-height:100vh"><div class="placeholder-icon">🇷🇺</div><div class="placeholder-title" style="color:#38bdf8">Rusça IV — 4. Hafta</div><div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span class="placeholder-badge" style="border-color:#38bdf8;color:#38bdf8">Yakında · Hafta notlarını at</span></div></div>
+  <div class="app-panel" id="panel-rusca4-w5"><div class="panel-placeholder" style="background:#000d1a;min-height:100vh"><div class="placeholder-icon">🇷🇺</div><div class="placeholder-title" style="color:#38bdf8">Rusça IV — 5. Hafta</div><div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span class="placeholder-badge" style="border-color:#38bdf8;color:#38bdf8">Yakında · Hafta notlarını at</span></div></div>
+  <div class="app-panel" id="panel-rusca4-w6"><div class="panel-placeholder" style="background:#000d1a;min-height:100vh"><div class="placeholder-icon">🇷🇺</div><div class="placeholder-title" style="color:#38bdf8">Rusça IV — 6. Hafta</div><div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span class="placeholder-badge" style="border-color:#38bdf8;color:#38bdf8">Yakında · Hafta notlarını at</span></div></div>
+  <div class="app-panel" id="panel-rusca4-w7"><div class="panel-placeholder" style="background:#000d1a;min-height:100vh"><div class="placeholder-icon">🇷🇺</div><div class="placeholder-title" style="color:#38bdf8">Rusça IV — 7. Hafta</div><div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span class="placeholder-badge" style="border-color:#38bdf8;color:#38bdf8">Yakında · Hafta notlarını at</span></div></div>
 
   <!-- RUSÇA VI PANELLER -->
-  <div class="app-panel" id="panel-rusca6">
-    <div class="panel-placeholder" style="background:#000d1a;min-height:100vh">
-      <div class="placeholder-icon">🇷🇺</div>
-      <div class="placeholder-title" style="color:#38bdf8">Rusça VI</div>
-      <div class="placeholder-sub" style="color:#7a8090">2. Hafta · Bu dersin notları eklenmeye hazır.</div><span
-        class="placeholder-badge" style="border-color:#38bdf8;color:#38bdf8">Yakında · Hafta notlarını at</span>
-    </div>
-  </div>
-  <div class="app-panel" id="panel-rusca6-w3">
-    <div class="panel-placeholder" style="background:#000d1a;min-height:100vh">
-      <div class="placeholder-icon">🇷🇺</div>
-      <div class="placeholder-title" style="color:#38bdf8">Rusça VI — 3. Hafta</div>
-      <div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span
-        class="placeholder-badge" style="border-color:#38bdf8;color:#38bdf8">Yakında · Hafta notlarını at</span>
-    </div>
-  </div>
-  <div class="app-panel" id="panel-rusca6-w4">
-    <div class="panel-placeholder" style="background:#000d1a;min-height:100vh">
-      <div class="placeholder-icon">🇷🇺</div>
-      <div class="placeholder-title" style="color:#38bdf8">Rusça VI — 4. Hafta</div>
-      <div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span
-        class="placeholder-badge" style="border-color:#38bdf8;color:#38bdf8">Yakında · Hafta notlarını at</span>
-    </div>
-  </div>
-  <div class="app-panel" id="panel-rusca6-w5">
-    <div class="panel-placeholder" style="background:#000d1a;min-height:100vh">
-      <div class="placeholder-icon">🇷🇺</div>
-      <div class="placeholder-title" style="color:#38bdf8">Rusça VI — 5. Hafta</div>
-      <div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span
-        class="placeholder-badge" style="border-color:#38bdf8;color:#38bdf8">Yakında · Hafta notlarını at</span>
-    </div>
-  </div>
-  <div class="app-panel" id="panel-rusca6-w6">
-    <div class="panel-placeholder" style="background:#000d1a;min-height:100vh">
-      <div class="placeholder-icon">🇷🇺</div>
-      <div class="placeholder-title" style="color:#38bdf8">Rusça VI — 6. Hafta</div>
-      <div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span
-        class="placeholder-badge" style="border-color:#38bdf8;color:#38bdf8">Yakında · Hafta notlarını at</span>
-    </div>
-  </div>
-  <div class="app-panel" id="panel-rusca6-w7">
-    <div class="panel-placeholder" style="background:#000d1a;min-height:100vh">
-      <div class="placeholder-icon">🇷🇺</div>
-      <div class="placeholder-title" style="color:#38bdf8">Rusça VI — 7. Hafta</div>
-      <div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span
-        class="placeholder-badge" style="border-color:#38bdf8;color:#38bdf8">Yakında · Hafta notlarını at</span>
-    </div>
-  </div>
+  <div class="app-panel" id="panel-rusca6"><div class="panel-placeholder" style="background:#000d1a;min-height:100vh"><div class="placeholder-icon">🇷🇺</div><div class="placeholder-title" style="color:#38bdf8">Rusça VI</div><div class="placeholder-sub" style="color:#7a8090">2. Hafta · Bu dersin notları eklenmeye hazır.</div><span class="placeholder-badge" style="border-color:#38bdf8;color:#38bdf8">Yakında · Hafta notlarını at</span></div></div>
+  <div class="app-panel" id="panel-rusca6-w3"><div class="panel-placeholder" style="background:#000d1a;min-height:100vh"><div class="placeholder-icon">🇷🇺</div><div class="placeholder-title" style="color:#38bdf8">Rusça VI — 3. Hafta</div><div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span class="placeholder-badge" style="border-color:#38bdf8;color:#38bdf8">Yakında · Hafta notlarını at</span></div></div>
+  <div class="app-panel" id="panel-rusca6-w4"><div class="panel-placeholder" style="background:#000d1a;min-height:100vh"><div class="placeholder-icon">🇷🇺</div><div class="placeholder-title" style="color:#38bdf8">Rusça VI — 4. Hafta</div><div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span class="placeholder-badge" style="border-color:#38bdf8;color:#38bdf8">Yakında · Hafta notlarını at</span></div></div>
+  <div class="app-panel" id="panel-rusca6-w5"><div class="panel-placeholder" style="background:#000d1a;min-height:100vh"><div class="placeholder-icon">🇷🇺</div><div class="placeholder-title" style="color:#38bdf8">Rusça VI — 5. Hafta</div><div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span class="placeholder-badge" style="border-color:#38bdf8;color:#38bdf8">Yakında · Hafta notlarını at</span></div></div>
+  <div class="app-panel" id="panel-rusca6-w6"><div class="panel-placeholder" style="background:#000d1a;min-height:100vh"><div class="placeholder-icon">🇷🇺</div><div class="placeholder-title" style="color:#38bdf8">Rusça VI — 6. Hafta</div><div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span class="placeholder-badge" style="border-color:#38bdf8;color:#38bdf8">Yakında · Hafta notlarını at</span></div></div>
+  <div class="app-panel" id="panel-rusca6-w7"><div class="panel-placeholder" style="background:#000d1a;min-height:100vh"><div class="placeholder-icon">🇷🇺</div><div class="placeholder-title" style="color:#38bdf8">Rusça VI — 7. Hafta</div><div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span class="placeholder-badge" style="border-color:#38bdf8;color:#38bdf8">Yakında · Hafta notlarını at</span></div></div>
 
   <!-- TERMİNOLOJİ PANELLER — DÜZELTİLDİ (eskiden Türk İşaret Dili içeriği vardı) -->
-  <div class="app-panel" id="panel-termin">
-    <div class="panel-placeholder" style="background:#001a08;min-height:100vh">
-      <div class="placeholder-icon">📖</div>
-      <div class="placeholder-title" style="color:#4ade80">Çevirmenler İçin Terminoloji</div>
-      <div class="placeholder-sub" style="color:#7a8090">2. Hafta · Bu dersin notları eklenmeye hazır.</div><span
-        class="placeholder-badge" style="border-color:#4ade80;color:#4ade80">Yakında · Hafta notlarını at</span>
-    </div>
-  </div>
-  <div class="app-panel" id="panel-termin-w3">
-    <div class="panel-placeholder" style="background:#001a08;min-height:100vh">
-      <div class="placeholder-icon">📖</div>
-      <div class="placeholder-title" style="color:#4ade80">Çevirmenler İçin Terminoloji — 3. Hafta</div>
-      <div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span
-        class="placeholder-badge" style="border-color:#4ade80;color:#4ade80">Yakında · Hafta notlarını at</span>
-    </div>
-  </div>
-  <div class="app-panel" id="panel-termin-w4">
-    <div class="panel-placeholder" style="background:#001a08;min-height:100vh">
-      <div class="placeholder-icon">📖</div>
-      <div class="placeholder-title" style="color:#4ade80">Çevirmenler İçin Terminoloji — 4. Hafta</div>
-      <div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span
-        class="placeholder-badge" style="border-color:#4ade80;color:#4ade80">Yakında · Hafta notlarını at</span>
-    </div>
-  </div>
-  <div class="app-panel" id="panel-termin-w5">
-    <div class="panel-placeholder" style="background:#001a08;min-height:100vh">
-      <div class="placeholder-icon">📖</div>
-      <div class="placeholder-title" style="color:#4ade80">Çevirmenler İçin Terminoloji — 5. Hafta</div>
-      <div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span
-        class="placeholder-badge" style="border-color:#4ade80;color:#4ade80">Yakında · Hafta notlarını at</span>
-    </div>
-  </div>
-  <div class="app-panel" id="panel-termin-w6">
-    <div class="panel-placeholder" style="background:#001a08;min-height:100vh">
-      <div class="placeholder-icon">📖</div>
-      <div class="placeholder-title" style="color:#4ade80">Çevirmenler İçin Terminoloji — 6. Hafta</div>
-      <div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span
-        class="placeholder-badge" style="border-color:#4ade80;color:#4ade80">Yakında · Hafta notlarını at</span>
-    </div>
-  </div>
-  <div class="app-panel" id="panel-termin-w7">
-    <div class="panel-placeholder" style="background:#001a08;min-height:100vh">
-      <div class="placeholder-icon">📖</div>
-      <div class="placeholder-title" style="color:#4ade80">Çevirmenler İçin Terminoloji — 7. Hafta</div>
-      <div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span
-        class="placeholder-badge" style="border-color:#4ade80;color:#4ade80">Yakında · Hafta notlarını at</span>
-    </div>
-  </div>
+  <div class="app-panel" id="panel-termin"><div class="panel-placeholder" style="background:#001a08;min-height:100vh"><div class="placeholder-icon">📖</div><div class="placeholder-title" style="color:#4ade80">Çevirmenler İçin Terminoloji</div><div class="placeholder-sub" style="color:#7a8090">2. Hafta · Bu dersin notları eklenmeye hazır.</div><span class="placeholder-badge" style="border-color:#4ade80;color:#4ade80">Yakında · Hafta notlarını at</span></div></div>
+  <div class="app-panel" id="panel-termin-w3"><div class="panel-placeholder" style="background:#001a08;min-height:100vh"><div class="placeholder-icon">📖</div><div class="placeholder-title" style="color:#4ade80">Çevirmenler İçin Terminoloji — 3. Hafta</div><div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span class="placeholder-badge" style="border-color:#4ade80;color:#4ade80">Yakında · Hafta notlarını at</span></div></div>
+  <div class="app-panel" id="panel-termin-w4"><div class="panel-placeholder" style="background:#001a08;min-height:100vh"><div class="placeholder-icon">📖</div><div class="placeholder-title" style="color:#4ade80">Çevirmenler İçin Terminoloji — 4. Hafta</div><div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span class="placeholder-badge" style="border-color:#4ade80;color:#4ade80">Yakında · Hafta notlarını at</span></div></div>
+  <div class="app-panel" id="panel-termin-w5"><div class="panel-placeholder" style="background:#001a08;min-height:100vh"><div class="placeholder-icon">📖</div><div class="placeholder-title" style="color:#4ade80">Çevirmenler İçin Terminoloji — 5. Hafta</div><div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span class="placeholder-badge" style="border-color:#4ade80;color:#4ade80">Yakında · Hafta notlarını at</span></div></div>
+  <div class="app-panel" id="panel-termin-w6"><div class="panel-placeholder" style="background:#001a08;min-height:100vh"><div class="placeholder-icon">📖</div><div class="placeholder-title" style="color:#4ade80">Çevirmenler İçin Terminoloji — 6. Hafta</div><div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span class="placeholder-badge" style="border-color:#4ade80;color:#4ade80">Yakında · Hafta notlarını at</span></div></div>
+  <div class="app-panel" id="panel-termin-w7"><div class="panel-placeholder" style="background:#001a08;min-height:100vh"><div class="placeholder-icon">📖</div><div class="placeholder-title" style="color:#4ade80">Çevirmenler İçin Terminoloji — 7. Hafta</div><div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span class="placeholder-badge" style="border-color:#4ade80;color:#4ade80">Yakında · Hafta notlarını at</span></div></div>
 
   <!-- ARAŞTIRMA BECERİLERİ PANELLER -->
-  <div class="app-panel" id="panel-tibbi">
-    <div class="panel-placeholder" style="background:#0a1100;min-height:100vh">
-      <div class="placeholder-icon">🔬</div>
-      <div class="placeholder-title" style="color:#fb923c">Araştırma Becerileri</div>
-      <div class="placeholder-sub" style="color:#7a8090">2. Hafta · Bu dersin notları eklenmeye hazır.</div><span
-        class="placeholder-badge" style="border-color:#fb923c;color:#fb923c">Yakında · Hafta notlarını at</span>
-    </div>
-  </div>
-  <div class="app-panel" id="panel-tibbi-w3">
-    <div class="panel-placeholder" style="background:#0a1100;min-height:100vh">
-      <div class="placeholder-icon">🔬</div>
-      <div class="placeholder-title" style="color:#fb923c">Araştırma Becerileri — 3. Hafta</div>
-      <div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span
-        class="placeholder-badge" style="border-color:#fb923c;color:#fb923c">Yakında · Hafta notlarını at</span>
-    </div>
-  </div>
-  <div class="app-panel" id="panel-tibbi-w4">
-    <div class="panel-placeholder" style="background:#0a1100;min-height:100vh">
-      <div class="placeholder-icon">🔬</div>
-      <div class="placeholder-title" style="color:#fb923c">Araştırma Becerileri — 4. Hafta</div>
-      <div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span
-        class="placeholder-badge" style="border-color:#fb923c;color:#fb923c">Yakında · Hafta notlarını at</span>
-    </div>
-  </div>
-  <div class="app-panel" id="panel-tibbi-w5">
-    <div class="panel-placeholder" style="background:#0a1100;min-height:100vh">
-      <div class="placeholder-icon">🔬</div>
-      <div class="placeholder-title" style="color:#fb923c">Araştırma Becerileri — 5. Hafta</div>
-      <div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span
-        class="placeholder-badge" style="border-color:#fb923c;color:#fb923c">Yakında · Hafta notlarını at</span>
-    </div>
-  </div>
-  <div class="app-panel" id="panel-tibbi-w6">
-    <div class="panel-placeholder" style="background:#0a1100;min-height:100vh">
-      <div class="placeholder-icon">🔬</div>
-      <div class="placeholder-title" style="color:#fb923c">Araştırma Becerileri — 6. Hafta</div>
-      <div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span
-        class="placeholder-badge" style="border-color:#fb923c;color:#fb923c">Yakında · Hafta notlarını at</span>
-    </div>
-  </div>
-  <div class="app-panel" id="panel-tibbi-w7">
-    <div class="panel-placeholder" style="background:#0a1100;min-height:100vh">
-      <div class="placeholder-icon">🔬</div>
-      <div class="placeholder-title" style="color:#fb923c">Araştırma Becerileri — 7. Hafta</div>
-      <div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span
-        class="placeholder-badge" style="border-color:#fb923c;color:#fb923c">Yakında · Hafta notlarını at</span>
-    </div>
-  </div>
+  <div class="app-panel" id="panel-tibbi"><div class="panel-placeholder" style="background:#0a1100;min-height:100vh"><div class="placeholder-icon">🔬</div><div class="placeholder-title" style="color:#fb923c">Araştırma Becerileri</div><div class="placeholder-sub" style="color:#7a8090">2. Hafta · Bu dersin notları eklenmeye hazır.</div><span class="placeholder-badge" style="border-color:#fb923c;color:#fb923c">Yakında · Hafta notlarını at</span></div></div>
+  <div class="app-panel" id="panel-tibbi-w3"><div class="panel-placeholder" style="background:#0a1100;min-height:100vh"><div class="placeholder-icon">🔬</div><div class="placeholder-title" style="color:#fb923c">Araştırma Becerileri — 3. Hafta</div><div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span class="placeholder-badge" style="border-color:#fb923c;color:#fb923c">Yakında · Hafta notlarını at</span></div></div>
+  <div class="app-panel" id="panel-tibbi-w4"><div class="panel-placeholder" style="background:#0a1100;min-height:100vh"><div class="placeholder-icon">🔬</div><div class="placeholder-title" style="color:#fb923c">Araştırma Becerileri — 4. Hafta</div><div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span class="placeholder-badge" style="border-color:#fb923c;color:#fb923c">Yakında · Hafta notlarını at</span></div></div>
+  <div class="app-panel" id="panel-tibbi-w5"><div class="panel-placeholder" style="background:#0a1100;min-height:100vh"><div class="placeholder-icon">🔬</div><div class="placeholder-title" style="color:#fb923c">Araştırma Becerileri — 5. Hafta</div><div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span class="placeholder-badge" style="border-color:#fb923c;color:#fb923c">Yakında · Hafta notlarını at</span></div></div>
+  <div class="app-panel" id="panel-tibbi-w6"><div class="panel-placeholder" style="background:#0a1100;min-height:100vh"><div class="placeholder-icon">🔬</div><div class="placeholder-title" style="color:#fb923c">Araştırma Becerileri — 6. Hafta</div><div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span class="placeholder-badge" style="border-color:#fb923c;color:#fb923c">Yakında · Hafta notlarını at</span></div></div>
+  <div class="app-panel" id="panel-tibbi-w7"><div class="panel-placeholder" style="background:#0a1100;min-height:100vh"><div class="placeholder-icon">🔬</div><div class="placeholder-title" style="color:#fb923c">Araştırma Becerileri — 7. Hafta</div><div class="placeholder-sub" style="color:#7a8090">Bu haftanın notları henüz eklenmedi.</div><span class="placeholder-badge" style="border-color:#fb923c;color:#fb923c">Yakında · Hafta notlarını at</span></div></div>
 
   <script src="data.js"></script>
   <script src="app.js" defer></script>
@@ -1555,13 +1053,11 @@
   </div>
 
   <!-- Keyboard Shortcuts Modal -->
-  <div id="shortcuts-overlay"
-    style="display:none;position:fixed;inset:0;z-index:99990;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);align-items:center;justify-content:center;">
+  <div id="shortcuts-overlay" style="display:none;position:fixed;inset:0;z-index:99990;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);align-items:center;justify-content:center;">
     <div id="shortcuts-modal">
       <div class="shortcuts-header">
         <span class="shortcuts-title">⌨️ Klavye Kısayolları</span>
-        <button onclick="document.getElementById('shortcuts-overlay').style.display='none'"
-          class="shortcuts-close">×</button>
+        <button onclick="document.getElementById('shortcuts-overlay').style.display='none'" class="shortcuts-close">×</button>
       </div>
       <div class="shortcuts-grid">
         <div class="shortcut-item"><kbd>D</kbd><span>Dashboard</span></div>
@@ -1594,24 +1090,15 @@
 
   <!-- Command Palette -->
   <!-- HIGHLIGHT → FLASHCARD POPUP -->
-  <div id="highlight-popup"
-    style="display:none;position:fixed;z-index:99980;background:#1a1d26;border:1px solid #c8f135;border-radius:10px;padding:6px 4px;gap:4px;box-shadow:0 8px 32px rgba(0,0,0,0.5);">
-    <button onclick="highlightToFlashcard()"
-      style="background:none;border:none;color:#c8f135;font-size:11px;font-family:'IBM Plex Mono',monospace;letter-spacing:1px;padding:4px 10px;cursor:pointer;white-space:nowrap;">➕
-      Flashcard</button>
-    <button onclick="highlightCopy()"
-      style="background:none;border:none;color:#7a8090;font-size:11px;font-family:'IBM Plex Mono',monospace;letter-spacing:1px;padding:4px 10px;cursor:pointer;white-space:nowrap;">📋
-      Kopyala</button>
+  <div id="highlight-popup" style="display:none;position:fixed;z-index:99980;background:#1a1d26;border:1px solid #c8f135;border-radius:10px;padding:6px 4px;gap:4px;box-shadow:0 8px 32px rgba(0,0,0,0.5);">
+    <button onclick="highlightToFlashcard()" style="background:none;border:none;color:#c8f135;font-size:11px;font-family:'IBM Plex Mono',monospace;letter-spacing:1px;padding:4px 10px;cursor:pointer;white-space:nowrap;">➕ Flashcard</button>
+    <button onclick="highlightCopy()" style="background:none;border:none;color:#7a8090;font-size:11px;font-family:'IBM Plex Mono',monospace;letter-spacing:1px;padding:4px 10px;cursor:pointer;white-space:nowrap;">📋 Kopyala</button>
   </div>
 
-  <div id="command-palette-overlay"
-    style="display:none;position:fixed;inset:0;z-index:99995;background:rgba(0,0,0,0.6);backdrop-filter:blur(6px);">
+  <div id="command-palette-overlay" style="display:none;position:fixed;inset:0;z-index:99995;background:rgba(0,0,0,0.6);backdrop-filter:blur(6px);">
     <div id="command-palette">
       <div class="cmd-search-wrap">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="11" cy="11" r="8" />
-          <path d="m21 21-4.35-4.35" />
-        </svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
         <input id="cmd-input" type="text" placeholder="Ne yapmak istiyorsun?" autocomplete="off" spellcheck="false">
         <kbd class="cmd-esc">Esc</kbd>
       </div>
