@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="tr" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AceCast</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="uygulama">
+    <aside class="sol-panel">
+      <div class="marka">
+        <div class="nokta"></div>
+        <div>
+          <h1>AceCast</h1>
+          <p id="durumYazi">Hazır</p>
+        </div>
+      </div>
+
+      <div class="aksiyonlar">
+        <button id="temaBtn" class="ikon-btn" title="Tema Değiştir" aria-label="Tema Değiştir"></button>
+        <button id="playlistBtn" class="ikon-btn" title="Playlist Seç" aria-label="Playlist Seç"></button>
+        <button id="ekleBtn" class="ikon-btn" title="Kanal Ekle" aria-label="Kanal Ekle"></button>
+        <button id="geriBtn" class="ikon-btn" title="Önceki Kanal" aria-label="Önceki Kanal"></button>
+        <button id="ileriBtn" class="ikon-btn" title="Sonraki Kanal" aria-label="Sonraki Kanal"></button>
+      </div>
+
+      <label class="ara-kutu">
+        <input id="araInput" type="text" placeholder="Kanal ara" />
+      </label>
+
+      <label class="anahtar">
+        <input id="engineAuto" type="checkbox" />
+        <span>Engine açılışta başlasın</span>
+      </label>
+
+      <div class="kanal-ust">
+        <span>Kanal Listesi</span>
+        <span class="rozet" id="kanalSayisi">0</span>
+      </div>
+      <div id="kanalListe" class="kanal-liste"></div>
+      <div id="uyari" class="uyari gizli"></div>
+    </aside>
+
+    <main class="sag-panel">
+      <header class="oynatici-ust">
+        <div>
+          <h2 id="aktifKanal">Kanal seç</h2>
+          <p id="aktifMeta">Oynatma beklemede</p>
+        </div>
+        <div class="durum-rozetleri">
+          <span id="engineDurum" class="rozet">Engine</span>
+          <span id="oynatimDurum" class="rozet">Durum</span>
+        </div>
+      </header>
+
+      <section id="videoSahne" class="video-sahne">
+        <video id="video" playsinline></video>
+
+        <div id="yukleniyor" class="yukleniyor gizli">
+          <div class="donen"></div>
+          <p id="yukleniyorMetin">Yükleniyor...</p>
+        </div>
+
+        <div id="kontrolKatman" class="kontrol-katman">
+          <div class="kontrol-sol">
+            <button id="playBtn" class="ikon-btn buyuk" aria-label="Oynat Duraklat" title="Oynat Duraklat"></button>
+            <button id="sessizBtn" class="ikon-btn" aria-label="Sessiz" title="Sessiz"></button>
+          </div>
+
+          <div class="kontrol-zaman">
+            <span id="sureAnlik">00:00</span>
+            <input id="seek" type="range" min="0" max="100" value="0" step="0.1" />
+            <span id="sureToplam">canlı</span>
+          </div>
+
+          <div class="kontrol-sag">
+            <div class="ses-alani">
+              <input id="ses" type="range" min="0" max="1" step="0.01" value="1" />
+            </div>
+            <button id="tamBtn" class="ikon-btn" aria-label="Tam Ekran" title="Tam Ekran"></button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="kanalModal" class="modal gizli">
+    <div class="modal-kutu">
+      <h3>Kanal Ekle</h3>
+      <label>
+        <span>Kanal Adı</span>
+        <input id="kanalAdInput" type="text" placeholder="Örn: Bein Sports 1" />
+      </label>
+      <label>
+        <span>ACE Link</span>
+        <input id="aceInput" type="text" placeholder="acestream://..." />
+      </label>
+      <label>
+        <span>Logo URL (opsiyonel)</span>
+        <input id="logoInput" type="text" placeholder="https://..." />
+      </label>
+      <div class="modal-butonlar">
+        <button id="kanalModalKapat" class="ikon-btn" aria-label="Kapat" title="Kapat"></button>
+        <button id="kanalModalKaydet" class="ikon-btn" aria-label="Kaydet" title="Kaydet"></button>
+      </div>
+    </div>
+  </div>
+
+  <div id="duzenleModal" class="modal gizli">
+    <div class="modal-kutu">
+      <h3>Kanalı Özelleştir</h3>
+      <label>
+        <span>Yeni Ad</span>
+        <input id="duzenleAd" type="text" />
+      </label>
+      <label>
+        <span>Logo URL</span>
+        <input id="duzenleLogo" type="text" placeholder="https://..." />
+      </label>
+      <div class="modal-butonlar">
+        <button id="duzenleKapat" class="ikon-btn" aria-label="Kapat" title="Kapat"></button>
+        <button id="duzenleKaydet" class="ikon-btn" aria-label="Kaydet" title="Kaydet"></button>
+      </div>
+    </div>
+  </div>
+
+  <div id="sagTikMenu" class="sag-tik gizli">
+    <button data-action="ozellestir">✏️ Kanalı Özelleştir</button>
+    <button data-action="kaldir">🗑️ Kanalı Kaldır</button>
+  </div>
+
+  <script src="../node_modules/hls.js/dist/hls.min.js"></script>`n  <script src="../node_modules/mpegts.js/dist/mpegts.js"></script>
+  <script src="./renderer.js"></script>
+</body>
+</html>
+
